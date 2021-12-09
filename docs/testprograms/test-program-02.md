@@ -1,5 +1,22 @@
-Extended Euclid(Using Function)  
+---
+title: 'Test Program 02: Extended Euclid(Using Function)'
+hide:
+    - toc
+---
 
+# Test Program 2 : Extended Euclid algorithm (iterative version and with functions)¶
+
+This test program calculates the GCD (Greatest Common Divisor) of two numbers along with Bezout co-efficients. (iterative version)
+
+#### Input
+Two numbers
+
+#### Output
+GCD of the given two numbers and Benoud co-efficients.
+
+This program test the iteration, parameter passing, passing of user-defined datatype as return value of function.
+
+```
 decl
  int ExtendedEuclid(int a,int b);
 enddecl
@@ -52,3 +69,4 @@ int main()
   return 0;
  end 
 }
+```

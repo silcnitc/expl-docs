@@ -1,7 +1,23 @@
-Bubblesort(recursive)  
+---
+title: 'Test Program 3 : Bubblesort (recursive)'
+hide:
+    - toc
+---
+# Test Program 3 : Bubblesort (recursive)
 
-decl 
-  int n,arr\[10\],i,j,dup, BubbleSort(int first, int last); 
+This test program reads elements into an array and sorts them using the classic bubblesort algorithm. (recursive version)
+
+#### Input
+1. Number of elements to be sorted from standard input.
+2. Elements to be sorted
+#### Output
+A sorted array of elements.
+
+This program test the recursion, conditional and arrays.
+
+```
+decl
+  int n,arr[10],i,j,dup, BubbleSort(int first, int last);
 enddecl
 
 int BubbleSort(int first, int last)
@@ -13,10 +29,10 @@ int BubbleSort(int first, int last)
   begin
     if((first < last) AND (last > 0)) then
 
-      if(arr\[first\] > arr\[first+1\]) then
-        temp = arr\[first\];
-        arr\[first\] = arr\[first+1\];
-        arr\[first+1\] = temp;
+      if(arr[first] > arr[first+1]) then
+        temp = arr[first];
+        arr[first] = arr[first+1];
+        arr[first+1] = temp;
       endif;
 
       dup = BubbleSort(first+1, last);
@@ -38,7 +54,7 @@ int main()
 
     i=0;
     while(i<n) do
-      read(arr\[i\]);
+      read(arr[i]);
       i = i+1;
     endwhile;
 
@@ -46,10 +62,11 @@ int main()
 
     i=0;
     while(i<n) do
-      write(arr\[i\]);
+      write(arr[i]);
       i = i+1;
     endwhile;
 
     return 0;
   end
 }
+```

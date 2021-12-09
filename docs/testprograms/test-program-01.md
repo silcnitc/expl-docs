@@ -1,12 +1,26 @@
 ---
-title: 'Test Program 1'
+title: 'Test Program 1: Bubblesort(iterative)'
+hide:
+    - toc
 ---
 
+# Test Program 1: Bubblesort(iterative)
+
+This test program reads elements into an array and sorts them using the classic bubblesort algorithm. (iterative version)
+
+#### Input
+1. Number of elements to be sorted from standard input.
+2. Elements to be sorted
+
+#### Output
+A sorted array of elements.
+
+This program test the iteration, conditional and arrays.
+
 ```
-Bubblesort(iterative)
 
 decl
-   int n,arr\[50\],i,j,dup;
+   int n,arr[50],i,j,dup;
 enddecl
 
 int main()
@@ -16,7 +30,7 @@ int main()
 
   i=0;
   while(i<n) do
-    read(arr\[i\]);
+    read(arr[i]);
     i = i+1;
   endwhile;
 
@@ -24,10 +38,10 @@ int main()
   while(i<n) do
     j=i;
     while(j<n) do
-      if(arr\[i\]>arr\[j\]) then
-        dup = arr\[i\];
-        arr\[i\] = arr\[j\];
-        arr\[j\] = dup;
+      if(arr[i]>arr[j]) then
+        dup = arr[i];
+        arr[i] = arr[j];
+        arr[j] = dup;
       endif;
       j = j + 1;
     endwhile;
@@ -36,7 +50,7 @@ int main()
 
   i=0;
   while(i<n) do
-    write(arr\[i\]);
+    write(arr[i]);
     i = i+1;
   endwhile;
 
