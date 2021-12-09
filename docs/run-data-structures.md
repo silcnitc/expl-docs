@@ -1,40 +1,52 @@
-Run Time Data Structures    
+---
+title: 'Run Time Data Structures'
+---
 
-[![](img/logo.png)](index.html)
+# Run Time Data Structures
 
-*   [Home](index.html)
-*   [About](about.html)
-*   [Roadmap](roadmap.html)
-*   [Documentation](documentation.html)
-
-* * *
-
-Run Time Data Structures
-
-  
-  
-
-*   [Introduction](#nav-introduction)
-*   [The memory model](#nav-memory-model)
-*   [Temporary Allocation](#nav-register-allocation)
-*   [Static Allocation](#nav-static-allocation)
-*   [Run Time Stack Allocation](#nav-run-time-stack-allocation)
-*   [Heap Allocation](#nav-heap-allocation)
-
-Introduction
-------------
+## Introduction
 
 This document explains how the compiler allocates memory for variables in a program. First it is necessary to understand the requirements and the underlying theoretical concepts in some detail.
 
-#### The storage allocation Problem
+### The storage allocation Problem
 
 A program contains global variables as well as variables that are local to functions, both requiring memory space. Of these, global variables are the simplest to handle because during the analysis phase we know how many global variables are there in the program (all global variables are declared) and how much space needs to be allocated for each of them (why?). Thus, the storage requirements for global variables are completely determined at compile time and they can be assigned memory addresses during the analysis phase itself. Such allocation is called **static allocation**. The binding field of the global symbol table entry for a variable is set to the memory address allocated to the variable. This symbol table information will be used during the code generation phase to find out the address of the variable in memory.
 
 During the analysis phase the compiler **will not** decide on the addresses in the _code area_ of memory where a function's code is loaded. Hence, the compiler cannot fix the address to which function must be attached. To handle this issue, the compiler will assign a **pseudo address** to each function, which will be stored in the binding field of the function's global symbol table entry. All calls to the function will be translated to an assembly level call to this pseudo address. The correct addresses will be assigned later during [**label translation**](#).
 
-Variables which are local to functions demand more complicated allocation. This is because a function may be invoked several times and _for each invocation, separate storage needs to be allocated for variables defined within the scope of the function_ (i.e., local variables and arguments).  \[Why?\] Moreover, we do not know during the analysis phase how many times a function will be invoked during the execution. \[Why?\]
+Variables which are local to functions demand more complicated allocation. This is because a function may be invoked several times and _for each invocation, separate storage needs to be allocated for variables defined within the scope of the function_ (i.e., local variables and arguments).  \[Why?\] Moreover, we do not know during the analysis phase how many times a function will be invoked during the execution. Why?
 
 To understand this, consider the factorial program below.
+
+```
+decl
+    int result,factorial(int n);
+enddecl
+int factorial(int n){
+    decl
+        int f;
+    enddecl
+    begin
+        if( n==1 || n==0 ) then
+            f = 1;
+        else
+            f = n * factorial(n-1);
+        endif;
+        return f;
+    end
+}
+int main(){
+    decl
+        int a;
+    enddecl
+    begin
+        read(a);
+        result = factorial(a);
+        write(result);
+        return 1;
+    end
+}
+```
 
 The function factorial contains an argument 'n'. Suppose the initial value of 'n' input by the user at run time was 5, then factorial(n) with n=5 is invoked from the main. This function invokes factorial(n) with n=4. However, we need to retain the old value of n since the orginal factorial function must resume execution after the completion of factorial(4). Thus, we cannot statically assign a fixed memory address to the variable n. Instead, for each invocation of the function, we need to create a different memory space for storing the value of n. Moreover, the initial value of n given by the user is not known at compile time. Hence, we cannot determine at compile time the exact storage requirements. The compiler should generate code in such a way that necessary memory space is allocated at run time as required.
 
@@ -54,14 +66,11 @@ Finally, intermediate values generated during program execution needs **temporar
 
 To summarize, we have four kinds of memory allocation – static, stack, heap and register (temporary). The implemention of each of these are discussed below.
 
-The memory model
-----------------
+## The memory model
 
 The compiler assumes an address space model for the target program, determined by the target machine architecture as well as the target operating system.
 
 The memory model provided for application programs running on the Experimental Operating System(eXpOS) for the XSM machine architecture is explained below. For further details, see the [Application Binary Interface(ABI)](abi.html) Specification documentation.
-
-  
 
 ![](img/memory_model_1.png)
 
@@ -80,39 +89,26 @@ In the following, we describe how activation records are allocated in the stack,
 
   
 
-#### Temporary Allocation
+## Temporary Allocation
 
 Register allocation is performed through two simple functions. int get\_register()...
 
-[Read more](run_data_structures/register.html)
+[Read more](./run_data_structures/register.md)
 
-#### Static Allocation
+## Static Allocation
 
 Global variables are allocated statically. In our interpreter, the initial portion of the stack will be used for ....
 
-[Read more](run_data_structures/static-allocation.html)
+[Read more](./run_data_structures/static-allocation.md)
 
-#### Run time Stack Allocation
+## Run time Stack Allocation
 
 During run-time, when an ExpL function is invoked, space has to be allocated for storing the arguments of a function, return value...
 
-[Read more](run_data_structures/run-time-stack.html)
+[Read more](./run_data_structures/run-time-stack.md)
 
-#### Heap Allocation
+## Heap Allocation
 
 ExpL specification stipulates that variables of user defined types are allocated dynamically using the alloc() function. The alloc() function has the following syntax: ....
+[Read more](./run_data_structures/heap.md)
 
-[Read more](run_data_structures/heap.html)
-
-*   [Github](http://github.com/silcnitc)
-*   [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-
-Contributed By : [Nunnaguppala Surya Harsha](https://www.linkedin.com/in/suryaharshanunnaguppala),  
-        [Vishnu Priya Matha](https://in.linkedin.com/in/vishnupriyamatha)
-
-*   [Home](index.html)
-*   [About](about.html)
-
-  
-
-window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\\/script>');
