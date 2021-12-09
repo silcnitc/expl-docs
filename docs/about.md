@@ -1,20 +1,3 @@
-SILC | About    
-
-[![](img/logo.png)](index.html)
-
-*   [Home](index.html)
-*   [About](about.html)
-*   [Roadmap](roadmap.html)
-*   [Documentation](documentation.html)
-*   [Student Feedback](studentfeedback.html)
-
-This is an educational compiler development project.
-
-*   [PHILOSOPHY](#navphilo)
-*   [AUTHORS](#navteam)
-*   [LICENSE](#navlic)
-*   [WEBSITE](#navplace)
-
 ABOUT THE PROJECT
 -----------------
 

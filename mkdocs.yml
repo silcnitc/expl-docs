@@ -62,22 +62,22 @@ nav:
     - Stage 8: roadmap/stage-08.md
   - Documentation:
       - Documentation: documentation.md
-      - Using LEX: documentation.md
-      - Using YACC: documentation.md
-      - Using YACC with LEX: documentation.md
-      - ExpL Specification: documentation.md
-      - ExpL Grammar Outline: documentation.md
-      - OExpL Specification: documentation.md
-      - OExpL Grammar Outline: documentation.md
+      - Using LEX: lex.md
+      - Using YACC: yacc.md
+      - Using YACC with LEX: ywl.md
+      - ExpL Specification: expl.md
+      - ExpL Grammar Outline: grammer-outline.md
+      - OExpL Specification: oexpl-specification.md
+      - OExpL Grammar Outline: oexpl-grammer-outline.md
       - Compile Time Data Structures for ExpL: documentation.md
       - Compile Time Data Structures for OExpL: documentation.md
       - Run Time Data Structures for ExpL: documentation.md
       - Run Time Data Structures for OExpL: documentation.md
-      - Code Generation: documentation.md
-      - Label Translation: documentation.md
-      - Application Binary Interface: documentation.md
+      - Code Generation: codegen.md
+      - Label Translation: label-translation.md
+      - Application Binary Interface: abi.md
       - Library Implementation: documentation.md
-      - XSM simulator Installation: documentation.md
+      - XSM Simulator Installation: documentation.md
       - XSM Simulator Instructions: documentation.md
       - XSM Environment Tutorial: documentation.md
       - ExpL Test Programs: documentation.md
