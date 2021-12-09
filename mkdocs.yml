@@ -1,0 +1,99 @@
+site_name: EXPL NIT-C
+theme:
+  name: material
+  palette:
+      - media: "(prefers-color-scheme: light)"
+        scheme: default
+        primary: purple
+        toggle:
+          icon: material/lightbulb-outline
+          name: Switch to dark mode
+      - media: "(prefers-color-scheme: dark)"
+        scheme: slate
+        primary: purple
+        toggle:
+          icon: material/lightbulb
+          name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.sections
+
+
+copyright: >-
+  National Insititute of Technology, Calicut <br/>
+  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+    <img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/by-nc/4.0/80x15.png" />
+  </a>
+
+# Plugins
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Roadmap:
+    - Roadmap: roadmap/index.md
+    - Stage 0: roadmap/stage-00.md
+    - Stage 1: roadmap/stage-01.md
+    - Stage 2: roadmap/stage-02.md
+    - Stage 3: roadmap/stage-03.md
+    - Stage 4: roadmap/stage-04.md
+    - Stage 5: roadmap/stage-05.md
+    - Stage 6: roadmap/stage-06.md
+    - Stage 7: roadmap/stage-07.md
+    - Stage 8: roadmap/stage-08.md
+  - Documentation:
+      - Documentation: documentation.md
+      - Using LEX: documentation.md
+      - Using YACC: documentation.md
+      - Using YACC with LEX: documentation.md
+      - ExpL Specification: documentation.md
+      - ExpL Grammar Outline: documentation.md
+      - OExpL Specification: documentation.md
+      - OExpL Grammar Outline: documentation.md
+      - Compile Time Data Structures for ExpL: documentation.md
+      - Compile Time Data Structures for OExpL: documentation.md
+      - Run Time Data Structures for ExpL: documentation.md
+      - Run Time Data Structures for OExpL: documentation.md
+      - Code Generation: documentation.md
+      - Label Translation: documentation.md
+      - Application Binary Interface: documentation.md
+      - Library Implementation: documentation.md
+      - XSM simulator Installation: documentation.md
+      - XSM Simulator Instructions: documentation.md
+      - XSM Environment Tutorial: documentation.md
+      - ExpL Test Programs: documentation.md
+      - OExpL Test Programs: documentation.md
+      - Others:
+        - Test Programs:
+          - Test Programs: testprograms/index.md
+          - Program 1: testprograms/test-program-01.md
+          - Program 2: testprograms/test-program-02.md
+          - Program 3: testprograms/test-program-03.md
+          - Program 4: testprograms/test-program-04.md
+          - Program 5: testprograms/test-program-05.md
+          - Program 6: testprograms/test-program-06.md
+          - Program 7: testprograms/test-program-07.md
+          - Program 8: testprograms/test-program-08.md
+          - Program 9: testprograms/test-program-09.md
+          - Program 10: testprograms/test-program-10.md
+          - Program 11: testprograms/test-program-11.md
+          - Program 12: testprograms/test-program-12.md
+  - Feedback: feedback.md
