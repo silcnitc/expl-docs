@@ -5,71 +5,48 @@ hide:
 ---
 # EXPL NIT-C
 
-## EXPERIMENTAL LANGUAGE
+## **EXPERIMENTAL LANGUAGE** : WRITE YOUR OWN COMPILER!
 
 !!! info inline end custom-large "Project Infomation"
-    Source Code: [https://github.com/exposnitc](https://github.com/exposnitc)
+    Source Code: [https://github.com/silcnitc](https://github.com/silcnitc)
 
     Last updated: 22nd July 2021 (see [Release Notes](./changelog.md))
 
-## WRITE YOUR OWN COMPILER!
+This project aims to develop an online self-sufficient educational platform to help undergraduate Computer Science students understand the functioning of a compiler for a simple procedural language by writing a small toy compiler themselves. (An object oriented extension for the language has been added subsequently.) The project will provide students with a [roadmap :material-road:](./roadmap/index.md) for the development process and guide them along the roadmap with supporting documentation. Using the step-by-step guidance offered by the roadmap, the students will be able to build the compiler under minimal expert supervision.
 
-This project aims to develop an online self-sufficient educational platform to help undergraduate Computer Science students understand the functioning of a compiler for a simple procedural language by writing a small toy compiler themselves. (An object oriented extension for the language has been added subsequently.) The project will provide students with a roadmap for the development process and guide them along the roadmap with supporting documentation. Using the step-by-step guidance offered by the roadmap, the students will be able to build the compiler under minimal expert supervision.
+The platform is designed assuming that the student has a basic knowledge of Data structures, Computer organization and a working proficiency of the C programming language. Being instructional in nature, this project tries to give some insight into the working of LEX, YACC and the usage of these tools to develop a compiler for an instructional language custom designed for the project - called ExpL (Experimental language). Brief theoretical explanations are provided on a _need-to-do_ basis.
 
-The platform is designed assuming that the student has a basic knowledge of Data structures, Computer organization and a working proficiency of the C programming language. Being instructional in nature, this project tries to give some insight into the working of LEX, YACC and the usage of these tools to develop a compiler for an instructional language custom designed for the project - called ExpL (Experimental language). Brief theoretical explanations are provided on a need-to-do basis.
+If you wish to get started with the project directly, proceed to the [Roadmap :material-road:](./roadmap/index.md). If you wish to get a high level overview of the project, a brief outline is given next.
 
-If you wish to get started with the project directly, proceed to the roadmap. If you wish to get a high level overview of the project, a brief outline is given next.
+If you wish to customize this project for your instructional requirements, proceed [here](#customizing-the-project).
 
-If you wish to customize this project for your instructional requirements, proceed here.
+* * *
 
+Overview of the project
+-----------------------
 
-  <h2>Overview of the project</h2>
-<p>
-    To design a compiler, one needs the following specifications: <br><br>
+To design a compiler, one needs the following specifications:
 
-    1. <i>The specification of the source programming language</i>:  The source language for this compiler is called the Experimental Language (ExpL),  which is designed solely for instructional purposes.  An informal specification of the source language is given <a href="expl.html" target="_blank"> here</a>. The specification for an extension of the basic ExpL language with support for object oriented programming is given <a href="oexpl-specification.html" target="_blank">here</a>.
-</p>
-<p>
-    2.  <i>Application Binary Interface of the target platform</i>:  A compiler must generate a binary executable file that can be loaded and executed by an operating system running on a target machine.  Normally, an OS system installation comes with an interface specification, explaining how binary executable files must be formatted to run on the system.  This interface is called the Application Binary Interface (ABI).  The ABI is dependent on both the OS and the machine architecture.   The ABI for this project is that of the Experimental Operating System (ExpOS) running on the Experimental String Machine.  [XSM].   The ABI specification is given <a href="abi.html"> here</a>.  (The simulator allows the target program to contain machine instructions in mnemonic form, avoiding translation to binary format).
-</p>
-<p>
-    A compiler takes a source language program as input and produces an executable target file formatted according to the requirements laid down by the ABI.  Of course, the semantics of the program must be preserved by the translation process.
-</p>
-<p>
-    The main intellectual complexity in understanding a compiler is that its inputs and outputs are programs – that is, a compiler's input data is a (source language) program and its output is a (target language) program.  The task is to systematically map each construct in the source program to semantically equivalent constructs in the target language.
-</p>
-<p>
-    A text book approach to compilation logically divides the process into several parts.  The lexical elements of the input program are identified during a <i>lexical analysis phase</i>.  The software tool LEX is used in this phase.  The lexemes identified by the lexical analysis phase are passed to the next phase – called the <i>syntax analysis phase</i> - which checks the program against syntax errors.  If the program is free of syntax errors, the next conceptual stage called the <i>semantic analysis phase</i>, checks for type and scope errors in the program.  Once a program is found to be free of syntax and semantic errors, an intermediate representation of the source program called the <I>abstract syntax tree</i> representation is generated by the compiler.  (In practice, syntax analysis, semantic analysis and abstract syntax tree construction happens together.  The syntax directed translation scheme provided by the software tool YACC is used for completing these phases.)   The sequence of phases starting with the lexical analysis of the source program to generation of abstract syntax tree representation is called the <i>front end</i> of the compiler.
-</p>
-<p>
-    <br><img src="img/flowdiagram.png"><br>
-</p>
-<p>
-    The abstract syntax tree produced by the front end is the input to the back end phase which generates an assembly language program.  Finally, a label translation phase is run to replace symbolic labels in the assembly language program with logical addresses (linking) and generate final target executable file.
-</p>
-<p>
-    The road-map takes you through a "spiral" model of program development. First, a simple expression compiler is built.  Static variables are then introduced to the expression compiler and control flow constructs are added.  In the next step, support for string type is added to the language and semantic issues are addressed. Subroutines and run time allocation are introduced subsequently and finally support for user defined types and dynamic memory allocation is added.  (A final phase of providing support for classes and subtype polymorphism has been added subsequently).   In each of these steps, you will encounter lexical, syntax and semantic analysis, syntax tree construction and code generation.  The tasks will be very simple during the initial stages and the complexity will grow gradually as more and more features are added to the language.
-</p>
-<p>
-    Wish you good luck working through the <a href="http://silcnitc.github.io/roadmap.html" target="_blank">road-map</a>.
-</p>
-<h3 id="contribution">Customizing the Project </h3>
-<p>  If you wish to adapt the project to your own instructional
-requirements, this is how we suggest you to proceed.
-</p>
-<p>
-Suppose your institution has the name ABC University,
-download the ExpL source and create your
-own Git repository "explabc.github.io".
-You can now modify the specification/simulator/ABI
-or any other component of this package, subject to the
-<a href="http://silcnitc.github.io/about.html#navlic" target="_blank">license conditions</a>.  You will have
-your version of  ExpL in this way.    We encourage you to do this as
-you will develop your own instructional
-system and a team of students who can help you with
-the administration of your Git repository.
-We recommend you to keep your repository in Git so
-that students elsewhere will also get the benefit of your contribution.
+1. **The specification of the source programming language**: The source language for this compiler is called the Experimental Language (ExpL), which is designed solely for instructional purposes. An informal specification of the source language is given [here](expl.html). The specification for an extension of the basic ExpL language with support for object oriented programming is given [here](oexpl-specification.html).
+
+2. **Application Binary Interface of the target platform**: A compiler must generate a binary executable file that can be loaded and executed by an operating system running on a target machine. Normally, an OS system installation comes with an interface specification, explaining how binary executable files must be formatted to run on the system. This interface is called the Application Binary Interface (ABI). The ABI is dependent on both the OS and the machine architecture. The ABI for this project is that of the Experimental Operating System (ExpOS) running on the Experimental String Machine. \[XSM\]. The ABI specification is given [here](./abi.md). (The simulator allows the target program to contain machine instructions in mnemonic form, avoiding translation to binary format).
+
+A compiler takes a source language program as input and produces an executable target file formatted according to the requirements laid down by the ABI. Of course, the semantics of the program must be preserved by the translation process.
+
+The main intellectual complexity in understanding a compiler is that its inputs and outputs are programs – that is, a compiler's input data is a (source language) program and its output is a (target language) program. The task is to systematically map each construct in the source program to semantically equivalent constructs in the target language.
+
+A text book approach to compilation logically divides the process into several parts. The lexical elements of the input program are identified during a _lexical analysis phase_. The software tool LEX is used in this phase. The lexemes identified by the lexical analysis phase are passed to the next phase – called the _syntax analysis phase_ - which checks the program against syntax errors. If the program is free of syntax errors, the next conceptual stage called the _semantic analysis phase_, checks for type and scope errors in the program. Once a program is found to be free of syntax and semantic errors, an intermediate representation of the source program called the _abstract syntax tree_ representation is generated by the compiler. (In practice, syntax analysis, semantic analysis and abstract syntax tree construction happens together. The syntax directed translation scheme provided by the software tool YACC is used for completing these phases.) The sequence of phases starting with the lexical analysis of the source program to generation of abstract syntax tree representation is called the _front end_ of the compiler.
 
 
-</p>
+![](img/flowdiagram.png)
+
+The abstract syntax tree produced by the front end is the input to the back end phase which generates an assembly language program. Finally, a label translation phase is run to replace symbolic labels in the assembly language program with logical addresses (linking) and generate final target executable file.
+
+The road-map takes you through a "spiral" model of program development. First, a simple expression compiler is built. Static variables are then introduced to the expression compiler and control flow constructs are added. In the next step, support for string type is added to the language and semantic issues are addressed. Subroutines and run time allocation are introduced subsequently and finally support for user defined types and dynamic memory allocation is added. (A final phase of providing support for classes and subtype polymorphism has been added subsequently). In each of these steps, you will encounter lexical, syntax and semantic analysis, syntax tree construction and code generation. The tasks will be very simple during the initial stages and the complexity will grow gradually as more and more features are added to the language.
+
+Wish you good luck working through the [roadmap](./roadmap/index.md).
+
+## Customizing the Project
+If you wish to adapt the project to your own instructional requirements, this is how we suggest you to proceed.
+
+Suppose your institution has the name ABC University, download the ExpL source and create your own Git repository "explabc.github.io". You can now modify the specification/simulator/ABI or any other component of this package, subject to the [license conditions](http://silcnitc.github.io/about.html#navlic). You will have your version of ExpL in this way. We encourage you to do this as you will develop your own instructional system and a team of students who can help you with the administration of your Git repository. We recommend you to keep your repository in Git so that students elsewhere will also get the benefit of your contribution.
