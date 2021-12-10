@@ -1,23 +1,12 @@
-Library Implementation    
+---
+title: 'Library Implementation'
+hide:
+    - toc
+---
 
-[![](img/logo.png)](index.html)
+# Library Implementation
 
-*   [Home](index.html)
-*   [About](about.html)
-*   [Roadmap](roadmap.html)
-*   [Documentation](documentation.html)
-
-* * *
-
-Library Implementation
-
-  
-
-*   [Introduction](#nav-introduction)
-*   [Illustration](#nav-illustration)
-
-Introduction
-------------
+## Introduction
 
 The ABI stipulates that the code for a **common shared library** must be linked to the address space of every program. The library code must be linked to logical page 0 and logical page 1 of each program. When an ExpL source program is compiled by an ExpL compiler, the compiler generates code containing calls to the library assuming the library functions will be "there" in the address space when the program is eventually loaded for execution. It is the responsibility of the OS loader to do the actual loading of the library. (In technical jargon, the library is said to be **_linked at compile time_** and **_loaded at run time_**. Unfortunately, there is lack of agreement on terminology in these matters).
 
@@ -31,7 +20,8 @@ Various dynamic memory allocation algorithms exist. A very simple allocation pol
 
 The advantage of using a library for dynamic memory allocation is that this common code can be loaded by the OS during boot time at some memory and can be attached to the address space of every application, saving memory space.
 
-**Note**: The library implementation outline given below assumes that the application code will modify only memory addresses acquired using _Alloc_. If the application modifies heap region that was not allocated to it, the data structures set up by the library functions may get corrupted and the library functions may fail to work properly.
+!!! note
+    The library implementation outline given below assumes that the application code will modify only memory addresses acquired using _Alloc_. If the application modifies heap region that was not allocated to it, the data structures set up by the library functions may get corrupted and the library functions may fail to work properly.
 
 Illustration
 ------------
@@ -42,42 +32,33 @@ The ABI stipulates that all the library function calls are invoked using CALL 0 
 
 The following snippet gives the overview of the design of the library.
 
-//get function code from stack  
-....  
-  
-MOV R0, <function code>  
-MOV R1, R0  
-EQ R1, "Heapset"  
-JNZ R1, <starting address of Initialize>  
-MOV R1, R0  
-EQ R1, "Alloc"  
-JNZ R1, <starting address of Alloc>  
-....  
-  
-// code for Initialize  
-....  
-  
-RET  
-// code for Alloc  
-....  
-  
-RET  
-....  
+```asm
+//get function code from stack
+....
+
+MOV R0, <function code>
+MOV R1, R0
+EQ R1, "Heapset"
+JNZ R1, <starting address of Initialize>
+MOV R1, R0
+EQ R1, "Alloc"
+JNZ R1, <starting address of Alloc>
+....
+
+// code for Initialize
+....
+
+RET
+// code for Alloc
+....
+
+RET
+....
+```
 
 As shown above, the function code that was pushed by the application program is used to direct the control of the program to the corresponding function logic. In case of Alloc(), Free() and Initialize() calls, the library contains the logic whereas in case of Read() and Write() system calls the library should invoke the kernel using [low level system call interface](abi.html#nav-lowlevel-syscall-interface). The appropriate arguments required for the system call can be obtained from the user stack.
 
 A detailed explanation on the usage of library interface can be found [here](xsm-environment-tut.html#nav-experiment3).
 
-**Note:** As the library is directly loaded by the ExpOS loader, the code should be free of labels and all the jump instructions should have the target memory addresses.
-
-*   [Github](http://github.com/silcnitc)
-*   [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-
-Contributed By : [Thallam Sai Sree Datta](https://www.linkedin.com/in/dattathallam), [N Ruthvik](https://www.linkedin.com/in/n-ruthviik-0a0539100)
-
-*   [Home](index.html)
-*   [About](about.html)
-
-  
-
-window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\\/script>')
+!!! note
+    As the library is directly loaded by the ExpOS loader, the code should be free of labels and all the jump instructions should have the target memory addresses.
