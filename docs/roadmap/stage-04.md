@@ -201,41 +201,39 @@ The binding field in the symbol table for the variable a may be set to address 4
 
 Check your implementation with the following test cases :
 
+1. **Bubblesort (iterative)**
 
+    This test program reads elements into an array and sorts them using the classic bubblesort algorithm. (iterative version)
 
-#### 1. Bubblesort (iterative)
+    **Input** : 1. Number of elements to be sorted from standard input. 2. Elements to be sorted
 
-This test program reads elements into an array and sorts them using the classic bubblesort algorithm. (iterative version)
+    **Output** : A sorted array of elements.
 
-**Input** : 1. Number of elements to be sorted from standard input. 2. Elements to be sorted
+    To get the code for this test program [click here](testprograms/stage4/bubblesort.html).
 
-**Output** : A sorted array of elements.
+2. **Nth Fibonacci Number(iterative)**
 
-To get the code for this test program [click here](testprograms/stage4/bubblesort.html).
+    This test program prints the nth fibonacci number
 
-#### 2. Nth Fibonacci Number(iterative)
+    **Input** : 1.An integer n
+    **Output** : nth fibonacci number
 
-This test program prints the nth fibonacci number
+    To get the code for this test program [click here](testprograms/stage4/fibaofn.html).
 
-**Input** : 1.An integer n
-**Output** : nth fibonacci number
+3. **Is Prime or Not**
 
-To get the code for this test program [click here](testprograms/stage4/fibaofn.html).
+    This program tests if a given integer is prime or not.
 
-#### 3. Is Prime or Not
+    **Input** : 1.An integer n
+    **Output** : Prime if n is prime else not a prime.
 
-This program tests if a given integer is prime or not.
+    To get the code for this test program [click here](testprograms/stage4/prime.html).
 
-**Input** : 1.An integer n
-**Output** : Prime if n is prime else not a prime.
+4. **Sum of n factorials (iterative)**
 
-To get the code for this test program [click here](testprograms/stage4/prime.html).
+    This program prints the sum to n factorial for a given n.
 
-#### 4. Sum of n factorials (iterative)
+    **Input** : 1.An integer n
+    **Output** : sum of factorial of all integers 1 to n.
 
-This program prints the sum to n factorial for a given n.
-
-**Input** : 1.An integer n
-**Output** : sum of factorial of all integers 1 to n.
-
-To get the code for this test program [click here](testprograms/stage4/sum-to-n-fact.html).
+    To get the code for this test program [click here](testprograms/stage4/sum-to-n-fact.html).

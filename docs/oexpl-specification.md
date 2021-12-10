@@ -1,36 +1,13 @@
-OExpL Specification    
+---
+title: 'OExpL Specification'
+---
+# OExpL Specification
 
-[![](img/logo.png)](index.html)
-
-*   [Home](index.html)
-*   [About](about.html)
-*   [Roadmap](roadmap.html)
-*   [Documentation](documentation.html)
-
-* * *
-
-OExpL Specification
-
-  
-  
-[Download as PDF(pending)](pdfs/oexpl.pdf)
-
-*   [Introduction](#nav-intro)
-*   [Class Definitions](#nav-class-definitions)
-*   [Inheritance](#nav-inheritance)
-*   [Class variables and Instantiation](#nav-class-variables-and-instantiation)
-*   [Subtype Polymorphism](#nav-subtype-polymorphism)
-*   [Run time Binding](#nav-run-time-binding)
-*   [Sample Programs](#nav-sample-programs)
-*   [Appendix](#nav-appendix)
-
-Introduction
-------------
+## Introduction
 
 An informal specification for a minimal object oriented extension of the ExpL languge with support for [Inheritance](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)) and [subtype polymorphism](https://en.wikipedia.org/wiki/Polymorphism_(computer_science)) is outlined here.
 
-Class Definitions
------------------
+## Class Definitions
 
 Classes extend the notion of ExpL types. A class [encapsulates](https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)) **_member fields_** and **_member functions_** (called **methods** in OOP jargon). The following is an example for a class definition. Standard syntax and semantics conventions followed in languages like Java and C++ are assumed.
 
@@ -55,8 +32,7 @@ To put in short
 2.  Member functions of a class can access only its member fields, methods, local variables, arguments and methods of member fields.
 3.  Member fields of a class can be accessed from outside only through member functions of the class.
 
-Inheritance
------------
+## Inheritance
 
 The language supports class **extension**. A class defined by extension of another class is called a _derived class_ (or _child class_) of the _parent class_ (sometimes called the _base class_). The following example demonstrates the syntax of class extension. The language does not support [multiple inheritance](https://en.wikipedia.org/wiki/Multiple_inheritance) .
 
@@ -65,8 +41,7 @@ The semantics of class extension can be summarized as follows:
 1.  **The derived class inherits all member fields of the parent class automatically.** If additional fields are defined, they will be specific to the derived class. **The derived class cannot re-declare a member field already declared in the parent class.**
 2.  **The derived class inherits only those methods of the parent class which are not re-defined (overridden).** If a method is overridden, the new definition will be the only valid definition for the derived class. All the overridden methods must be declared again in the derived class. **The signature of the overridden method must match exactly in both number and types of arguments with the signature of the function in the parent class.** Only one function of the same name is permitted in a class. Thus, the language does **not** permit [function overloading]( https://en.wikipedia.org/wiki/Function_overloading).
 
-Class variables and Instantiation
----------------------------------
+## Class variables and Instantiation
 
 Class variables are declared just like other variables in the global declaration section after type definitions and class definitions.
 
@@ -74,13 +49,11 @@ Example:
 
 Object instance is created for a variable of a class with the built-in function _new_. The language does not support [constructors and destructors](https://en.wikipedia.org/wiki/Constructor_(object-oriented_programming). Hence intitialization of objects has to be done explicitly. An object can be deallocated using the built-in function _delete_. The function _new_ will create an object of a specified class at run time, and assigns a _reference_ to the object into a variable. A variable of a given class may be assigned a reference to an object of any desendent class using _new_. Access semantics of class variables is similar to ExpL user-defined-types, except for the details associated with methods defined within classes. These details are described below.
 
-Subtype Polymorphism
---------------------
+## Subtype Polymorphism
 
 **A variable of a parent class can refer to any object in its inheritance hierarchy.** That is, if class B extends class A and class C extends class B, then a variable of class A can refer to objects of classes A, B or C, whereas a variable of class B can refer to any object of class B or C. (References are set using the ExpL _assignment statement_ in the normal way, as with user defined types. The function _**new**_ can also be used to set the reference for a variable). When a method is invoked with a variable of class B or C, if the method is inherited from an ancestor class, the ancestor's method is invoked. This is illustrated by the following examples.
 
-Run time Binding
-----------------
+## Run time Binding
 
 Suppose that a variable declared to be of a parent class in an inheritance hierarchy holds the reference to an instance of a derived class. On invocation of a method of the parent class variable, if the method is over-ridden by the derived class, the method of the derived class is invoked.
 
@@ -92,13 +65,11 @@ To resolve such function invocations, the method of [dynamic binding](https://en
 
 **Important Note :** If a variable of a parent class holds the reference to an object of a descendent class, only methods defined in the parent class are allowed to be invoked using the variable of the parent class.
 
-Sample Programs
----------------
+## Sample Programs
 
 Example Programs are [here](oexpl-testprograms.html).
 
-Appendix
---------
+## Appendix
 
 #### Keywords
 
@@ -116,16 +87,3 @@ delete
 
 self
 
-* * *
-
-*   [Github](http://github.com/silcnitc)
-*   [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-
-Contributed By : Muralikrishnan K.
-
-*   [Home](index.html)
-*   [About](about.html)
-
-  
-
-window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\\/script>')

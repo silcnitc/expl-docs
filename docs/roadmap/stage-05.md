@@ -21,6 +21,7 @@ hide:
 
 This is the first major stage in the ExpL project. A skeletal outline of the syntax rules for defining the extension of the language of Stage 4 to support subroutines is as below. You are required to fill in rules required to complete the grammar. Note that variables may be only of type integer/string.
 
+```c
 Program ::= GDeclBlock FdefBlock [MainBlock](grammar-outline.html)
         | GdeclBlock MainBlock
         | MainBlock
@@ -35,7 +36,7 @@ GidList ::= GidList , Gid | Gid
 Gid ::= ID
      | ID\[NUM\]
      | ID(ParamList)
-\--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 FDefBlock ::= FdefBlock Fdef | Fdef
 
 Fdef ::=Type ID ( ParamList ) { LdeclBlock Body }
@@ -46,7 +47,9 @@ ParamList ::= ParamList , Param | Param
 Param ::= Type ID
 
 Type ::= INT | STR
-\----------------------------------------------------------------------------------------- LdeclBlock ::= DECL LDecList ENDDECL | DECL ENDDECL
+-----------------------------------------------------------------------------------------
+
+LdeclBlock ::= DECL LDecList ENDDECL | DECL ENDDECL
 
 LDecList ::= LDecList LDecl | LDecl
 
@@ -62,10 +65,13 @@ E ::= ID () | ID(ArgList)
 
 ArgList ::= ArgList, E | E
 
+```
+
 Here is an [example](run_data_structures/run-time-stack.html#nav-illustration) for a program with a function. We will take up semantic analysis and AST representation before proceeding to code generation.
 
 Each function requires a **declaration**. The declaration of functions must be made along with the global declarations. The declaration of a function must specify the types and names of the **formal parameters** and the **return type** of the function. The compiler must store the declaration information in the global symbol table. For example, the declaration
 
+```c
 decl
 ..
 ..
@@ -73,23 +79,24 @@ decl
 ..
 ..
 enddecl
+```
 
 specifies that _factorial_ is a function that takes as input one integer argument and returns an integer. This is sometimes called the **signature** of the function. Conceptually, to invoke the factorial function, the **caller** must know:
 
-*   1\. The memory address to which the function call must be directed (**binding**).
-*   2\. The **types and names of the formal parameters** to the function and the order in which the actual **arguments** must be given as input to the function.
-*   3\. The **return type** of the function.
+1. The memory address to which the function call must be directed (**binding**).
+2. The **types and names of the formal parameters** to the function and the order in which the actual **arguments** must be given as input to the function.
+3. The **return type** of the function.
 
 This precisely is the information that the symbol table stores.
 
 A function **definition** contains:
 
-*   a) The function's signature.
-*   b) The declaration of **local variables** of the function.
-*   c) The code of the function.
+a. The function's signature.
+b. The declaration of **local variables** of the function.
+c. The code of the function.
 
 For example, the definition of the factorial function could be as:
-
+```
 int factorial(int n){
  decl
   int f;
@@ -98,11 +105,12 @@ int factorial(int n){
   if( n==1 || n==0 ) then
    f = 1;
   else
-   f = n \* factorial(n-1);
+   f = n * factorial(n-1);
   endif;
  return f;
  end
 }
+```
 
 Local variables declared in a function are _visible only_ within the function. We say that the **scope** of a local declaration is limited to the function. Moreover, if a global variable is redeclared inside a function, _the local declaration overrides the global declaration_.
 
@@ -242,12 +250,6 @@ Stack before the call instruction :
 
 Stack after the call instruction :
 ![](img/after call.png)
-
-
-
-
-
-
 Figure: Actions in the stack done by the caller before the call
 
 
@@ -273,59 +275,82 @@ With this convention, the code for each instruction inside a function can be gen
 
 Finally, the code for a return statement must:
 
-*   1\. **Pop out the local variables** from the stack.
-*   2\. Calculate the return expression and store the value in \[BP-2\].
-*   3\. **set BP to the old value** of BP in the stack.
-*   4\. **Execute the RET instruction** to pass control back to the caller.
+1. **Pop out the local variables** from the stack.
+2. Calculate the return expression and store the value in \[BP-2\].
+3. **set BP to the old value** of BP in the stack.
+4. **Execute the RET instruction** to pass control back to the caller.
 
 
 In the calling convention which we described above, the arguments were pushed in reverse order, space for the return value was allocated by the caller, BP of the caller was saved to the stack by the callee, and so on. Space created in the stack by either the callee or the caller must be eventually reclaimed by the same party.
 
-**IMPORTANT NOTE**: In our calling convention, the caller was required to save the registers in use before the call. What if instead, we design a calling convention where the callee had to push the registers in use? The problem here is that the callee does not know (and does not have to know) the caller and hence do not know at each call which were the registers in use. Hence, the callee will have to save all machine registers, wasting time and space. Hence, the convention of the caller storing registers in use is superior. However, there are situations where this is not possible. For instance, in hardware interrupt routines, control is transferred to the callee without the caller executing a call. In such cases, the callee will have to save (all) the machine registers for a successful return.
+!!! tip "IMPORTANT NOTE"
+    In our calling convention, the caller was required to save the registers in use before the call. What if instead, we design a calling convention where the callee had to push the registers in use? The problem here is that the callee does not know (and does not have to know) the caller and hence do not know at each call which were the registers in use. Hence, the callee will have to save all machine registers, wasting time and space. Hence, the convention of the caller storing registers in use is superior. However, there are situations where this is not possible. For instance, in hardware interrupt routines, control is transferred to the callee without the caller executing a call. In such cases, the callee will have to save (all) the machine registers for a successful return.
 
 You have enough background now to complete the final task of this stage.
 
-**Task 3**: Complete code generation for functional calls.
+!!! question "Task 3"
+    Complete code generation for functional calls.
 
-**Exercise 1**: Modify the function semantics to permit pointer type variables of [Stage 4 (Exercise 2)](#stage4_ex2) to be passed as arguments to functions. This will allow a function to pass the address of a local variable to another function as an argument so that the callee can modify the contents. Modify the syntax and semantics rules appropriately. This feature must allow you to write functions like:
+!!! question "Exercise 1"
+    Modify the function semantics to permit pointer type variables of [Stage 4 (Exercise 2)](#stage4_ex2) to be passed as arguments to functions.
+    This will allow a function to pass the address of a local variable to another function as an argument so that the callee can modify the contents.
+    Modify the syntax and semantics rules appropriately. This feature must allow you to write functions like:
 
-_int_ swap_(int_ \*p, _int_ \*q_)_
+    `int swap(int *p, int *q)`
 
-Note that functions need to be permitted to return pointer type variables. (Returning a pointer to local variable from a function is not advisable – Why?).
+    Note that functions need to be permitted to return pointer type variables. (Returning a pointer to local variable from a function is not advisable – Why?).
 
-**Exercise 2** (Hard work, but insightful): Suppose you want to extend the language with facility of **tuples**. By a tuple, we mean an object declared as below:
+!!! question "Exercise 2"
+    _Hard work, but insightful_
 
-decl
-..
-..
- tuple tnme(type fname\_1, type fname\_2, .... ,type fname\_n) var\_1, var\_2 .. var\_k;
-..
-..
-enddecl
+    Suppose you want to extend the language with facility of **tuples**. By a tuple, we mean an object declared as below:
 
-Note that tuple is introduced as a new keyword. For example, we could have:
+    ```
+    decl
+    ..
+    ..
+     tuple tnme(type fname\_1, type fname\_2, .... ,type fname\_n) var\_1, var\_2 .. var\_k;
+    ..
+    ..
+    enddecl
+    ```
 
-decl
+    Note that tuple is introduced as a new keyword. For example, we could have:
 
- tuple student (str name, int roll\_no, str branchname, int year\_of\_admission) a, b, c, \*sptr;
- tuple faculty (str name, int employee\_id, str dept) x, y, z, \*fptr;
+    ```
+    decl
 
-enddecl
+     tuple student (str name, int roll\_no, str branchname, int year\_of\_admission) a, b, c, \*sptr;
+     tuple faculty (str name, int employee\_id, str dept) x, y, z, \*fptr;
 
-To access a tuple you must introduce the "." operator. Here is an example:
+    enddecl
+    ```
 
-read(a.name);
-read(x.name);
-if (a.name == x.name) then
- write("They have same names");
-endif;
+    To access a tuple you must introduce the "." operator. Here is an example:
 
-You must also permit assignment of a tuple type variable to another, provided the variables are of the same tuple type.
+    ```
+    read(a.name);
+    read(x.name);
+    if (a.name == x.name) then
+     write("They have same names");
+    endif;
+    ```
 
-Design the syntax and semantics rules, make necessary modifications to the lexer, parser, symbol table and AST structures to incorporate the addition of tuples and change the code generation module accordingly. For now, assume that tuples cannot be passed as arguments to functions or be returned by functions. However, you must permit local tuple declarations. Note that you have considerable freedom in deciding on the grammar rules and data structures, and even the features permitted.
+    You must also permit assignment of a tuple type variable to another, provided the variables are of the same tuple type.
 
-**Exercise 3**: (Hard work, optional, but insightful. Can be done only after Exercise 1 and Exercise 2 are completed).
-Allow tuples and pointers to tuples to be passed as arguments to functions. (Allowing the whole tuple to be passed creates more work in parameter passing, though not difficult in principle). Functions may be permitted to return tuples as return values. Permit a function that takes an argument/returns a tuple or pointers to tuple type to be declared only after the declaration of the concerned tuples (this is to avoid the [forward reference problem](https://en.wikipedia.org/wiki/Forward_declaration)). Design syntax, semantics and code generation strategies appropriately.
+    Design the syntax and semantics rules, make necessary modifications to the lexer, parser, symbol table and AST structures to incorporate the addition of tuples and change the code generation module accordingly. For now, assume that tuples cannot be passed as arguments to functions or be returned by functions. However, you must permit local tuple declarations. Note that you have considerable freedom in deciding on the grammar rules and data structures, and even the features permitted.
+
+
+!!! question "Exercise 3"
+
+    _Hard work, optional, but insightful. Can be done only after Exercise 1 and Exercise 2 are completed_
+
+    Allow tuples and pointers to tuples to be passed as arguments to functions.
+    (Allowing the whole tuple to be passed creates more work in parameter passing, though not difficult in principle).
+    Functions may be permitted to return tuples as return values. Permit a function that takes an argument/returns
+    a tuple or pointers to tuple type to be declared only after the declaration of the concerned tuples
+    (this is to avoid the [forward reference problem](https://en.wikipedia.org/wiki/Forward_declaration)).
+    Design syntax, semantics and code generation strategies appropriately.
 
 ## Test Programs
 

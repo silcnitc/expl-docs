@@ -1,7 +1,9 @@
-ABOUT THE PROJECT
------------------
+---
+title: 'About the project'
+---
+#ABOUT THE PROJECT
 
-### PHILOSOPHY
+## PHILOSOPHY
 
 Any pedagogical compiler implementation project offered as part of an undergraduate junior level compiler design course needs to satisfy two fundamental requirements:  
 2.    
@@ -35,7 +37,7 @@ Feedback data collected from students who credited the course is summarized [her
 
 This project is the second one in a suite of two student learning projects designed to tutor undergraduate CS juniors. The first one in the suite is an OS development project ([exposnitc.github.io](http://exposnitc.github.io)), which asks the student to implement a simple multi-tasking operating system on the same machine architecture used in the present project. The target code of the compiler implemented in the present project is designed to be executable by the OS implemented in the first project. Our hope is that by going through the projects, the student will gain a clear conceptual understanding of how the two central software systems – the OS and the compiler - work together in a computer system.
 
-### AUTHORS
+## AUTHORS
 
 The content in the website and the documentation has been authored in the Department of Computer Science and Engineering, [National Institute of Technology](http://nitc.ac.in), Calicut under the guidance of Dr. Murali Krishnan K. The project's activity started in the year 2013 and completed in the year 2018. Below is a list of co-authors and contributors to the project. The work evolved from an earlier version of the project a Simple Integer Language Compiler development student project under the guidance of Dr. Murali Krishnan K. and Dr. Vineeth Paleri. The work received technical support from Dr. Vineeth Paleri and Dr. Saleena N. .
 
@@ -91,22 +93,9 @@ Peeyush Singh, C.H. Vishal
 
 Please send queries and bug reports to **kmuralinitc@gmail.com**
 
-### LICENSE
+## LICENSE
 
 [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)  
   
 SILCNITC by Dr. Murali Krishnan K, Department of Computer Science and Engineering, National Institute of Technology, Calicut is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/). Based on a work at [https://github.com/silcnitc](https://github.com/silcnitc/)
 
-### WEBSITE
-
-This website has been developed using HTML5, CSS3 and Javascript. This website's design is based on the [Designa Studio](http://sylvainlafitte.com/) template. This website is hosted under Github pages and the entire website's source code can be found [here]( http://github.com/silcnitc/silcnitc.github.io.git)
-
-*   [Github](https://github.com/silcnitc)
-*   [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-
-[Go up](#navtop)
-
-*   [Home](index.html)
-*   [About](about.html)
-
-window.jQuery || document.write('<script src="js/jquery-1.5.1.min.js"><\\/script>')

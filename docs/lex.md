@@ -1,34 +1,9 @@
-LEX  
+---
+title: 'Using lex'
+---
+# Using `lex`
 
-[![](img/logo.png)](index.html)
-
-*   [Home](index.html)
-*   [About](about.html)
-*   [Roadmap](roadmap.html)
-*   [Documentation](documentation.html)
-
-### Contents
-
-*   [Introduction](#navintro)
-*   [Structure of a LEX Program](#navstructure)
-*   [yyvariables](#navvariables)
-*   [yyfunctions](#navfunctions)
-*   [A complete LEX Program](#navcompleteexample)
-*   [Disambiguation rules](#navdisambiguation)
-*   [Pattern Matching Using LEX](#navpatternmatching)
-*   [A token simulator program](#navsimulator)
-*   [DFA -> regular expression](#navdfaconstruction)
-
-*   [Using the generated lexical analyzer](#navusingthelexicalanalyzer)
-*   [References](#navreferences)
-
-*   [Download as PDF](https://github.com/silcnitc/documentation/blob/master/lex/Lex.pdf?raw=true)
-
-USING LEX
-=========
-
-Introduction
-------------
+## Introduction
 
 **LEX** is a tool used to generate a lexical analyzer. This document is a tutorial for the use of LEX for **ExpL Compiler** development. Technically, LEX translates a set of regular expression specifications (given as input in input\_file.l) into a C implementation of a corresponding finite state machine (lex.yy.c). This C program, when compiled, yields an executable lexical analyzer.
 
@@ -38,19 +13,20 @@ The source ExpL program is fed as the input to the the lexical analyzer which pr
 
 Each token is specified by a token name. The token name is an abstract symbol representing the kind of lexical unit, e.g., a particular keyword, or a sequence of input characters denoting an identifier. The token names are the input symbols that the parser processes. For instance integer, boolean, begin, end, if, while etc. are tokens in ExpL.
 
-“integer”  	{return ID\_TYPE\_INTEGER;}
+```c
+"integer"  	{return ID_TYPE_INTEGER;}
+```
 
 This example demonstrates the specification of a **rule** in LEX. The rule in this example specifies that the lexical analyzer must return the token named ID\_TYPE\_INTEGER when the pattern “integer” is found in the input file. A rule in a LEX program comprises of a 'pattern' part (specified by a regular expression) and a corresponding (semantic) 'action' part (a sequence of C statements). In the above example, “integer” is the pattern and {return ID\_TYPE\_INTEGER;} is the corresponding action. The statements in the action part will be executed when the pattern is detected in the input.
 
 [Lex](https://en.wikipedia.org/wiki/Lex_(software)) was developed by [Mike Lesk](https://en.wikipedia.org/wiki/Mike_Lesk) and [Eric Schmidt](https://en.wikipedia.org/wiki/Eric_Schmidt) at [Bell labs](https://en.wikipedia.org/wiki/Bell_Labs).
 
-[top ↑](#navtop "Go back up")
 
-The structure of LEX programs
------------------------------
+## The structure of LEX programs
 
 A LEX program consists of three sections : **Declarations, Rules and Auxiliary functions**
 
+```c
 DECLARATIONS
 
 %%
@@ -60,6 +36,7 @@ RULES
 %%
 
 AUXILIARY FUNCTIONS
+```
 
 ### 2.1 Declarations
 
@@ -75,8 +52,8 @@ LEX allows the use of short-hands and extensions to regular expressions for the 
 
 Rules in a LEX program consists of two parts :
 
-1.  1\. The pattern to be matched
-2.  2\. The corresponding action to be executed
+1. The pattern to be matched
+2. The corresponding action to be executed
 
 **Example:**
 
@@ -105,10 +82,8 @@ The auxiliary declarations and auxiliary functions are copied as such to the lex
 
 Once the code is written, _lex.yy.c_ maybe generated using the command _lex "filename.l"_ and compiled as _gcc lex.yy.c_
 
-[top ↑](#navtop "Go back up")
 
-The yyvariables
----------------
+## The yyvariables
 
 The following variables are offered by LEX to aid the programmer in designing sophisticated lexical analyzers. These variables are accessible in the LEX program and are automatically declared by LEX in _lex.yy.c_.
 
@@ -172,7 +147,6 @@ Sample Input/Output
 I: 1234
 O: Number of digits = 4
 
-[top ↑](#navtop "Go back up")
 
 The yyfunctions
 ---------------
@@ -227,12 +201,10 @@ Suggest a modification in the above example LEX program to make the generated le
 *   \-> Initially from a file input\_file.l and then from the console
 *   \-> Twice from the console
 
-[top ↑](#navtop "Go back up")
 
 Even-Odd.l , a complete LEX program
 -----------------------------------
 
-[top ↑](#navtop "Go back up")
 
 Disambiguation Rules
 --------------------
@@ -275,14 +247,12 @@ O: DECREMENT MINUS
 
 Note that, in case of an -- input to the lexical analyzer, yylex() does not return two MINUS tokens, but instead returns a DECREMENT token, by the second disambiguation rule.
 
-[top ↑](#navtop "Go back up")
 
 Pattern matching using LEX
 --------------------------
 
 Conceptually, LEX constructs a finite state machine to recognize all the regular expression patterns specified in the LEX program file. The code written by the programmer in the action part is executed when the machine is in accept state. The lex.yy.c program stores information about the finite state machine in the form of a decision table (transition table). A transition(current\_state,input\_char) function is used to access the decision table. LEX makes it's decision table visible if we compile the program with the -T flag. The finite state machine used by LEX is deterministic finite state automaton. The lex.yy.c simulates the DFA.
 
-[top ↑](#navtop "Go back up")
 
 A token simulator program
 -------------------------
@@ -296,7 +266,6 @@ O: Acceptable
 
 When 'Var9' is provided as the input, the DFA constructed by LEX accepts the string, and the corresponding action 'return ID' executed. As a result _yylex()_ returns the token ID, and the _main()_ function prints 'Acceptable' on the screen.
 
-[top ↑](#navtop "Go back up")
 
 Construction of a DFA from a regular expression
 -----------------------------------------------
@@ -345,14 +314,11 @@ Consider the position 1 (position of 'a'), it could be followed by either of the
 
 ![](img/lex_3.jpeg)
 
-  
 **9.3 The intermediate syntax tree**
 
 The DFA obtained for the above syntax tree would look like :
 
 ![](img/lex_4.png)
-
-  
 
 This DFA represents the regular expression provided as a specification (i.e. pattern to be matched) in the first rule of the token simulator program in section 9. When the DFA is in the final state i.e. III, then the corresponding action is executed as instructed in the lex.yy.c file. The constructed DFA is simulated using a simulation algorithm.
 
@@ -361,59 +327,46 @@ This DFA represents the regular expression provided as a specification (i.e. pat
 
 The working of the constructed DFA is simulated using the following algorithm.
 
-DFA\_simulator()
-	current\_state = start\_state
-	c = get\_next\_char()
+```c
+DFA_simulator()
+	current_state = start_state
+	c = get_next_char()
 	while(c != EOF)
-		current\_sate = transition(current\_state , c)
-  	c = get\_next\_char()
-		if(current\_state ∈ Final\_states)
-			/\*ACCEPT\*/
+		current_sate = transition(current_state , c)
+  	c = get_next_char()
+		if(current_state ∈ Final_states)
+			/*ACCEPT*/
 		else
-			/\*REJECT\*/
+			/*REJECT*/
+```
 
 The information about all the transitions made by the DFA can be obtained from the decision table (generally a two dimensional matrix) through the transition() function.
 
-[top ↑](#navtop "Go back up")
 
 Using the generated lexical analyzer
 ------------------------------------
 
 In this document, we have learned to use LEX to build a lexical analyzer. A lexical analyzer generated by LEX can be used for lexical analysis of ExpL. Lexical analysis is the inital stage of compiling a source language. We will learn more about how to use the lexical analyzer in later stages of the documentation.
 
-[top ↑](#navtop "Go back up")
 
 Exercises
 ---------
 
-1.Write a lex file
+1. Write a lex file
+    1. To count the number of lines, words, and characters in the input.
+    2. To count the number of integers and floating point numbers appearing in the input.
+    3. To list out all words of length three, starting with "A" to uppercase.
+    4. To list out all C-like comments (both single line and multi line comments) from a text file.
 
-*   1.1 to count the number of lines, words, and characters in the input.
-*   1.2 to count the number of integers and floating point numbers appearing in the input.
-
-*   1.3 to list out all words of length three, starting with "A" to uppercase.
-*   1,4 to list out all C-like comments (both single line and multi line comments) from a text file.
-
-[top ↑](#navtop "Go back up")
 
 References
 ----------
 
 For further details on the topics covered in this document, the reader may refer to the following :
 
-*   1\. Compilers : Principles,Techniques and Tools by Alfred V.Aho, Monica S. Lam, Ravi Sethi and Jeffrey D.Ulman .
-*   2\. Modern Compiler Implementation in C by Andrew W.Appel
-*   3\. Flex & Bison by John Levine
-*   4\. [http://dinosaur.compilertools.net/](http://dinosaur.compilertools.net/)
+1. Compilers : Principles,Techniques and Tools by Alfred V.Aho, Monica S. Lam, Ravi Sethi and Jeffrey D.Ulman .
+2. Modern Compiler Implementation in C by Andrew W.Appel
+3. Flex & Bison by John Levine
+4. [http://dinosaur.compilertools.net/](http://dinosaur.compilertools.net/)
 
-[top ↑](#navtop "Go back up")
 
-*   [Github](https://github.com/silcnitc)
-*   [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-
-Contributed By : [Nachiappan V](http://www.linkedin.com/in/nachivpn)
-
-*   [Home](index.html)
-*   [About](about.html)
-
-window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\\/script>')
