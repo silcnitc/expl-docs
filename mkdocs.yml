@@ -97,4 +97,12 @@ nav:
           - Program 10: testprograms/test-program-10.md
           - Program 11: testprograms/test-program-11.md
           - Program 12: testprograms/test-program-12.md
+        - OExPL Test Programs:
+          - Program 1: oexpltestprograms/test1.md
+          - Program 2: oexpltestprograms/test2.md
+          - Program 3: oexpltestprograms/test3.md
+          - Program 4: oexpltestprograms/test4.md
+          - Program 5: oexpltestprograms/test5.md
+          - Program 6: oexpltestprograms/test6.md
+          - Program 7: oexpltestprograms/test7.md
   - Feedback: feedback.md
