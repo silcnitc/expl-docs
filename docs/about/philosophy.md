@@ -3,7 +3,7 @@ title: 'About the project'
 hide:
     - toc
 ---
-# PHILOSOPHY
+# Philosophy
 
 Any pedagogical compiler implementation project offered as part of an undergraduate junior level compiler design course needs to satisfy two fundamental requirements:  
 
@@ -29,7 +29,7 @@ It is our responsiblity to explicitly state some central concepts that the proje
 
 The project is designed to help the student to gain knowledge, appreciation and insight into the working of compilers, but does not try to train the student in professional compiler writing. This particular pedagogical choice has been taken to spare the student from the technicalities of machine architecture, executable/object formats and the complexities of the ABIs of real systems – something that in our experience seems to drive a lot of students away from systems projects. Our hope is that once the basic material is assimilated, the student will be more confident to get involved with these details in professional life.
 
-Feedback data collected from students who credited the course is summarized [here](studentfeedback.html).
+Feedback data collected from students who credited the course is summarized [here](../feedback/index.md).
 
 This project is the second one in a suite of two student learning projects designed to tutor undergraduate CS juniors. The first one in the suite is an OS development project ([exposnitc.github.io](http://exposnitc.github.io)), which asks the student to implement a simple multi-tasking operating system on the same machine architecture used in the present project. The target code of the compiler implemented in the present project is designed to be executable by the OS implemented in the first project. Our hope is that by going through the projects, the student will gain a clear conceptual understanding of how the two central software systems – the OS and the compiler - work together in a computer system.
 

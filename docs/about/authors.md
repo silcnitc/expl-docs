@@ -8,8 +8,8 @@ hide:
 The content in the website and the documentation has been authored in the Department of Computer Science and Engineering, [National Institute of Technology](http://nitc.ac.in), Calicut under the guidance of Dr. Murali Krishnan K. The project's activity started in the year 2013 and completed in the year 2018. Below is a list of co-authors and contributors to the project. The work evolved from an earlier version of the project a Simple Integer Language Compiler development student project under the guidance of Dr. Murali Krishnan K. and Dr. Vineeth Paleri. The work received technical support from Dr. Vineeth Paleri and Dr. Saleena N. .
 
 ## Project team (2017-2018)
-- [Jaini Phani Koushik](#)
-- [Jampala Ritesh](#)
+- [Jaini Phani Koushik](https://www.linkedin.com/in/phani-koushik-jaini-38a071bb/)
+- [Jampala Ritesh](https://www.linkedin.com/in/ritheshjampala/)
 - [Madisetty Jayaprakash](#)
 - [Subin Puleri](#)
 
@@ -22,8 +22,8 @@ The content in the website and the documentation has been authored in the Depart
 - [Vishnu Priya Matha](https://in.linkedin.com/in/vishnupriyamatha)
 
 ## Project team (2014-2015)
-- Ashwathy T Revi
-- Subisha V
+- [Ashwathy T Revi](https://www.linkedin.com/in/ashwathytr)
+- [Subisha V](https://www.linkedin.com/in/subisha-v-3a1520aa)
 
 ## Project team (2013-2014)
 - [Nachiappan V.](http://www.linkedin.com/in/nachivpn)
