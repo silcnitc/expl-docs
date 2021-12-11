@@ -1,17 +1,8 @@
-ExpL Specification
+---
+title: 'ExpL Specification'
+---
 
-[![](img/logo.png)](index.html)
-
-* [Home](index.html)
-* [About](about.html)
-* [Roadmap](roadmap.html)
-* [Documentation](documentation.html)
-
-* * *
-
-ExpL Specification
-
-[Download as PDF](pdfs/expl.pdf)
+# ExpL Specification
 
 * [Introduction](#nav-intro)
 * [Supported data types](#nav-data-types)
@@ -418,16 +409,3 @@ letter -> \[a-z\]|\[A-Z\]
 digit -> \[0-9\]
 
 identifier -> (letter)(letter | digit)\*
-
-* * *
-
-* [Github](http://github.com/silcnitc)
-* [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-
-Contributed By : Ashwathy T Revi, Subisha V,  
-[Nunnaguppala Surya Harsha](https://www.linkedin.com/in/suryaharshanunnaguppala), [Vishnu Priya Matha](https://in.linkedin.com/in/vishnupriyamatha)
-
-* [Home](index.html)
-* [About](about.html)
-
-window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\\/script>')
