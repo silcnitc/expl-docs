@@ -260,7 +260,7 @@ O: Number of digits = 4
 _yylex()_ is a function of return type int. LEX automatically defines _yylex()_ in _lex.yy.c_ but does not call it. The programmer must call yylex() in the Auxiliary functions section of the LEX program. LEX generates code for the definition of yylex() according to the rules specified in the Rules section.
 
 !!! note
-    That yylex() need not necessarily be invoked in the Auxiliary Functions Section of LEX program when used with [YACC](http://silcnitc.github.io/yacc.html).
+    That yylex() need not necessarily be invoked in the Auxiliary Functions Section of LEX program when used with [YACC](./yacc.md).
 
 **Example:**
 

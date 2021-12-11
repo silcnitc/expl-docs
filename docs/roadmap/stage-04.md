@@ -76,7 +76,7 @@ struct Gsymbol {
 ```
 
 The symbol table entries for the program above would look as below:
-![](https://silcnitc.github.io/img/gsymboltable1.png)
+![](../img/gsymboltable1.png)
 
 To implement the symbol table, you must write two functions. For a simple implementation, a linear linked list suffices. In modern compilers, hash tables are maintained to make search efficient.
 
@@ -121,7 +121,7 @@ endwhile;
 .
 ```
 
-![](https://silcnitc.github.io/img/ast_stage4.png)
+![](../img/ast_stage4.png)
 
 There is no serious change to the code generation process, except that for variables, the binding address is obtained from the symbol table.
 
@@ -165,7 +165,7 @@ enddecl
 
 The binding field in the symbol table for the variable a may be set to address 4096. The size entry set to 10. This means that we are allocating locations 4096-4105 for the array. The next variable, b can be bound to the address 4106.
 
-![](https://silcnitc.github.io/img/gsymboltable2.png)
+![](../img/gsymboltable2.png)
 
 
 !!! question "Task 2"

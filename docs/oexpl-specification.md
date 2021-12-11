@@ -209,7 +209,7 @@ begin
 
 In the above code, the value of the variable n read from the input at run-time determines whether the variable _arbitrary_ refers to an object of the class - person or the class - student. Consequently, at compile time, we cannot decide whether the call _arbitrary.printDetails()_ must be translated to an invocation of the function in the parent class or the child class.
 
-To resolve such function invocations, the method of [dynamic binding](https://en.wikipedia.org/wiki/Late_binding) must be implemented using the [The virtual function table method](https://en.wikipedia.org/wiki/Virtual_method_table) .A tutorial explaining the implementation of virtual function tables is given [here](http://silcnitc.github.io/oexpl-run-data-structures.html) .
+To resolve such function invocations, the method of [dynamic binding](https://en.wikipedia.org/wiki/Late_binding) must be implemented using the [The virtual function table method](https://en.wikipedia.org/wiki/Virtual_method_table) .A tutorial explaining the implementation of virtual function tables is given [here](oexpl-run-data-structures.md) .
 
 !!! tip "Important note"
     If a variable of a parent class holds the reference to an object of a descendent class, only methods defined in the parent class are allowed to be invoked using the variable of the parent class.

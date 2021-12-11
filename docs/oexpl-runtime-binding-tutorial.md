@@ -6,7 +6,7 @@ hide:
 
 # OEXPL Run Time Binding Tutorial
 
-Consider the OExpL code given below extending the classes [here](http://silcnitc.github.io/oexpl-run-data-structures.html#nav-illustration)
+Consider the OExpL code given below extending the classes [here](oexpl-run-data-structures.html#nav-illustration)
 ```
 decl
     A obj ;

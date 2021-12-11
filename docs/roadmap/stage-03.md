@@ -66,7 +66,7 @@ For example, consider the AST for the following erratic expression.
 ```
 d = ( a + b ) + ( c < 3 )
 ```
-![](https://silcnitc.github.io/img/ast3.png)
+![](/img/ast3.png)
 
 Here, the root of the AST is an assignment node which is **typeless**. (statements have no type, only expressions have a type associated with them). The left subtree of the root is a variable, and hence has type integer. The right subtree is a **+** node of type integer. Hence, at the root, there is no type mismatch. However, the right child of the right subtree has type boolean and does not match the operand type for the + operator. Hence the compiler must terminate compilation flagging error "type mismatch". Note that the compiler can stop processing when the first error is encountered without proceeding further with the tree construction.
 
@@ -139,7 +139,7 @@ while (a < b) {
 
 The expression tree for the above statement would look like:
 
-![](https://silcnitc.github.io/img/ast31.png)
+![](/img/ast31.png)
 
 Suppose variable a is bound to address 4096, b to address 4097, then our plan is to generate code that would look like the following:
 

@@ -85,7 +85,7 @@ Of the above, the XSM execution environment tutorial has already explained (1) a
 Let us take an example:
 If you are given a two node expression tree as shown below corresponding to the expression (3+2):
 
-![](https://silcnitc.github.io/img/tree1.png)
+![](../img/tree1.png)
 
 The evaluation strategy will be:
 
@@ -103,7 +103,7 @@ fprintf(target_file, "ADD R0, R1");
 
 However, life becomes complicated if we have an expression like (3+2)+(5+6) resulting in the following tree.
 
-![](https://silcnitc.github.io/img/tree2.png)
+![](../img/tree2.png)
 
 Of course, we can “hand craft” this case also. But the strategy will not generalize.
 The basic issue is that your compiler does not know the input expression before-hand.
