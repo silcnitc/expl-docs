@@ -1,7 +1,7 @@
 ---
 title: 'Local Symbol Table'
 hide:
-    - navigation
+    - toc
 ---
 
 # Local Symbol Table

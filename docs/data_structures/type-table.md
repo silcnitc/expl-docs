@@ -1,7 +1,7 @@
 ---
 title: 'Type Table'
 hide:
-    - navigation
+    - toc
 ---
 
 # TypeTable

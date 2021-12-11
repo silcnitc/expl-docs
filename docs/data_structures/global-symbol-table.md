@@ -1,7 +1,7 @@
 ---
 title: 'Global Symbol Table'
 hide:
-    - navigation
+    - toc
 ---
 
 # Global Symbol Table

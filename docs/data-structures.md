@@ -1,7 +1,6 @@
 ---
 title: 'Compile Time Data Structures'
 hide:
-    - navigation
     - toc
 ---
 
