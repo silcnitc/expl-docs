@@ -6,7 +6,7 @@ title: 'Using lex with Yacc'
 
 ## Integrating LEX with YACC
 
-In the previous documents, we have noted that YACC is used to generate a parser ([YACC documentation](yacc.html)) and LEX is used to generate a lexical analayzer ([LEX documentation](lex.html)). YACC generates the definition for yyparse() in y.tab.c and LEX generates the definition for yylex() in lex.yy.c. We have also noted that yyparse() repetitively calls yylex() to read tokens from the input stream. Till now, for simplicity, we had written a [user-defined yylex()](yacc.html#navexy0al) in the YACC program. In this section of the document we will use LEX to generate the definition of yylex() and make YACC use this definition for retrieving tokens.
+In the previous documents, we have noted that YACC is used to generate a parser ([YACC documentation](yacc.md)) and LEX is used to generate a lexical analayzer ([LEX documentation](lex.md)). YACC generates the definition for yyparse() in y.tab.c and LEX generates the definition for yylex() in lex.yy.c. We have also noted that yyparse() repetitively calls yylex() to read tokens from the input stream. Till now, for simplicity, we had written a [user-defined yylex()](yacc.md#navexy0al) in the YACC program. In this section of the document we will use LEX to generate the definition of yylex() and make YACC use this definition for retrieving tokens.
 
 ```c
 /* Declarations section */
@@ -25,16 +25,16 @@ int yylex();
 We should now compile it as _gcc y.tab.c lex.yy.c -o <objectfilename&rt;_
 
 !!! note
-    We **must not** provide a [main() definition in the LEX program](lex.html#navexl0) calling yylex(), as there already
-    exists a [main() function in the YACC program](yacc.html#navexy0al) which calls yyparse() which in turn calls yylex().
+    We **must not** provide a [main() definition in the LEX program](lex.md#navexl0) calling yylex(), as there already
+    exists a [main() function in the YACC program](yacc.md#navexy0al) which calls yyparse() which in turn calls yylex().
 
-Recall that yyparse() attempts to parse the given input by calling yylex() to obtain tokens. In the [infix to postfix conversion example](yacc.html#navexy1) in the YACC documentation, we had used a [user defined yylex()](yacc.html#yylex) in the YACC program. In that example, the YACC program contains the declaration for the token DIGIT in the [declarations section](yacc.html#navexy1d) . The definition of the token DIGIT is given in the [auxiliary functions section](yacc.html#navexy1a) under the function yylex(). Instead, we will now use LEX to generate yylex().
+Recall that yyparse() attempts to parse the given input by calling yylex() to obtain tokens. In the [infix to postfix conversion example](yacc.md#navexy1) in the YACC documentation, we had used a [user defined yylex()](yacc.md#yylex) in the YACC program. In that example, the YACC program contains the declaration for the token DIGIT in the [declarations section](yacc.md#navexy1d) . The definition of the token DIGIT is given in the [auxiliary functions section](yacc.md#navexy1a) under the function yylex(). Instead, we will now use LEX to generate yylex().
 
 First, we will write a YACC program to declare the tokens and generate yyparse().
 
 ## Declaring tokens
 
-The token DIGIT must be declared in the _declaration section_ to be used in the _rules section_. The declaration for a token must be made by specifying it in the [YACC declarations section](yacc.html#decl) using the **%token** feature offered by YACC. The following example shows the declaration of the token DIGIT in a YACC program.
+The token DIGIT must be declared in the _declaration section_ to be used in the _rules section_. The declaration for a token must be made by specifying it in the [YACC declarations section](yacc.md#decl) using the **%token** feature offered by YACC. The following example shows the declaration of the token DIGIT in a YACC program.
 
 **in2post.y**
 
@@ -74,7 +74,7 @@ int main()
 
 ```
 
-The YACC program given above contains the declaration of the token DIGIT in the _declarations section_. Note that the grammar contains other terminals like '+', '-', '(' and ')' that also are tokens, but are not declared in the _declaration section_. These tokens are called **literal tokens**. Literal tokens are tokens with fixed lexemes. This means that the [lexeme](lex.html#navyytext) corresponding to a literal token is a single character or a character string. Such a token do not require an expicit declaration in the YACC program.
+The YACC program given above contains the declaration of the token DIGIT in the _declarations section_. Note that the grammar contains other terminals like '+', '-', '(' and ')' that also are tokens, but are not declared in the _declaration section_. These tokens are called **literal tokens**. Literal tokens are tokens with fixed lexemes. This means that the [lexeme](lex.md#navyytext) corresponding to a literal token is a single character or a character string. Such a token do not require an expicit declaration in the YACC program.
 
 !!! note
     Conceptually, the lexeme of a literal token can be a character or a string. But, not all versions of YACC support string literal tokens. Hence, in our project we will use only single character literal tokens.
@@ -95,7 +95,7 @@ expr: expr '+' expr
 
 is valid because YACC automatically identifies '+' as the literal token.
 
-We must now write a LEX program that contains the [regular definition](lex.html#regdef) for DIGIT and the literal tokens.
+We must now write a LEX program that contains the [regular definition](lex.md#regdef) for DIGIT and the literal tokens.
 
 ## y.tab.h
 
@@ -113,7 +113,7 @@ An example of the contents of y.tab.h file is shown below.
 #define DIGIT 253
 ```
 
-Note that '253' is a YACC generated constant to represent DIGIT. The constant may vary at different executions of YACC. YACC represents a token by defining a [macro identifier](http://gcc.gnu.org/onlinedocs/cpp/Macros.html) corresponding to it.
+Note that '253' is a YACC generated constant to represent DIGIT. The constant may vary at different executions of YACC. YACC represents a token by defining a [macro identifier](http://gcc.gnu.org/onlinedocs/cpp/Macros.md) corresponding to it.
 
 The y.tab.h file must be _included_ in the declarations section of the LEX program. This makes the token declarartions accessible to the LEX program. We will see an example in the next section.
 
@@ -207,17 +207,17 @@ A complete illustration of all the shift and reduce steps is given [later](#nava
 |||expr + expr|REDUCE|printf("- ");|11 22 33 -|
 |||expr|REDUCE|printf("+ ");|11 22 33 - +|
 
-Note that yylex() makes a call to yywrap(), when 'End of file' is encountered. We have defined yywrap() to return 1 (We have provided the definition for [yywrap()](#navyywrapexp) in our LEX file). [Recall](lex.html#navyywrap) that when yylex() receives non-zero value from yywrap(), it returns zero to yyparse(). Also [recall](yacc.html#navyyparse) that yyparse() does not call yylex() once it has returned 0. It return zero to main() function to indicate successful parsing.
+Note that yylex() makes a call to yywrap(), when 'End of file' is encountered. We have defined yywrap() to return 1 (We have provided the definition for [yywrap()](#navyywrapexp) in our LEX file). [Recall](lex.md#navyywrap) that when yylex() receives non-zero value from yywrap(), it returns zero to yyparse(). Also [recall](yacc.md#navyyparse) that yyparse() does not call yylex() once it has returned 0. It return zero to main() function to indicate successful parsing.
 
 We have noted how to integrate the lexical analyzer generated by LEX with the parser generated by YACC. Now, we will learn more about managing attributes using LEX and YACC..
 
 ## Introduction to attributes
 
-In the [last section](yacc.html#navpassingvalues) of the YACC documentation we have noted that it is possible to pass values associated with tokens from yylex() to yyparse(). We had described the term 'attribute' as a value associated with a token. YACC uses yylval to facilitate passing values from the lexical analyzer to the parser. We will now explore how YACC associates attribute values to terminals and non-terminals in a production. We will also explore the usage of YYSTYPE to define custom (user defined )attribute types.
+In the [last section](yacc.md#navpassingvalues) of the YACC documentation we have noted that it is possible to pass values associated with tokens from yylex() to yyparse(). We had described the term 'attribute' as a value associated with a token. YACC uses yylval to facilitate passing values from the lexical analyzer to the parser. We will now explore how YACC associates attribute values to terminals and non-terminals in a production. We will also explore the usage of YYSTYPE to define custom (user defined )attribute types.
 
-[Recall](yacc.html#navyylval) that yylval is a global variable declared in y.tab.c of type YYSTYPE (YYSTYPE is integer unless defined otherwise. We will let YYSTYPE take its default type of integer since it is simpler to understand how attributes are processed in this case. Later we will see how more complex attribute types can be defined and handled).
+[Recall](yacc.md#navyylval) that yylval is a global variable declared in y.tab.c of type YYSTYPE (YYSTYPE is integer unless defined otherwise. We will let YYSTYPE take its default type of integer since it is simpler to understand how attributes are processed in this case. Later we will see how more complex attribute types can be defined and handled).
 
-In the YACC documentation, we had seen an [example](yacc.html#navexy1) which illustrates the passing of attributes from yylex() to yyparse(). We use the variable yylval to hold the attribute to be passed. If the programmer were to use LEX to generate yylex(), then the attributes will have to be passed to yyparse() using the same mechanism i.e, using yylval (see example below).
+In the YACC documentation, we had seen an [example](yacc.md#navexy1) which illustrates the passing of attributes from yylex() to yyparse(). We use the variable yylval to hold the attribute to be passed. If the programmer were to use LEX to generate yylex(), then the attributes will have to be passed to yyparse() using the same mechanism i.e, using yylval (see example below).
 
 In the LEX program, yylex() returns each token by its name. The attribute associated with each token is assigned to yylval and thus becomes accessible to yyparse(). Note that, all tokens except literal tokens must be declared in the declarations section of the YACC program. The following example is a LEX program which returns a token DIGIT when it finds a number.
 
@@ -244,7 +244,7 @@ number  [0-9]+
 
 In this example, we want to return the token DIGIT when an integer is found in the input stream. In addition to the token, we need to pass the value found in the input stream to yyparse(). The lexeme found in the input stream is a string which contains the integer found. [atoi()](http://en.cppreference.com/w/cpp/string/byte/atoi) is a built-in function of return type _int_ defined in the _stdlib.h_ header file. We use atoi() to obtain the integer equivalent of the lexeme found. The obtained integer value is then assigned to yylval.
 
-The following code segment demonstrates how yyparse() receives the attribute value corresponding to the token DIGIT passed by yylex(). Note that YACC must be run with the [\-d flag](ywl.html#navdflag) to generate y.tab.h. The LEX program above includes the y.tab.h file in the auxiliary declarations section to _import_ the declarations from y.tab.h.
+The following code segment demonstrates how yyparse() receives the attribute value corresponding to the token DIGIT passed by yylex(). Note that YACC must be run with the [\-d flag](ywl.md#navdflag) to generate y.tab.h. The LEX program above includes the y.tab.h file in the auxiliary declarations section to _import_ the declarations from y.tab.h.
 
 ```c
 %{
@@ -426,7 +426,7 @@ We will now see how attribute synthesis is managed internally.
 
 ## The Attribute Stack
 
-[Recall](yacc.html#navshiftreduce) that YACC maintains a parse stack to achieve shift-reduce parsing. The parse stack contains grammar symbols (both terminal and non-terminal ) representing the current configuration of the parser. Similar to the parse stack, YACC also maintains an attribute stack to store the attribute value of each grammar symbol in the parse stack.
+[Recall](yacc.md#navshiftreduce) that YACC maintains a parse stack to achieve shift-reduce parsing. The parse stack contains grammar symbols (both terminal and non-terminal ) representing the current configuration of the parser. Similar to the parse stack, YACC also maintains an attribute stack to store the attribute value of each grammar symbol in the parse stack.
 
 The attribute stack is synchronous with the parse stack -- synchronous because the i'th value on the attribute stack will be the attribute value of the i'th symbol on the parse stack.
 
@@ -436,7 +436,7 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
 2. yylex() reads the input and finds that the lexeme "2" matches with the pattern for the token DIGIT. It assigns ‘2’ to yylval and returns DIGIT. Note that YYSTYPE is assumed to take its default value of integer and hence yylval is set to integer type by YACC.
 
-3. yyparse() which obtains the token DIGIT and its attribute value inside the variable yylval, [shifts](yacc.html#navshiftreduce) the token DIGIT to the parser stack and pushes the value of yylval (2) to the attribute stack.
+3. yyparse() which obtains the token DIGIT and its attribute value inside the variable yylval, [shifts](yacc.md#navshiftreduce) the token DIGIT to the parser stack and pushes the value of yylval (2) to the attribute stack.
 
     <div class="two-col">
     <div>
@@ -460,7 +460,7 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
     </div>
     </div>
 
-5. A [reduction](yacc.html#navshiftreduce) (corresponding to the rule expr: DIGIT) takes place. This results in the following events:
+5. A [reduction](yacc.md#navshiftreduce) (corresponding to the rule expr: DIGIT) takes place. This results in the following events:
 
     1. The terminal ‘ DIGIT’ gets replaced with the non-terminal expr in the parser stack.
 
@@ -544,7 +544,7 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
     </div>
     </div>
 
-9. Now even though a valid reduction is possible for expr + expr, the parser executes a shift action. This is because shift/reduce conflict is resolved by looking at operator precedence. [Recall](yacc.html#navlookahead) shift/reduce parsing. The next token, ‘\*’ is returned by Lex. This is again a literal token and is pushed into both the parse stack and attribute stack.
+9. Now even though a valid reduction is possible for expr + expr, the parser executes a shift action. This is because shift/reduce conflict is resolved by looking at operator precedence. [Recall](yacc.md#navlookahead) shift/reduce parsing. The next token, ‘\*’ is returned by Lex. This is again a literal token and is pushed into both the parse stack and attribute stack.
 
     <div class="two-col">
     <div>
@@ -718,7 +718,7 @@ PARSE STACK-BEFORE READ       ATTRIBUTE STACK-BEFORE READ
 
 PARSE STACK-AFTER READ       ATTRIBUTE STACK-AFTER READ
 
-22. Lexer now encounters end of input (You need to enter Ctrl+D to indicate end of input as input is being read from stdout.) As a result yylex calls yywrap() which returns a non-zero value indication end of input. [yylex()](lex.html#navyywraplink) returns 0. (The $ in the input buffer stands for the end of input marker.)
+22. Lexer now encounters end of input (You need to enter Ctrl+D to indicate end of input as input is being read from stdout.) As a result yylex calls yywrap() which returns a non-zero value indication end of input. [yylex()](lex.md#navyywraplink) returns 0. (The $ in the input buffer stands for the end of input marker.)
 
 23. When yyparse receives 0 from lexer, it returns 0 to main function to indicate that parsing was successfull.
 

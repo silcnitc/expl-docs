@@ -79,6 +79,6 @@ Do the following steps:
     This step is for those who don't have **bash** or **sh** as their "default shell" and therefore may be using other customizable shells like `zsh`, etc as their default shell.
     You can check your default shell by using `echo $SHELL` in terminal.
 
-The usage instructions for the XSM simulator can be found [here](xsmusagespec.html).
+The usage instructions for the XSM simulator can be found [here](xsmusagespec.md).
 
 Please report installation errors to _kmurali@nitc.ac.in_
