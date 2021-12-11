@@ -440,22 +440,22 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl1.png">
+    <img src="../img/ywl1.png">
     <h5>INITIAL PARSE STACK</h5>
     </div>
     <div>
-    <img src="img/ywl1.png">
+    <img src="../img/ywl1.png">
     <h5>INITIAL ATTRIBUTE STACK</h5>
     </div>
     </div>
 
     <div class="two-col">
     <div>
-    <img src="img/ywl2.png">
+    <img src="../img/ywl2.png">
     <h5>PARSE STACK - AFTER SHIFT</h5>
     </div>
     <div>
-    <img src="img/ywl3.png">
+    <img src="../img/ywl3.png">
     <h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
     </div>
     </div>
@@ -473,22 +473,22 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl4.png">
+    <img src="../img/ywl4.png">
     <h5>PARSE STACK - BEFORE READ</h5>
     </div>
     <div>
-    <img src="img/ywl5.png">
+    <img src="../img/ywl5.png">
     <h5>ATTRIBUTE STACK - BEFORE READ</h5>
     </div>
     </div>
 
     <div class="two-col">
     <div>
-    <img src="img/ywl6.png">
+    <img src="../img/ywl6.png">
     <h5>PARSE STACK - AFTER READ</h5>
     </div>
     <div>
-    <img src="img/ywl7.png">
+    <img src="../img/ywl7.png">
     <h5>ATTRIBUTE STACK - AFTER READ</h5>
     </div>
     </div>
@@ -497,11 +497,11 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl8.png">
+    <img src="../img/ywl8.png">
     <h5>PARSE STACK - AFTER SHIFT</h5>
     </div>
     <div>
-    <img src="img/ywl9.png">
+    <img src="../img/ywl9.png">
     <h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
     </div>
     </div>
@@ -510,11 +510,11 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl10.png">
+    <img src="../img/ywl10.png">
     <h5>PARSE STACK - AFTER SHIFT</h5>
     </div>
     <div>
-    <img src="img/ywl11.png">
+    <img src="../img/ywl11.png">
     <h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
     </div>
     </div>
@@ -524,22 +524,22 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl12.png">
+    <img src="../img/ywl12.png">
     <h5>PARSE STACK - BEFORE READ</h5>
     </div>
     <div>
-    <img src="img/ywl13.png">
+    <img src="../img/ywl13.png">
     <h5>ATTRIBUTE STACK - BEFORE READ</h5>
     </div>
     </div>
 
     <div class="two-col">
     <div>
-    <img src="img/ywl14.png">
+    <img src="../img/ywl14.png">
     <h5>PARSE STACK - AFTER READ</h5>
     </div>
     <div>
-    <img src="img/ywl15.png">
+    <img src="../img/ywl15.png">
     <h5>ATTRIBUTE STACK - AFTER READ</h5>
     </div>
     </div>
@@ -548,11 +548,11 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl16.png">
+    <img src="../img/ywl16.png">
     <h5>PARSE STACK - AFTER SHIFT</h5>
     </div>
     <div>
-    <img src="img/ywl17.png">
+    <img src="../img/ywl17.png">
     <h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
     </div>
     </div>
@@ -561,11 +561,11 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl18.png">
+    <img src="../img/ywl18.png">
     <h5>PARSE STACK - AFTER SHIFT</h5>
     </div>
     <div>
-    <img src="img/ywl19.png">
+    <img src="../img/ywl19.png">
     <h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
     </div>
     </div>
@@ -574,11 +574,11 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl20.png">
+    <img src="../img/ywl20.png">
     <h5>PARSE STACK - AFTER SHIFT</h5>
     </div>
     <div>
-    <img src="img/ywl21.png">
+    <img src="../img/ywl21.png">
     <h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
     </div>
     </div>
@@ -587,22 +587,22 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl22.png">
+    <img src="../img/ywl22.png">
     <h5>PARSE STACK - BEFORE READ</h5>
     </div>
     <div>
-    <img src="img/ywl23.png">
+    <img src="../img/ywl23.png">
     <h5>ATTRIBUTE STACK - BEFORE READ</h5>
     </div>
     </div>
 
     <div class="two-col">
     <div>
-    <img src="img/ywl24.png">
+    <img src="../img/ywl24.png">
     <h5>PARSE STACK - AFTER READ</h5>
     </div>
     <div>
-    <img src="img/ywl25.png">
+    <img src="../img/ywl25.png">
     <h5>ATTRIBUTE STACK - AFTER READ</h5>
     </div>
     </div>
@@ -611,11 +611,11 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl26.png">
+    <img src="../img/ywl26.png">
     <h5>PARSE STACK - AFTER SHIFT</h5>
     </div>
     <div>
-    <img src="img/ywl27.png">
+    <img src="../img/ywl27.png">
     <h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
     </div>
     </div>
@@ -624,11 +624,11 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl28.png">
+    <img src="../img/ywl28.png">
     <h5>PARSE STACK - AFTER SHIFT</h5>
     </div>
     <div>
-    <img src="img/ywl29.png">
+    <img src="../img/ywl29.png">
     <h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
     </div>
     </div>
@@ -638,22 +638,22 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
     <div class="two-col">
     <div>
-    <img src="img/ywl30.png">
+    <img src="../img/ywl30.png">
     <h5>PARSE STACK - BEFORE READ</h5>
     </div>
     <div>
-    <img src="img/ywl31.png">
+    <img src="../img/ywl31.png">
     <h5>ATTRIBUTE STACK - BEFORE READ</h5>
     </div>
     </div>
 
     <div class="two-col">
     <div>
-    <img src="img/ywl32.png">
+    <img src="../img/ywl32.png">
     <h5>PARSE STACK - AFTER READ</h5>
     </div>
     <div>
-    <img src="img/ywl33.png">
+    <img src="../img/ywl33.png">
     <h5>ATTRIBUTE STACK - AFTER READ</h5>
     </div>
     </div>
