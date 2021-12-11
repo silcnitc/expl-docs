@@ -8,7 +8,7 @@ title: 'Stage 8: Inheritance and Sub-type Polymorphism'
     1 week, 5-10 hours/week
 
 !!! abstract "Prerequisites"
-    1. A rigorous reading of the [OExpL specification](oexpl-specification.html)
+    1. A rigorous reading of the [OExpL specification](../oexpl-specification.md)
 
 !!! example "Learning Objectives"
     You will extend the language of Stage 7 by adding support for single inheritance and subtype polymorphism to make OExpL an _object oriented_ language.
@@ -26,18 +26,18 @@ Cname : ID {Cptr = Cinstall($1->Name,NULL);}
       | ID Extends ID {Cptr = Cinstall($1->Name,$3->Name);}
 ```
 
-An additional field called the **parent class pointer** must be added to each class table entry. If the class is defined by extention of another class, the parent class pointer entry must point to the class table entry of the parent class. If the class is not an extention of any other class, this entry must be NULL. ([See class table structure](oexpl-data-structures.html)). An outline of the grammar is given [here](oexpl-grammar-outline.html).
+An additional field called the **parent class pointer** must be added to each class table entry. If the class is defined by extention of another class, the parent class pointer entry must point to the class table entry of the parent class. If the class is not an extention of any other class, this entry must be NULL. ([See class table structure](../oexpl-data-structures.md)). An outline of the grammar is given [here](../oexpl-grammar-outline.md).
 
 An extended class inherits all the member fields and methods of the parent class. The descendent class is permitted to do additional definitions as specified below.
 
-*   1\. The only member field declarations in the descendent class shall be for the new member fields that are not present in the parent. (**The descendent cannot re-declare or remove any of the parent's member fields.**) Additionally, in our current implementation plan, the number of member fields - including those inherited from the parent - must not exceed 8 (because our memory allocation policy allocates only 8 words for storing a class object).
+1. The only member field declarations in the descendent class shall be for the new member fields that are not present in the parent. (**The descendent cannot re-declare or remove any of the parent's member fields.**) Additionally, in our current implementation plan, the number of member fields - including those inherited from the parent - must not exceed 8 (because our memory allocation policy allocates only 8 words for storing a class object).
     From an implementation perspective, **whenever the definition of a class by extension of another class is encountered, the compiler must copy all the member field information of the parent to the descendent class.** The member fields may be listed in the same order as they appear in the parent. Additional entries must be created for new members specific to the descendent class.
 
-*   2\. The descendent class may **define new methods** or **[override](https://en.wikipedia.org/wiki/Method_overriding)** one or more of the **parent's methods**. OExpL allows a class to contain only one definition for a function. **Once a method is over-ridden, the method of the parent class will no longer be visible inside the descendent class**. Moreover, the **signature of the overridden method must be identical with the signature of the method in the parent class** (in both the number and the types of arguments). In other words, [function overloading](https://en.wikipedia.org/wiki/Function_overloading) is not permitted. (Exercise 1 at the end asks you to relax this condition).
+2. The descendent class may **define new methods** or **[override](https://en.wikipedia.org/wiki/Method_overriding)** one or more of the **parent's methods**. OExpL allows a class to contain only one definition for a function. **Once a method is over-ridden, the method of the parent class will no longer be visible inside the descendent class**. Moreover, the **signature of the overridden method must be identical with the signature of the method in the parent class** (in both the number and the types of arguments). In other words, [function overloading](https://en.wikipedia.org/wiki/Function_overloading) is not permitted. (Exercise 1 at the end asks you to relax this condition).
 
 From an implementation perspective, the compiler may **initially copy the signatures of all methods of the parent to the class table entry of the descendent**. New entries will have to be created for methods that defined in the descendent, but not present in the parent. Finally, the present implementation restricts the number of methods in a class ( including inherited methods ) to 8.
 
-What about the labels of the methods of the descendent class? **If a method is over-ridden or defined new in a class, the compiler must assign a new label for the method and store this label in the _Flabel_ field of the method in the [class table entry](oexpl-data-structures.html). Otherwise, the class inherits the parent's method and the label of the method in the parent class ( specified by the _Flabel_ field of the parent class ) must be copied into the _Flabel_ field of the method in the descendent class** ( See Memberfunclist in the class table ).
+What about the labels of the methods of the descendent class? **If a method is over-ridden or defined new in a class, the compiler must assign a new label for the method and store this label in the _Flabel_ field of the method in the [class table entry](oexpl-data-structures.md). Otherwise, the class inherits the parent's method and the label of the method in the parent class ( specified by the _Flabel_ field of the parent class ) must be copied into the _Flabel_ field of the method in the descendent class** ( See Memberfunclist in the class table ).
 
 Once the class table entries are created as described above, syntax and semantic analysis phases of compilation can be completed easily.
 
@@ -47,9 +47,11 @@ An assignment of the form a = b; between class variables is valid if either _a_ 
 
 ## **Part II**: Code Generation
 
-The key differences between the language of Stage 7 and the present stage are the following:*   a). A variable of a parent class may hold a reference to an object of any descendent class.
-*   b). The class to which the referred object belongs to at run time cannot be determined at compile time (why?)
-*   c). When a method is invoked using the variable of the parent class, if the method is over-ridden by the child class, then the method of the child class must be invoked.
+The key differences between the language of Stage 7 and the present stage are the following:*
+
+a. A variable of a parent class may hold a reference to an object of any descendent class.
+b. The class to which the referred object belongs to at run time cannot be determined at compile time (why?)
+c. When a method is invoked using the variable of the parent class, if the method is over-ridden by the child class, then the method of the child class must be invoked.
 
 Assume that A, B, C are classes such that B extends A and C extends B. Let x be a variable of class A. Consider the program segment:
 
@@ -94,11 +96,11 @@ An assignment of the form y=x, if valid semantically, will result in both the po
 
 Note that once the base of the correct virtual function table is known, invoking the right function simply involves adding the offset of the function to the base and making a call to the address (label) stored in the virtual function table entry.
 
-Note that the labels will be automatically translated to actual addresses during the [label translation phase](label-translation.html).
+Note that the labels will be automatically translated to actual addresses during the [label translation phase](label-translation.md).
 
 To implement virtual function tables on the eXpOS ABI, the suggested method is to allocate space (8 words each) for storing the virtual function tables of each class in the stack before allocating space for global variables.
 
-**Read the [OExpL run time data structures documentation](oexpl-run-data-structures.html) before proceeding further.**
+**Read the [OExpL run time data structures documentation](oexpl-run-data-structures.md) before proceeding further.**
 
 **Task 2:** Complete the OExpL compiler.
 
@@ -106,10 +108,10 @@ To implement virtual function tables on the eXpOS ABI, the suggested method is t
 
 Check your implementation with the following test cases :
 
-- [Test Program 1: Testing the runtime binding of the variables of a class](oexpl-testprograms.html#test4)
-- [Test Program 2: Testing the correct set up of the virtual function table](oexpl-testprograms.html#test5)
-- [Test Program 3: Testing the implementation of inheritance and subtype polymorphism](oexpl-testprograms.html#test6)
-- [Test Program 4: Testing the implementation of inheritance and subtype polymorphism](oexpl-testprograms.html#test7)
+- [Test Program 1: Testing the runtime binding of the variables of a class](oexpl-testprograms.md#test4)
+- [Test Program 2: Testing the correct set up of the virtual function table](oexpl-testprograms.md#test5)
+- [Test Program 3: Testing the implementation of inheritance and subtype polymorphism](oexpl-testprograms.md#test6)
+- [Test Program 4: Testing the implementation of inheritance and subtype polymorphism](oexpl-testprograms.md#test7)
 
 !!! question "Exercise 1"
     This exercise asks you to add a limited form of **function overloading** support to the language.
