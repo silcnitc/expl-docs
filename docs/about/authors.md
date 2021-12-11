@@ -26,8 +26,8 @@ The content in the website and the documentation has been authored in the Depart
 - [Subisha V](https://www.linkedin.com/in/subisha-v-3a1520aa)
 
 ## Project team (2013-2014)
-- [Nachiappan V.](http://www.linkedin.com/in/nachivpn)
-- [Arun Rajan](http://in.linkedin.com/pub/arun-rajan-sharma/39/291/8a5)
+- [Nachiappan V.](https://www.linkedin.com/in/nachivpn)
+- [Arun Rajan](https://in.linkedin.com/pub/arun-rajan-sharma/39/291/8a5)
 
 ## Project team (2001-2002)
 - [Jithesh Kumar O. V](#)

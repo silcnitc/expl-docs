@@ -1,6 +1,6 @@
 ---
 title: 'Abstract Syntax Tree'
-original_url: 'http://silcnitc.github.io/data_structures/abstract-syntax-tree.html'
+original_url: 'https://silcnitc.github.io/data_structures/abstract-syntax-tree.html'
 ---
 
 # Abstract Syntax Tree

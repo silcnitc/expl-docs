@@ -10,7 +10,7 @@ hide:
 !!! info inline end custom-large "Source Code"
     ![](img/GitHub-Logo.png){style="height:75px"}
 
-    The entire project code is hosted on Github [http://github.com/silcnitc](http://github.com/silcnitc)
+    The entire project code is hosted on Github [https://github.com/silcnitc](http://github.com/silcnitc)
 
     <span style="color: red">Release Version 1.0</span>
 

@@ -113,7 +113,7 @@ An example of the contents of y.tab.h file is shown below.
 #define DIGIT 253
 ```
 
-Note that '253' is a YACC generated constant to represent DIGIT. The constant may vary at different executions of YACC. YACC represents a token by defining a [macro identifier](http://gcc.gnu.org/onlinedocs/cpp/Macros.html) corresponding to it.
+Note that '253' is a YACC generated constant to represent DIGIT. The constant may vary at different executions of YACC. YACC represents a token by defining a [macro identifier](https://gcc.gnu.org/onlinedocs/cpp/Macros.html) corresponding to it.
 
 The y.tab.h file must be _included_ in the declarations section of the LEX program. This makes the token declarartions accessible to the LEX program. We will see an example in the next section.
 
@@ -242,7 +242,7 @@ number  [0-9]+
 %%
 ```
 
-In this example, we want to return the token DIGIT when an integer is found in the input stream. In addition to the token, we need to pass the value found in the input stream to yyparse(). The lexeme found in the input stream is a string which contains the integer found. [atoi()](http://en.cppreference.com/w/cpp/string/byte/atoi) is a built-in function of return type _int_ defined in the _stdlib.h_ header file. We use atoi() to obtain the integer equivalent of the lexeme found. The obtained integer value is then assigned to yylval.
+In this example, we want to return the token DIGIT when an integer is found in the input stream. In addition to the token, we need to pass the value found in the input stream to yyparse(). The lexeme found in the input stream is a string which contains the integer found. [atoi()](https://en.cppreference.com/w/cpp/string/byte/atoi) is a built-in function of return type _int_ defined in the _stdlib.h_ header file. We use atoi() to obtain the integer equivalent of the lexeme found. The obtained integer value is then assigned to yylval.
 
 The following code segment demonstrates how yyparse() receives the attribute value corresponding to the token DIGIT passed by yylex(). Note that YACC must be run with the [\-d flag](ywl.md#navdflag) to generate y.tab.h. The LEX program above includes the y.tab.h file in the auxiliary declarations section to _import_ the declarations from y.tab.h.
 
