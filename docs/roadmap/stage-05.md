@@ -233,7 +233,7 @@ The fundamental strategy for space allocation is to create an **activation recor
 *   5\. If function A calls function B, the address of the instruction in A to resume execution (**return address** – value of current-IP +2 in XSM machine- why?) upon return from B must be saved. Similarly, the **base pointer of the caller** (BP value) of A **must be saved in the stack** before BP is changed to point to the base of B. Both the return address and BP values will be stored in pre-defined locations of the activation record of B.
 *   6\. In addition to the above, one additional **space** must be reserved in the activation record of B **to store the return value**.
 
-A thorough reading of this [page](run_data_structures/run-time-stack.md) is **absolutely essential** to proceed any further. Suppose a function has n arguments (arg\_1, arg\_2,...,arg\_n) and m local variables (loc\_1, loc\_2, ..., loc\_m), its activation record in the stack may look as the following.(The stack is assumed to grow downwards.)
+A thorough reading of this [page](../run_data_structures/run-time-stack.md) is **absolutely essential** to proceed any further. Suppose a function has n arguments (arg\_1, arg\_2,...,arg\_n) and m local variables (loc\_1, loc\_2, ..., loc\_m), its activation record in the stack may look as the following.(The stack is assumed to grow downwards.)
 
 ![](../img/stack.png)
 

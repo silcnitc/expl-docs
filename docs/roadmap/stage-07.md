@@ -33,11 +33,11 @@ For simplifying the implementation, **we will assume here that a class may conta
 
 Each **class table entry stores information pertaining to a class**. The names and types of each member field along with its _position index_ must be stored in the class table (In any class, the method defined first will be assigned position index as **0**, the method defined next will be assigned position index as **1** and so on). For each method, the _signature_ of the method (method name, return type, types and names or arguments) along with the binding (_label_ of the method – a call to the method must be translated to a call to this label) needs to be stored. The type field for a variable/method must contain a pointer to the corresponding type table entry. _An exceptional case is when a member field is of a previously defined class. In this case, a pointer to the class table entry of the member field must be maintained_.
 
-**A thorough reading of the details of [class table implementation](oexpl-data-structures.md) is necessary to proceed further**. In this stage, we will not support class extension. Hence, the parent class pointer entry for each class must be set to NULL.
+**A thorough reading of the details of [class table implementation](../oexpl-data-structures.md) is necessary to proceed further**. In this stage, we will not support class extension. Hence, the parent class pointer entry for each class must be set to NULL.
 
 For now, we will focus on syntax and semantics. Code generation will be taken up subsequently.
 
-When **a variable of a class** is declared (in the global declaration section), **a pointer to the class table entry must be mainted in the [global symbol table entry](data_structures/global-symbol-table.md)** of the variable. Hence, a new _class table pointer_ field may be added to the global symbol table structure. Note that the [global symbol table entry](../data_structures/global-symbol-table.md) for a global variable will have either a class table pointer entry or a type table pointer entry, but not both.
+When **a variable of a class** is declared (in the global declaration section), **a pointer to the class table entry must be mainted in the [global symbol table entry](../data_structures/global-symbol-table.md)** of the variable. Hence, a new _class table pointer_ field may be added to the global symbol table structure. Note that the [global symbol table entry](../data_structures/global-symbol-table.md) for a global variable will have either a class table pointer entry or a type table pointer entry, but not both.
 
 The following scope rules must be carefully checked to ensure correct semantic analysis:
 
@@ -65,7 +65,7 @@ The following paragraphs summarize the key ideas:
 
 1. How to get the address of _self?_ First observe that a reference to _self_ will occur only within a member function of a class variable. Second, all variables of the same class share the code of all the methods of the class. Thus, at run time, a method must be told which is the variable for which the current call is made. In other words, **the address of self can be determined only at run-time (_why? - ensure that you digest this point clearly before proceeding further!_)**
 
-    The standard way to resolve this reference is to set the convention that **before a call to a method, the caller must push the address of _self_** (for the particular call) **as an argument into the stack.** The convention we suggest is to push the address of _self_ before pushing the arguments during method invocations. Note that _self_ is an **implicit argument**, not found either in the declaration or the definition of the method. In the next stage, we will need to push one more implicit argument for each method invocation. It is instructive to have a quick look at the [run-time-stack management documentation](oexpl-run-data-structures.md#nav-runtimestackmanagementformethodinvocations) for OExpL at this stage
+    The standard way to resolve this reference is to set the convention that **before a call to a method, the caller must push the address of _self_** (for the particular call) **as an argument into the stack.** The convention we suggest is to push the address of _self_ before pushing the arguments during method invocations. Note that _self_ is an **implicit argument**, not found either in the declaration or the definition of the method. In the next stage, we will need to push one more implicit argument for each method invocation. It is instructive to have a quick look at the [run-time-stack management documentation](../oexpl-run-data-structures.md#nav-runtimestackmanagementformethodinvocations) for OExpL at this stage
 
 2. The **local symbol table of a method must contain an entry for _self_** along with the other arguments to the function. The binding field of this entry must be the relative address (with respect to BP in the stack) where the address of self must be pushed by the caller. For example, if this value is -k, then the compiler expects that the caller would have pushed to stack corresponding to \[BP-k\] the address of the heap block holding the member fields of the variable.
 
@@ -84,6 +84,6 @@ The task of completing code generation phase is now straightforward.
 
 Check your implementation with the following test cases :
 
-- [Test Program 1: Binary Search Tree using Classes](oexpltestprograms/test1.md)
-- [Test Program 2: Linked list in OExpL](oexpltestprograms/test2.md)
-- [Test Program 3: Sum of factorials](oexpltestprograms/test3.md)
+- [Test Program 1: Binary Search Tree using Classes](../oexpltestprograms/test1.md)
+- [Test Program 2: Linked list in OExpL](../oexpltestprograms/test2.md)
+- [Test Program 3: Sum of factorials](../oexpltestprograms/test3.md)

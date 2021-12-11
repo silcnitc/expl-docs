@@ -107,7 +107,7 @@ A plausible tree node structure and associated functions for AST construction ar
 With this background, the front end of the ExpL compiler can be completed.
 
 !!! question "Task 1"
-    Complete the syntax and semantic analysis and construct AST for ExpL language. ([Specification](expl.md), [Grammar Outline](grammar-outline.md))
+    Complete the syntax and semantic analysis and construct AST for ExpL language. ([Specification](../expl.md), [Grammar Outline](../grammar-outline.md))
 
 ## **Part II**: Back End
 
@@ -152,10 +152,10 @@ It is **absolutely necessary** to read and understand [Dynamic memory allocation
 !!! questiosn "Exercise 1"
     Extend ExpL to permit arrays of user-defined type.
 
-If you want to do **variable sized block allocation**, more complex allocation schemes like the [**Buddy System Algorithm**](./run_data_structures/heap.md#nav-buddy-allocation) will be required. One would also need to understand the issue of [**memory fragmentation**](https://en.wikipedia.org/wiki/Fragmentation_(computing)) that can arise when variable sized allocation is done.
+If you want to do **variable sized block allocation**, more complex allocation schemes like the [**Buddy System Algorithm**](../run_data_structures/heap.md#nav-buddy-allocation) will be required. One would also need to understand the issue of [**memory fragmentation**](https://en.wikipedia.org/wiki/Fragmentation_(computing)) that can arise when variable sized allocation is done.
 
 !!! question "Exercise 2: (Optional)"
-    Modify _Alloc()_ and _Free()_ library functions to implement the Buddy memory allocator described [here](run_data_structures/heap.md#nav-buddy-allocation). You will have to modify _Initialize()_ appropriately. The buddy system allocator is too complex to write in assembly language. Hence write them in ExpL itself and modify your label translation scheme to generate target addresses correctly.
+    Modify _Alloc()_ and _Free()_ library functions to implement the Buddy memory allocator described [here](../run_data_structures/heap.md#nav-buddy-allocation). You will have to modify _Initialize()_ appropriately. The buddy system allocator is too complex to write in assembly language. Hence write them in ExpL itself and modify your label translation scheme to generate target addresses correctly.
 
 ## Test Programs
 
