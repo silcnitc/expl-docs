@@ -7,10 +7,12 @@ hide:
 
 ## **EXPERIMENTAL LANGUAGE** : WRITE YOUR OWN COMPILER
 
-!!! info inline end custom-large "Project Infomation"
-    Source Code: [https://github.com/silcnitc](https://github.com/silcnitc)
+!!! info inline end custom-large "Source Code"
+    ![](img/GitHub-Logo.png){style="height:75px"}
 
-    Last updated: 22nd July 2021 (see [Release Notes](./changelog.md))
+    The entire project code is hosted on Github [http://github.com/silcnitc](http://github.com/silcnitc)
+
+    <span style="color: red">Release Version 1.0</span>
 
 This project aims to develop an online self-sufficient educational platform to help undergraduate Computer Science students understand the functioning of a compiler for a simple procedural language by writing a small toy compiler themselves. (An object oriented extension for the language has been added subsequently.) The project will provide students with a [roadmap :material-road:](./roadmap/index.md) for the development process and guide them along the roadmap with supporting documentation. Using the step-by-step guidance offered by the roadmap, the students will be able to build the compiler under minimal expert supervision.
 
