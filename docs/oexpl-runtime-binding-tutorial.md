@@ -6,7 +6,7 @@ hide:
 
 # OEXPL Run Time Binding Tutorial
 
-Consider the OExpL code given below extending the classes [here](oexpl-run-data-structures.html#nav-illustration)
+Consider the OExpL code given below extending the classes [here](oexpl-run-data-structures.md#nav-illustration)
 ```
 decl
     A obj ;
@@ -73,18 +73,18 @@ Note that compile time check whether f0() is a method in the class A to which ob
 
 ## Run time Stack Management for Method invocations
 
-While generating the code for invoking a method of a class using an object of the class (for example, in the call obj.f0() above, f0() is invoked using the object obj of class A) **the member field pointer and virtual function table pointer of the object must be pushed to the stack in addition to normal arguments of the function.** We will follow the convention that these two values will be pushed before other arguments are pushed. This is how the runtime stack looks, when a method of a class is called.  
-  
-[![](../img/runtimestackoexpl.png)](../img/runtimestackoexpl.png)  
-For instance, in the above example, if the value read from the input is 0, the following figure shows the run time stack.  
-  
-[![](../img/runtimestackoexpl2_1.png)](../img/runtimestackoexpl2_1.png)  
+While generating the code for invoking a method of a class using an object of the class (for example, in the call obj.f0() above, f0() is invoked using the object obj of class A) **the member field pointer and virtual function table pointer of the object must be pushed to the stack in addition to normal arguments of the function.** We will follow the convention that these two values will be pushed before other arguments are pushed. This is how the runtime stack looks, when a method of a class is called.
+
+[![](img/runtimestackoexpl.png)](img/runtimestackoexpl.png)
+For instance, in the above example, if the value read from the input is 0, the following figure shows the run time stack.
+
+[![](img/runtimestackoexpl2_1.png)](img/runtimestackoexpl2_1.png)
 
 ### Need For Pushing The Object
 
 According to OExpL Specification, a member field or method should be accessed using self. In order to find out which object we are talking about,when we say self, we need to push the object into the stack.
 
-Consider the following OExpL program,  
+Consider the following OExpL program,
 
 ```
 class
@@ -157,11 +157,11 @@ int main() {
 
 For **obj1**, the member field **height** must be set to 10. For **obj2**, the member field **height** must be set to 20.
 
-In the method definition for the method **setHeight**, the member field **height** is set by using the statement, **self.height = a;**.  
+In the method definition for the method **setHeight**, the member field **height** is set by using the statement, **self.height = a;**.
 By this statement alone, we cannot say which object is **self** referring to. To identify which object is **self** referring to, we push the calling object to the stack.
 
 If **obj1** calls the method **setHeight**, the member field pointer and virtual function table pointer of **obj1** are pushed into the stack. Now, we know that **obj1** is calling the method (By looking at the runtime stack). So, we set the **member field height of obj1** by using the **member field pointer** and the **field position of member field height**. Member field pointer is the heap address given to the object for storing the member fields of the class it is assigned with.
 
-The virtual function table pointer is used, when we invoke other methods using **self**. **p = self.setHeight(5);** //In the method defaultHeight().  
+The virtual function table pointer is used, when we invoke other methods using **self**. **p = self.setHeight(5);** //In the method defaultHeight().
 For this we need to generate a CALL instruction. The call address is obtained from virtual function table.
 

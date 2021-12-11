@@ -94,7 +94,7 @@ int main(){
 }
 ```
 
-1.  The global variables are allocated statically in the initial portion of the stack. Note that stack begins at `4096` according to the [ABI specification](abi.md).
+1.  The global variables are allocated statically in the initial portion of the stack. Note that stack begins at `4096` according to the [ABI specification](../abi.md).
 
     ![](../img/data_structure_39.png)
 

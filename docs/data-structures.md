@@ -42,7 +42,7 @@ A syntax tree representation for the three statements above would look as below:
 ![](img/symboltable.png)
 
 !!! note
-    The memory addresses assigned to each variable in the figure above (100-103) has been chosen arbitrary. The Application Binary Interface specifies the valid range of addresses that a compiler can allocate for variables. For instance, the ExpOS [ABI](abi.html#nav-virtual-address-space-model) requires that addresses must be in the range 4096 to 5119.
+    The memory addresses assigned to each variable in the figure above (100-103) has been chosen arbitrary. The Application Binary Interface specifies the valid range of addresses that a compiler can allocate for variables. For instance, the ExpOS [ABI](abi.md#nav-virtual-address-space-model) requires that addresses must be in the range 4096 to 5119.
 
 Whenever a variable occurs in the syntax tree representation, it is convenient to maintain a pointer to the symbol table entry of the variable as shown in the figure. Note that since there are multiple symbol tables (global and local), the reference maintained for each variable must be to the right symbol table containing the variable entry.
 

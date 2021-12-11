@@ -32,7 +32,7 @@ fprintf(); //Add this during implementation
 free_register(j);
 ```
 
-Following is how code is generated for the nodetype 'while'. Note that, the labels generated here are psuedo addresses. We will deal about replacing the labels with actual address in the [label translation](label-translation.html) documentation.
+Following is how code is generated for the nodetype 'while'. Note that, the labels generated here are psuedo addresses. We will deal about replacing the labels with actual address in the [label translation](label-translation.md) documentation.
 
 We have two subtrees for 'while' nodetype. 'ptr1' representing the conditional expression in while statement and 'ptr2' representing the body of while statement.
 
@@ -42,9 +42,9 @@ We have two subtrees for 'while' nodetype. 'ptr1' representing the conditional e
 4. If the value in register Ri is not zero, i.e, the conditional expression evaluted to true, the we would execute the body of while. Therefore, after the above steps code for 'ptr2' is generated and at the end of it, the jump statement to the first label, LL1 is given, so that, the conditional expression can be evalauted again and the decision whether to execute the body of while is made.
 5. Finally the second label is given,so that we can mark the end of while statement.
 
-For the code generation for functions, the activities are given [here.](run_data_structures/run-time-stack.html)
+For the code generation for functions, the activities are given [here.](run_data_structures/run-time-stack.md)
 
-For making library calls, follow the steps given in the [invoking a library module](abi.html#nav-eXpOS-system-library-interface) section in [Application Binary Interface](abi.html) documentation.
+For making library calls, follow the steps given in the [invoking a library module](abi.md#nav-eXpOS-system-library-interface) section in [Application Binary Interface](abi.html) documentation.
 
 ## Illustration
 
