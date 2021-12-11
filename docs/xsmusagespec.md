@@ -8,7 +8,7 @@ hide:
 
 ## Usage
 
-The **XSM (eXperimental String Machine)** Simulator is used to simulate the hardware and OS abstractions specified in the ExpOS [Application Binary Interface](abi.html).
+The **XSM (eXperimental String Machine)** Simulator is used to simulate the hardware and OS abstractions specified in the ExpOS [Application Binary Interface](abi.md).
 
 Within your XSM directory, use the following command to run the simulator
 
@@ -18,15 +18,15 @@ Within your XSM directory, use the following command to run the simulator
 
 1. ***Syntax*** : `-l library.lib`
 
-    ***Semantics*** : This flag loads the library, library.lib to the machine memory. (The simulator specification does not allow any name other than library.lib for the library file.) The argument is optional and needs to be given only if the library is to be linked to page 0 and page 1 of the [virtual address space](abi.html#nav-virtual-address-space-model)
+    ***Semantics*** : This flag loads the library, library.lib to the machine memory. (The simulator specification does not allow any name other than library.lib for the library file.) The argument is optional and needs to be given only if the library is to be linked to page 0 and page 1 of the [virtual address space](abi.md#nav-virtual-address-space-model)
 
 2. ***Syntax*** : `-e <filename.xsm>`
 
-    ***Semantics*** : This flag loads the executable file named as filename which is of the [XEXE format](abi.html#nav-XEXE-executable-file-format) . This argument is mandatory. The file is loaded into pages 4,5,6 and 7 in the [virtual address space](abi.html#nav-virtual-address-space-model) .
+    ***Semantics*** : This flag loads the executable file named as filename which is of the [XEXE format](abi.md#nav-XEXE-executable-file-format) . This argument is mandatory. The file is loaded into pages 4,5,6 and 7 in the [virtual address space](abi.md#nav-virtual-address-space-model) .
 
 3. ***Syntax*** : `--debug`
 
-    ***Semantics*** : This flag sets the machine into DEBUG mode when it encounters a BRKP machine instruction. Any [BRKP instruction](abi.html#nav-debug) in the program will be ignored by the machine if this flag is not set. Further details are given in the section below.
+    ***Semantics*** : This flag sets the machine into DEBUG mode when it encounters a BRKP machine instruction. Any [BRKP instruction](abi.md#nav-debug) in the program will be ignored by the machine if this flag is not set. Further details are given in the section below.
 
 ## Debugging
 

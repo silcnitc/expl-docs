@@ -8,7 +8,7 @@ title: 'OExpL Runtime Data Structures'
 
 **Virtual Function Table** is a run time data structure that is used to resolve at run time the call addresses of methods in a class. Such mechanism (or other table schemes) needs to be implemented by compilers for languages that support [inheritance](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)), [subtype Polymorphism](https://en.wikipedia.org/wiki/Subtyping) and [method over-riding](https://en.wikipedia.org/wiki/Method_overriding). A run time virtual function table is maintained in the memory for each class. **The compiler generates code to initialize the table for each class such that each function that can be invoked from the class has an entry in the table**. For each function defined or inherited by a class, the table will contain the call address of the function in the code region of memory. **If a function is inherited by a class from its parent and is not over-ridden by the class, the call address stored will be that of the function defined in the parent class**. The same address will be stored for the function in the virtual function table of the parent class as well.
 
-The OExpL compiler maintains a virtual function table of eight words for each class. Hence, a class can have at most eight member functions. The i-th entry in the table holds the address of the i-th function of the class (identified by the field **Funcposition** in the [class table](/oexpl-data-structures.html) - see Memberfunclist). While generating code, **if there is a call to a function within a class, the compiler simply translates the call to "CALL \[address\]", where address is obtained from the corresponding virtual function table**.
+The OExpL compiler maintains a virtual function table of eight words for each class. Hence, a class can have at most eight member functions. The i-th entry in the table holds the address of the i-th function of the class (identified by the field **Funcposition** in the [class table](oexpl-data-structures.html) - see Memberfunclist). While generating code, **if there is a call to a function within a class, the compiler simply translates the call to "CALL \[address\]", where address is obtained from the corresponding virtual function table**.
 
 A simple way to place the virtual function table is to use the initial part of the stack region (starting at memory address 4096), ahead of global variables. This is suggested because the compilation of classes will be finished before compiling the global declarations. In this scheme, the virtual function table of the class defined first in the program will be stored in the region 4096-4103, the second in 4104-4111 and so on.
 
@@ -110,9 +110,9 @@ endclass
         It is sufficient to place labels, and not addresses in the virtual function table, as the [label translation phase](/label-translation.html) will take care of translating labels to addresses
 
     In the example given, the function f0 in class A has funcposition 0 and say flabel F0 (we identify flabel 0 with F0) and the function f1 in class A gets a funcposition 1 and say flabel F1 (we identify flabel 1 with F1). The member function list of class A looks as shown in the below figure :
-    [![](../img/virtual_function_table_3.png)](../img/virtual_function_table_3.png)
+    [![](img/virtual_function_table_3.png)](img/virtual_function_table_3.png)
     The virtual function table of class A looks as shown in the figure below. It is constructed using member function list of class A which is shown in the figure above.
-    [![](../img/virtual_function_table_1.png)](../img/virtual_function_table_1.png)
+    [![](img/virtual_function_table_1.png)](img/virtual_function_table_1.png)
     As mentioned earlier, all the labels of the functions will be replaced with addresses during [label translation phase](/label-translation.html).
 
 4. Class B extends class A and over-rides f0(). Further, class B contains the newly defined method f2(). When a class extends another, all the member fields and methods of the parent class are inherited by the derived class, unless over-ridden by a new definition. Since the method f0() is over-ridden by B, a new label will have to be allocated for the function f0() in class B. In the present example, we set the new label to F2. Accordingly, the compiler must update _Memberfunclist_ entry of the method f0() in class B with the new _flabel_ value. Correspondingly, in the virtual function table entry for class B, the entry for method f0() must be F2 (over-riding F0). The entry for method f1() (label F1) will be inherited from class A. A new label (label F3 in the example) must be generated for the function f2() defined in class B. The labels for each method in class B is shown in the table below for easy reference.
@@ -122,7 +122,7 @@ endclass
     From an implementation point of view, it will be easier to (generate code to) copy all the virtual function table entries of A to the virtual function table of B and then (generate code to) modify the labels of over-ridden functions/add labels for new functions defined in B. The compilation for class C may proceed similarly. Note that OExpL specification stipulates that the signatures of the over-ridden methods must match exactly with the signature of the original definition in the parent class.
 
 
-    [![](../img/virtual_function_table_4.png)](../img/virtual_function_table_4.png)
+    [![](img/virtual_function_table_4.png)](img/virtual_function_table_4.png)
 
 
 
@@ -132,15 +132,15 @@ endclass
 
 
 
-    [![](../img/virtual_function_table_2.png)](../img/virtual_function_table_2.png)
+    [![](img/virtual_function_table_2.png)](img/virtual_function_table_2.png)
 
     ★ Overridden labels are marked in red
 
 ## Runtime Binding
 
-Please go through the [OExpL Specification - Run time Binding](/oexpl-specification.html#nav-run-time-binding) carefully before proceeding further.
+Please go through the [OExpL Specification - Run time Binding](oexpl-specification.md#nav-run-time-binding) carefully before proceeding further.
 
-Consider the OExpL code given below assuming the classes defined [above](/oexpl-run-data-structures.html#nav-illustration)
+Consider the OExpL code given below assuming the classes defined [above](oexpl-run-data-structures.md#nav-illustration)
 
 ```
 decl
@@ -185,15 +185,15 @@ Similarly the statement obj=new(B) results in the compiler generating code to st
 
 if '( n < 0)' then the two words of obj is :
 
-[![](../img/virtual_function_table_5.png)](../img/virtual_function_table_5.png)
+[![](./img/virtual_function_table_5.png)](./img/virtual_function_table_5.png)
 
 if '(n = 0)' then the two words of obj is :
 
-[![](../img/virtual_function_table_6.png)](../img/virtual_function_table_6.png)
+[![](./img/virtual_function_table_6.png)](./img/virtual_function_table_6.png)
 
 if '(n > 0)' then the two words of obj is :
 
-[![](../img/virtual_function_table_7.png)](../img/virtual_function_table_7.png)
+[![](./img/virtual_function_table_7.png)](./img/virtual_function_table_7.png)
 
 In the above code, the value of n is read from the console and is not known at the compile time. Hence, the actual value stored in the virtual function table pointer of obj during run-time cannot be predicted at compile time. Consequently, the actual function invoked by the call obj.f0() cannot be predicted at compile time. This fact forces the compiler to generate code to maintain the virtual function tables at run time.
 
@@ -225,10 +225,10 @@ In more detail, for the call _obj.f0()_, the compiler must do the following:
 
 While generating the code for invoking a method of a class using an object of the class (for example, in the call obj.f0() above, f0() is invoked using the object obj of class A) **the member field pointer and virtual function table pointer of the object must be pushed to the stack in addition to normal arguments of the function.** We will follow the convention that these two values will be pushed before other arguments are pushed. This is how the runtime stack looks, when a method of a class is **called**.
 
-[![](../img/rts11.png)](../img/rts11.png)
+[![](./img/rts11.png)](./img/rts11.png)
 For instance, in the above [example](/oexpl-run-data-structures.html#nav-runtimebinding), The value of _n_ read from the input is 0, the following figure shows the run time stack. Note that the function f0 has no arguments.
 
-[![](../img/rts2.png)](../img/rts2.png)
+[![](./img/rts2.png)](./img/rts2.png)
 
 ### Why do we need to push the object? Illustration
 ```

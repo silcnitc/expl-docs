@@ -20,7 +20,7 @@ A parser is a program that checks whether its input (viewed as a stream of token
 
 ### Context Free Grammar (CFG)
 
-A context free grammar is defined by a four tuple (N,T,P,S) - a set N of non-terminals, a set T of terminals (in our project, these are the [tokens](lex.html#navintro) returned by the lexical analyzer and hence we refer to them as tokens frequently), set P of productions and a start variable S. Each production consists of a non-terminal on the left side (head part) and a sequence of tokens and non-terminals (of zero or more length) on the right side (body part). We will explore productions further in detail [later](#navprod) in this documentation. For more about context free grammars refer to this [wiki](https://en.wikipedia.org/wiki/Context-free_grammar) .
+A context free grammar is defined by a four tuple (N,T,P,S) - a set N of non-terminals, a set T of terminals (in our project, these are the [tokens](lex.md#navintro) returned by the lexical analyzer and hence we refer to them as tokens frequently), set P of productions and a start variable S. Each production consists of a non-terminal on the left side (head part) and a sequence of tokens and non-terminals (of zero or more length) on the right side (body part). We will explore productions further in detail [later](#navprod) in this documentation. For more about context free grammars refer to this [wiki](https://en.wikipedia.org/wiki/Context-free_grammar) .
 
 **Example:** This example is an Infix to Postfix converter implemented using YACC. The rules part of the YACC program has been shown below:
 
