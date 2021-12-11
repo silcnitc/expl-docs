@@ -45,6 +45,8 @@ The road-map takes you through a "spiral" model of program development. First, a
 
 Wish you good luck working through the [roadmap](./roadmap/index.md).
 
+* * *
+
 ## Customizing the Project
 
 If you wish to adapt the project to your own instructional requirements, this is how we suggest you to proceed.

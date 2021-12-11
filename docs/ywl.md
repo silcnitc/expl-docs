@@ -457,25 +457,53 @@ We will see how attribute synthesis is done on input 2+3\*(4+5).
 
 Note that at any point in the parser’s execution, the symbols $1, $2, $3 etc., refers to the first, second, third etc. attribute values (of the corresponding tokens) on top of the stack. $$ refers to the attribute value of the non-terminal which is the head of the production. When the non-terminal is pushed on to the parse stack, the value of $$ is pushed on to the attribute stack. $$ refers to the symbol on top of the stack after a reduction has taken place.
 
- ![](img/ywl4.png) ![](img/ywl5.png)
+<div class="two-col">
+<div>
+<img src="img/ywl4.png">
+<h5>PARSE STACK - BEFORE READ</h5>
+</div>
+<div>
+<img src="img/ywl5.png">
+<h5>ATTRIBUTE STACK - BEFORE READ</h5>
+</div>
+</div>
 
-PARSE STACK-BEFORE READ       ATTRIBUTE STACK-BEFORE READ
-
- ![](img/ywl6.png) ![](img/ywl7.png)
-
-PARSE STACK-AFTER READ       ATTRIBUTE STACK-AFTER READ
+<div class="two-col">
+<div>
+<img src="img/ywl6.png">
+<h5>PARSE STACK - AFTER READ</h5>
+</div>
+<div>
+<img src="img/ywl7.png">
+<h5>ATTRIBUTE STACK - AFTER READ</h5>
+</div>
+</div>
 
 6. The parser executes a shift action. Now Lex reads and returns the token ‘+’. Since this is a literal token, its value, ‘+’ gets pushed into both the parse stack and the attribute stack after implicit type coercion .
 
- ![](img/ywl8.png) ![](img/ywl9.png)
-
-PARSE STACK-AFTER SHIFT       ATTRIBUTE STACK-AFTER SHIFT
+<div class="two-col">
+<div>
+<img src="img/ywl8.png">
+<h5>PARSE STACK - AFTER SHIFT</h5>
+</div>
+<div>
+<img src="img/ywl9.png">
+<h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
+</div>
+</div>
 
 7. Since there are no possible reductions to be performed, parser executes another shift operation. Lex returns the token DIGIT again as it encounters ‘3’. The token DIGIT gets pushed to the parser stack and its value, ‘3’, gets pushed to the attribute stack.
 
- ![](img/ywl10.png) ![](img/ywl11.png)
-
-PARSE STACK-AFTER SHIFT       ATTRIBUTE STACK-AFTER SHIFT
+<div class="two-col">
+<div>
+<img src="img/ywl10.png">
+<h5>PARSE STACK - AFTER SHIFT</h5>
+</div>
+<div>
+<img src="img/ywl11.png">
+<h5>ATTRIBUTE STACK - AFTER SHIFT</h5>
+</div>
+</div>
 
 8. The reduction by the rule expr: DIGIT takes place. The token DIGIT in parse stack is replaced by ‘expr’. The semantic action {$$=$1} sets the value of ‘expr’ to ‘3. In the attribute stack, the value of DIGIT (3) gets replaced by the value of expr (3 itself).
 

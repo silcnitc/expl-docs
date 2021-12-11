@@ -5,20 +5,6 @@ hide:
   - toc
 ---
 
-<style>
-.stage-link {
-    font-size: 1.3em;
-    line-height: 1.3;
-    display: block;
-    width: 100%;
-    padding: 0.25em 0;
-    margin: 0 0 0.25em;
-    border-bottom: 2px solid rgb(175, 175, 175);
-    color: var(--md-code-fg-color) !important;
-}
-</style>
-
-
 This roadmap is divided into several stages, to be done in sequential order. Incrementally you will build a compiler for the ExpL language according to its specification. Links are provided for background reading material wherever appropriate. It will be assumed that you have background in C programming, Data Structures and Principles of Computer Organization.
 
 

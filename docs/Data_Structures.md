@@ -1,32 +1,10 @@
-Data Structures
+---
+title: 'Data Structures for ExpL Compilation/Interpretation'
+---
+# Data Structures for ExpL Compilation/Interpretation
 
-[![](img/logo.png)](index.html)
 
-* [Home](index.html)
-* [About](about.html)
-* [Roadmap](roadmap.html)
-* [Documentation](documentation.html)
-
-* * *
-
-Data Structures for ExpL Compilation/Interpretation
-
-* [Introduction](#nav-introduction)
-* [Data Structures for Analysis Phase](#nav-analysis-structures)
-* [Type Table](#nav-typetable)
-* [Symbol Table](#nav-symbol-table)
-* [Global Symbol Table](#nav-global-symbol-table)
-* [Local Symbol Table](#nav-local-symbol-table)
-* [Abstract Syntax Tree](#nav-abstract-syntax-tree)
-* [Data Structures for execution phase](#nav-execution-structures)
-* [The memory model](#nav-memory-model)
-* [Register Allocation](#nav-register-allocation)
-* [Static Allocation](#nav-static-allocation)
-* [Run Time Stack Allocation](#nav-run-time-stack)
-* [Heap Allocation](#nav-heap)
-
-INTRODUCTION
-------------
+## INTRODUCTION
 
 The compilation/interpretation of an ExpL program involves two phases. In the first phase (called the **analysis phase**), the source ExpL program is analyzed (lexical, syntax and semantic analysis are completed in this phase) and if the program is free of syntax and semantic errors, an intermediate representation of the source program called the **abstract syntax tree** is generated.
 
@@ -54,11 +32,9 @@ We can generalize this representation to come up with a tree representation for 
 
 In the following, the definitions node structures for each of the above data structures is discussed. The organization of data in these data structures is also discussed with illustrative examples.
 
-DATA STRUCTURES FOR ANALYSIS PHASE
-----------------------------------
+## DATA STRUCTURES FOR ANALYSIS PHASE
 
-Type Table
-----------
+### Type Table
 
 The Type Table stores all the necessary information regarding the various user defined types in the source program. The compiler creates an entry in the Type Table for each user defined type. In addition to this, there are default entries created for primitive types (_int_, _str_) and special entries _null_, _boolean_ and _void_ for the internal purposes of the interpreter. The default and special entries are made beforehand whereas entries for user defined types are made as the Type Declaration Section of the source code is parsed.
 
@@ -92,8 +68,7 @@ Let us consider the following sample code:
 
 4. Once the type declaration section is completely parsed, the type table is fully created and will not be further modified or updated.
 
-Symbol Tables
--------------
+### Symbol Tables
 
 Symbol tables are used to store information pertaining to the variables and functions in a program.
 
@@ -141,8 +116,7 @@ Arrays cannot be local variables, so we don't need to store the size of a variab
 
 Memory is allocated for local variables of a function from a seperate memory area called the [stack](#nav-stack). Hence, the binding for a local variable is the relative address of the variable with respect to the base of the [**Activation Record**](#). The [**Base Pointer**](#) points to the base of an activation record of a function. The binding is added to the Base Pointer to obtain the address of variable in stack. This will be explained in detail later.
 
-Abstract Syntax Tree
---------------------
+### Abstract Syntax Tree
 
 The machine independent **front-end** phase of a compiler constructs an intermediate representation of the source program called the **Abstract Syntax Tree (AST)**. An interpretter will evaluate the AST whereas a compiler will run a machine dependent **back-end** to generate a target assembly language program. The following structure may be used to represent a node of the AST.
 
@@ -334,12 +308,11 @@ AST for `f = n * factorial(n-1)` is as below.
 
 ![](img/data_structure_59.png)  
 
-DATA STRUCTURES FOR EXECUTION PHASE
------------------------------------
+## DATA STRUCTURES FOR EXECUTION PHASE
 
 Before explaining the data structures used for the execution phase, it is necessary to understand the requirements and the underlying theoretical concepts in some detail.
 
-#### The storage allocation Problem
+### The storage allocation Problem
 
 This part of the documentation primarily focuses on program interpretation.  However, our interpreter will be somewhat mimicing the actions of a compiler and hence the reader will be able to easily adapt what is learned here to handle the synthesis phase of compilation by going through this documentation.
 
@@ -375,8 +348,7 @@ Finally, intermediate values generated during program execution needs **temporar
 
 To summarize, we have four kinds of memory allocation – static, stack, heap and register (temporary). The data structures and algorithms necessary for implementing each of these are discussed below.
 
-The memory model
-----------------
+### The memory model
 
 Our interpreter will simulate machine memory and registers by defining three memory arrays, named _stack, heap and registers_.
 
@@ -386,8 +358,7 @@ The basic unit of memory (called a **memory word**) is assumed to be able to sto
 
 The interpreter works with three arrays of memory words, to implement temporary storage (registers), the run time stack and the heap. There will be no sperarate memory array for static data. Instead, the intial part of the stack will be used for storing static data.
 
-Register Allocation
--------------------
+### Register Allocation
 
 Register allocation is performed through two simple functions.
 
@@ -396,13 +367,11 @@ Register allocation is performed through two simple functions.
 
 The interpreter invokes these functions in the course of evalaution of expressions to create temporary store.
 
-Static Allocation
------------------
+### Static Allocation
 
 As noted previously, global variables are allocated statically. In our interpreter, the initial portion of the stack will be used for static allocation. The rest of the stack memory region will be used for run time allocation. The amount of static storage required is known from the variable declarations.
 
-Run Time Stack Allocation
--------------------------
+### Run Time Stack Allocation
 
 During run-time, when an ExpL function is invoked, space has to be allocated for storing
 
@@ -511,8 +480,7 @@ The type field in memstruct can take the following values
 
 NOTE : valstruct and memstruct structures have been used here to keep the fine line between a value object and a object in the memory.
 
-Heap Allocation
----------------
+### Heap Allocation
 
 A storage allocation decision can be static or dynamic. A decision is dynamic if it can be decided only while the program executes. In simple terms, consider the previous example, the size of the linkedlist marks is not known at the compile time, its size is only known at the run-time when we read in the count of subjects.
 
@@ -648,10 +616,3 @@ For illustration, we will have 64-sized heap and smallest block size as 8. So we
     ![](img/data_structure_25.png)  
     ![](img/data_structure_26.png)  
 
-* [Github](http://github.com/silcnitc)
-* [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-
-* [Home](index.html)
-* [About](about.html)
-
-window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\\/script>')

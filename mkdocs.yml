@@ -19,6 +19,8 @@ theme:
     - navigation.top
     - navigation.sections
 
+extra_css:
+  - extra.css
 
 copyright: >-
   National Insititute of Technology, Calicut <br/>
@@ -105,4 +107,6 @@ nav:
           - Program 5: oexpltestprograms/test5.md
           - Program 6: oexpltestprograms/test6.md
           - Program 7: oexpltestprograms/test7.md
-  - Feedback: feedback.md
+  - Student Feedback:
+    - Student Feedback: feedback/index.md
+    - NIT-C Winter 2017: feedback/nitc-winter-2017.md
