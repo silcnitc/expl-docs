@@ -14,7 +14,7 @@ The ExpL compiler needs to translate a given source program and generate the **t
 
 **These specifications depend not only on the target machine architecture, but also on the operating system** upon which the target machine code must execute. Typically these specifications are collected together in the OS specification into a document called the Application Binary Interface (ABI).
 
-The following sections specify the ABI for the [eXpOS operating system](http://exposnitc.github.io/) run on the [XSM virtual machine model](http://exposnitc.github.io/virtual_machine_spec.md). The executable format is called the XEXE executable format.
+The following sections specify the ABI for the [eXpOS operating system](http://exposnitc.github.io/expos-docs/) run on the [XSM virtual machine model](https://exposnitc.github.io/expos-docs/virtual-machine-spec/). The executable format is called the XEXE executable format.
 
 ## The XSM virtual machine model and instruction set
 
@@ -434,7 +434,7 @@ POP Rj           // Pop and discard the function code
 
 The machine code shown above is executed upon return from the library call and pops out the values that were pushed before the call. The function code and arguments were inputs to the library module and hence they may be discarded now. The return value which is stored in the stack by the system call must be popped out and saved to some register. This value will be the only relevant information after return from the call.
 
-Note: The eXpOS library interface permits many more functions (interfaces to eXpOS system calls). Since these functions are not relevant for the implementation of the ExpL specification here, those details are left out. The full details of eXpOS library are given [here](http://exposnitc.github.io/os_spec-files/dynamicmemoryroutines.md).
+Note: The eXpOS library interface permits many more functions (interfaces to eXpOS system calls). Since these functions are not relevant for the implementation of the ExpL specification here, those details are left out. The full details of eXpOS library are given [here](https://exposnitc.github.io/expos-docs/os-spec/dynamicmemoryroutines/).
 
 Low Level System Call Interface
 -------------------------------

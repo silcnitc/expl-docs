@@ -164,7 +164,7 @@ Example:
  enddecl
 ```
 
-Object instance is created for a variable of a class with the built-in function _new_. The language does not support [constructors and destructors](<https://en.wikipedia.org/wiki/Constructor_(object-oriented_programming>). Hence intitialization of objects has to be done explicitly. An object can be deallocated using the built-in function _delete_. The function _new_ will create an object of a specified class at run time, and assigns a _reference_ to the object into a variable. A variable of a given class may be assigned a reference to an object of any desendent class using _new_. Access semantics of class variables is similar to ExpL user-defined-types, except for the details associated with methods defined within classes. These details are described below.
+Object instance is created for a variable of a class with the built-in function _new_. The language does not support [constructors and destructors](https://en.wikipedia.org/wiki/Constructor_(object-oriented_programming)). Hence intitialization of objects has to be done explicitly. An object can be deallocated using the built-in function _delete_. The function _new_ will create an object of a specified class at run time, and assigns a _reference_ to the object into a variable. A variable of a given class may be assigned a reference to an object of any desendent class using _new_. Access semantics of class variables is similar to ExpL user-defined-types, except for the details associated with methods defined within classes. These details are described below.
 
 ## Subtype Polymorphism
 ```
