@@ -150,11 +150,11 @@ The simple scheme we suggest here is to put the label F0 before the code of the 
 
 With this, the global symbol table for the [program](../run_data_structures/run-time-stack.md#nav-illustration) would be as below.
 
-![](../../img/gsymboltable3.png)
+![](../img/gsymboltable3.png)
 
 Continuing with the above example, we need two local symbol tables – one for the main function and one for the factorial function. The local symbol table holds the (name, type, binding) triple for each **formal parameter** as well as **local variables** of the function. We will discuss the binding of formal parameters and local variables later. The local symbol tables of main and factorial would look as the following:
 
-![](../../img/localsymboltable2.png) ![](../img/localsymboltable1.png)
+![](../img/localsymboltable2.png) ![](../img/localsymboltable1.png)
 
 See [LINK](../data_structures/local-symbol-table.md) for more details. For now, ignore the type table pointer in the structure given in the link. This will be discussed in the next stage.
 
@@ -191,9 +191,9 @@ The expression tree for this could look as below:
 
 A tree node for a function call contains a pointer to a list of expressions, one expression for each argument. **The compiler must type check each argument and match it with the type of the corresponding formal parameter of the called function.**
 
-To get an overall picture of what is going on, you may read the documentation on [compile time data structures](data-structures.md) at this juncture. **Ignore type table entries for now** as we permit only integer/string variables in the present stage.
+To get an overall picture of what is going on, you may read the documentation on [compile time data structures](../data-structures.md) at this juncture. **Ignore type table entries for now** as we permit only integer/string variables in the present stage.
 
-The expression tree structure given [HERE](data_structures/abstract-syntax-tree.md) can be used (again, ignore type table pointer) The details of implementation are left to you.
+The expression tree structure given [HERE](../data_structures/abstract-syntax-tree.md) can be used (again, ignore type table pointer) The details of implementation are left to you.
 
 With this information, the task of completing type checking and building expression tree for a function is straightforward.
 
@@ -220,7 +220,7 @@ The dynamics of a function call can be understood easily by dividing the process
 
 The machine code for actions in Step 1 and Step 3 must be generated when the compiler encounters a function call in the caller's code. The compiler generates code for Step 2 while generating code for the callee function.
 
-To implement the above plan, we need to create storage space whenever a function call is encountered. We will be focusing on generating code containing labels. Translation of labels to actual addresses can be easily done at the end as was done in Stage 4 following the [Label Translation Documentation](label-translation.md).
+To implement the above plan, we need to create storage space whenever a function call is encountered. We will be focusing on generating code containing labels. Translation of labels to actual addresses can be easily done at the end as was done in Stage 4 following the [Label Translation Documentation](../label-translation.md).
 
 **Implementation Strategy**.
 
