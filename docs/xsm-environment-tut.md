@@ -20,10 +20,10 @@ The XSM simulator given to you is actually much more than a bare XSM hardware si
 Your compiler simply needs to generate an executable file following the XEXE executable format and store it on the local machine. When you use the XSM simulator to run the program, the following actions take place.
 
 * 1\. The script that runs the simulator transfers the file from your local machine's disk to the XSM machine's (simulated) hard disk.
-* 2\. It then boots up the operating system (the OS is already preloaded in the simulator's hard disk). The bootstrap loader starts in the kernel mode and sets up a user process in memory, allocating an address space. Then, it transfers the executable file from the hard disk to the [code region](abi.html#nav-virtual-address-space-model) of this memory. Page tables are also set up to run the process in user mode.
-* 3\. Finally, the simulator sets the instruction pointer (IP) to the address specified in the **entry-point field** of the header of the executable file and control transfers to this instruction, resulting in execution of the loaded program starting with the instruction specified by the entry point. The machine also switches from the kernel mode to the user mode. (Technically, the OS code pushes the entry point address on to the program's stack and executes the [IRET instruction](http://exposnitc.github.io/arch_spec-files/instruction_set.html) resulting in transfer of control in user mode to the specified memory address. These details are not relevant for your work and are noted just for the sake of information.)
+* 2\. It then boots up the operating system (the OS is already preloaded in the simulator's hard disk). The bootstrap loader starts in the kernel mode and sets up a user process in memory, allocating an address space. Then, it transfers the executable file from the hard disk to the [code region](abi.md#nav-virtual-address-space-model) of this memory. Page tables are also set up to run the process in user mode.
+* 3\. Finally, the simulator sets the instruction pointer (IP) to the address specified in the **entry-point field** of the header of the executable file and control transfers to this instruction, resulting in execution of the loaded program starting with the instruction specified by the entry point. The machine also switches from the kernel mode to the user mode. (Technically, the OS code pushes the entry point address on to the program's stack and executes the [IRET instruction](http://exposnitc.github.io/arch_spec-files/instruction_set.md) resulting in transfer of control in user mode to the specified memory address. These details are not relevant for your work and are noted just for the sake of information.)
 
-We start now by generating a small XEXE executable file containing an XSM program to find the sum of two numbers and store the value in a register. The value of the register will have to be inspected in order to view the ouput. This is possible by executing the XSM simulator in [debug mode](xsmusagespec.html#nav-debug). Later we will see how console input and output are handled.
+We start now by generating a small XEXE executable file containing an XSM program to find the sum of two numbers and store the value in a register. The value of the register will have to be inspected in order to view the ouput. This is possible by executing the XSM simulator in [debug mode](xsmusagespec.md#nav-debug). Later we will see how console input and output are handled.
 
 ---
 
@@ -31,7 +31,7 @@ We start now by generating a small XEXE executable file containing an XSM progra
 
 As noted above, executable programs must be designed in such a way that it must be possible for the file to be loaded and executed by the underlying operating system. When a program is loaded into memory by the OS, the OS typically assigns a virtual address space (or simply an address space). In the present case, the address space of a program starts at address 0 of the memory and ends at address 5119. This means that while designing the target program, you may assume that this is the total computer memory accessible to the program.
 
-The compiler typically divides this memory into various regions – namely the code region, (often called the text region), data region, stack region, heap region etc. The ABI specifies the starting address and ending address of each region in the address space. This is specified [HERE](abi.html#nav-virtual-address-space-model). The ABI specifies that the compiler must divide the memory into four regions – **library, code, stack and heap**. (there is **no separate data region** – instead the stack region must be used for this as well).
+The compiler typically divides this memory into various regions – namely the code region, (often called the text region), data region, stack region, heap region etc. The ABI specifies the starting address and ending address of each region in the address space. This is specified [HERE](abi.md#nav-virtual-address-space-model). The ABI specifies that the compiler must divide the memory into four regions – **library, code, stack and heap**. (there is **no separate data region** – instead the stack region must be used for this as well).
 
 For our immediete requirements, the important region is the code region. The code region contains two parts – a **header** (addresses 2048 to 2055) and **code** (address 2056-4095). The target code will be loaded into this region of the memory when the OS (simulator) loads the program for execution. Details will be described soon.
 
@@ -41,7 +41,7 @@ Since each XSM assembly instruction requires two words of memory storage, the fi
 
 One important field of the header is its second entry – the entry point. The loader initializes the **Instruction Pointer (IP)** register of the XSM machine to this value. Thus, if entry point is 2064, the simulator the XSM machine simulator will start program execution by fetching the instruction stored at this address. The ABI stipulates that the value of the first field called the **magic number** must be set to zero. The setting of other fields in the header are not relevant for this experiment.
 
-**Note**: When the program is actually loaded for execution by the OS, the physical addresses in the actual memory to which the executable program is loaded will be different from the virtual addresses set by the compiler. Such relocation requires architecture support. In the XSM machine, the support is through paging. However address translation is a concern of the OS, not of the compiler. Hence we will not pursue this matter here. However, for those interested, details on XSM paging scheme is given [HERE](http://exposnitc.github.io/arch_spec-files/paging_hardware.html).
+**Note**: When the program is actually loaded for execution by the OS, the physical addresses in the actual memory to which the executable program is loaded will be different from the virtual addresses set by the compiler. Such relocation requires architecture support. In the XSM machine, the support is through paging. However address translation is a concern of the OS, not of the compiler. Hence we will not pursue this matter here. However, for those interested, details on XSM paging scheme is given [HERE](http://exposnitc.github.io/arch_spec-files/paging_hardware.md).
 
 With this, we complete the background needed to complete the present experiment. We now proceed to the implementation.
 
@@ -74,7 +74,7 @@ MOV R1, 2
 ADD R0, R1
 ```
 
-However, the header must be written into the first eight words of the target file before writing out the instructions. You must reserve the first eight words of the executable file for the header before writing code into the file. Now, set the entry point field to the first instruction to be executed. If the code is written immedietely after the header, the first instruction will be loaded to memory address 2056 and 2057 (see [memory model](abi.html#nav-virtual-address-space-model)). Hence, you must set the header as:
+However, the header must be written into the first eight words of the target file before writing out the instructions. You must reserve the first eight words of the executable file for the header before writing code into the file. Now, set the entry point field to the first instruction to be executed. If the code is written immedietely after the header, the first instruction will be loaded to memory address 2056 and 2057 (see [memory model](abi.md#nav-virtual-address-space-model)). Hence, you must set the header as:
 
 ```c
 fprintf(target_file, " %d\n %d\n %d\n %d\n %d\n %d\n %d\n %d\n ",0,2056,0,0,0,0,0,0);
@@ -99,7 +99,7 @@ ADD R0, R1
 
 The above code essentially sets the first field – magic number - to 0, the second field - entry point - to 2056 and other fields to 0.
 
-Now, to run the executable file, you must use the XSM simulator. The simulator usage commands are specified [here](xsmusagespec.html). You must read the above link before proceeding further.
+Now, to run the executable file, you must use the XSM simulator. The simulator usage commands are specified [here](xsmusagespec.md). You must read the above link before proceeding further.
 
 The simulator expects a library file by the name library.lib together with the XEXE executable file to be supplied as a command line argument. You will learn more about the library in later in this documentation. For now create a file library.lib with just one instruction in the XSM simulator folder.
 
@@ -107,7 +107,7 @@ The simulator expects a library file by the name library.lib together with the X
 RET
 ```
 
-Now we will try to execute the target\_file in the [debug mode](xsmusagespec.html#nav-debug).
+Now we will try to execute the target\_file in the [debug mode](xsmusagespec.md#nav-debug).
 
 1. Open terminal and navigate to the simulator folder.
 2. Type `./xsm -l library.lib -e <path to target_file.xsm> --debug`.
@@ -150,25 +150,25 @@ This command displays the contents of all the machine registers namely IP, SP, B
     Write an XSM assembly langauge program to find the largest of three numbers and run it on the simulator. You will learn how to handle the JMP instruction while doing this exercise.
 
 !!! question "Exercise 2"
-    Modify your code generation module to store the result of the previous program in the first location in [stack region](abi.html#nav-virtual-address-space-model) namely address 4096 and watch the contents in debug mode after execution.
+    Modify your code generation module to store the result of the previous program in the first location in [stack region](abi.md#nav-virtual-address-space-model) namely address 4096 and watch the contents in debug mode after execution.
 
 ## **Experiment II** : Input/Output using OS system call interface
 
 !!! abstract "Reading Assignment"
-    Read the low level system call interface of the [ABI](abi.html#nav-lowlevel-syscall-interface)
+    Read the low level system call interface of the [ABI](abi.md#nav-lowlevel-syscall-interface)
 
 In this experiment, you will extend the previous stage to print the result of adding two numbers to the console using the low level system call interface provided by the ABI.
 
 The conceptual point to understand here is that console I/O is handled by the kernel routines of the operating system. Kernel modules execute in **privileged mode** of execution and can execute special privileged instructions that access devices and other resources in a machine.
 
-However, your XEXE executable program execute in unprivileged mode. Such programs are called **application programs** or simply applications. These programs cannot contain privileged instructions. (If you try to write privileged instruction in your program and execute, the machine will raise an **exception** when it fetches the instruction and the exception handler module of the OS kernel will terminate the application, flagging an error.) The [instructions](abi.html#nav-XSM-instruction-set) specified in the ABI given to you are all unprivileged instructions. (To know more about privileged instructions in XSM, see [ExPOS documentation](http://exposnitc.github.io/arch_spec-files/instruction_set.html#privileged_instruction)).
+However, your XEXE executable program execute in unprivileged mode. Such programs are called **application programs** or simply applications. These programs cannot contain privileged instructions. (If you try to write privileged instruction in your program and execute, the machine will raise an **exception** when it fetches the instruction and the exception handler module of the OS kernel will terminate the application, flagging an error.) The [instructions](abi.md#nav-XSM-instruction-set) specified in the ABI given to you are all unprivileged instructions. (To know more about privileged instructions in XSM, see [ExPOS documentation](http://exposnitc.github.io/arch_spec-files/instruction_set.md#privileged_instruction)).
 
-An OS typically provides you with a set of kernel level routines called system calls which your code can invoke for performing console I/O. A system call is invoked by a trap instruction (The INT instruction is the trap instruction of the XSM machine). Arguments like the system call number specifying the particular OS service (like read/write/program exit) and so on are required. (see details [here](abi.html#syscalltable)). The OS specifies how an application must pass arguments and extract return values from system calls called the calling conventions. **Generally, arguments to a system call are passed through the application program's stack**. These details are written down in the [low level system call interface](abi.html#nav-lowlevel-syscall-interface) of the ABI.
+An OS typically provides you with a set of kernel level routines called system calls which your code can invoke for performing console I/O. A system call is invoked by a trap instruction (The INT instruction is the trap instruction of the XSM machine). Arguments like the system call number specifying the particular OS service (like read/write/program exit) and so on are required. (see details [here](abi.md#syscalltable)). The OS specifies how an application must pass arguments and extract return values from system calls called the calling conventions. **Generally, arguments to a system call are passed through the application program's stack**. These details are written down in the [low level system call interface](abi.md#nav-lowlevel-syscall-interface) of the ABI.
 
 !!! note
     An OS typically will provide a large number of system calls for various requirements. For our purposes, the relevant system calls are those for console read, console write and program exit.
 
-As noted previously, the arguments/return values to/from a system call are passed through the application program's stack. Each application maintains a stack region in memory where run-time data can be stored while the program executes. The ABI specification stipulates that the stack region of a program shall be between memory addresses 4096 and 5119. The application generally reserves some initial addresses starting from 4096 for storing global variables in the program (called **static allocation**) and then initializes the stack to the first free memory after those allocated to variables. Arguments to a system call are pushed into the stack before executing the INT instruction. Before the system call transfer control back (using the [IRET instruction](http://exposnitc.github.io/arch_spec-files/instruction_set.html)), return values would have been pushed into the stack.
+As noted previously, the arguments/return values to/from a system call are passed through the application program's stack. Each application maintains a stack region in memory where run-time data can be stored while the program executes. The ABI specification stipulates that the stack region of a program shall be between memory addresses 4096 and 5119. The application generally reserves some initial addresses starting from 4096 for storing global variables in the program (called **static allocation**) and then initializes the stack to the first free memory after those allocated to variables. Arguments to a system call are pushed into the stack before executing the INT instruction. Before the system call transfer control back (using the [IRET instruction](http://exposnitc.github.io/arch_spec-files/instruction_set.md)), return values would have been pushed into the stack.
 
 ### Implementation
 
@@ -290,7 +290,7 @@ Now, having generated the executable program run the program using the simulator
 
 You can see that the value 5 is printed on the console.
 
-Observe that the simulator flagged an error after the last statement was executed. This happened because after executing the last valid instruction in the program, the simulator had no idea that the program had ended and hence tried to fetch the next instruction from memory. However, since there is no valid insturction in that memory location, the machine raises an exception \[see [here](http://exposnitc.github.io/arch_spec-files/interrupts_exception_handling.html) for exceptions of XSM\] and control was transfered to an exception handler routine of the OS kernel. Typically, in a multitasking environment, the OS will terminate the program, reclaim resources allocated to it and schedule some other process.
+Observe that the simulator flagged an error after the last statement was executed. This happened because after executing the last valid instruction in the program, the simulator had no idea that the program had ended and hence tried to fetch the next instruction from memory. However, since there is no valid insturction in that memory location, the machine raises an exception \[see [here](http://exposnitc.github.io/arch_spec-files/interrupts_exception_handling.md) for exceptions of XSM\] and control was transfered to an exception handler routine of the OS kernel. Typically, in a multitasking environment, the OS will terminate the program, reclaim resources allocated to it and schedule some other process.
 
 The exception handler routine of the XSM simulator given to you is designed to print an error message and terminate the simulation.
 
@@ -308,7 +308,7 @@ The exit system call routine of the XSM simulator given to you will print a mess
     3. After return POP out the registers saved in the stack. (Note that you must pop the registers out in reverse order of push).
 
 !!! question "Exercise 3"
-    Follow the instructions in the low level system call interface of the ABI to invoke the [exit system call](abi.html#nav-lowlevel-syscall-interface)
+    Follow the instructions in the low level system call interface of the ABI to invoke the [exit system call](abi.md#nav-lowlevel-syscall-interface)
     after the console output in your previous program.
 
 So far, there was no need to allocate memory for storing variables as all the data involved were stored in registers. The next exercise requires allocation of storage for variables. Suppose you want **to read a number from the console**, then **the address of a memory location must be passed as the second argument to the read system call (INT 6).** The system call will place the input data into the memory address received as the second argument.
@@ -330,17 +330,17 @@ Suppose you need three variables to be read, then you may reserve the first thre
 ## **Experiment III**: Understanding the Library Interface
 
 !!! abstract "Prerequisite Reading"
-    Read and understand the [library interface](abi.html#nav-eXpOS-system-library-interface).
+    Read and understand the [library interface](abi.md#nav-eXpOS-system-library-interface).
 
 In this experiment, you will learn how to implement the library interface stipulated in the ABI for supporting **read, write and exit system calls**.
 
-The [memory address space model](abi.html#nav-virtual-address-space-model) of a program reserves the first 1024 words of the address space of a program to load a library. Here we explain the purpose of the library.
+The [memory address space model](abi.md#nav-virtual-address-space-model) of a program reserves the first 1024 words of the address space of a program to load a library. Here we explain the purpose of the library.
 
 If we consider C programs, almost every program uses the routines in the library _stdio.h_. Since in a computer system, several application programs will be running concurrently, it is a good idea to have the code for _stdio.h_ loaded once at bootstrap time into some region of the physical memory and link this memory to the address space of each program's standard library region at load time. This code will be designed once and shared between all applications.
 
 The ABI specifies that the ExpOS library for the XSM machine must be linked to address 0 to 1023. The XSM simulator given to you will load the contents of the file _library.lib_ to the addresses 0 - 1023 of your program. The ABI stipulates that the library must support functions for read, write and exit. (The library also must contain functions Alloc, Free and Initialize which will not be discussed here.)
 
-To access any library function, an application must transfer control to the code at memory address 0 using the instruction **CALL**. This is the first memory address in the library region. The arguments to the call specify which library function is being invoked. The library interface is specified [here](abi.html#nav-eXpOS-system-library-interface).
+To access any library function, an application must transfer control to the code at memory address 0 using the instruction **CALL**. This is the first memory address in the library region. The arguments to the call specify which library function is being invoked. The library interface is specified [here](abi.md#nav-eXpOS-system-library-interface).
 
 An application program can execute read, write and exit functions through the library. This means that once the library is implemented, application programs can call the library (CALL 0) to perform read, write and exit operations by passing appropriate function code and arguments. Internally, the library contains code that traps to the Os kernel.
 

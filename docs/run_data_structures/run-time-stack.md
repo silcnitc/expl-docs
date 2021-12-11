@@ -20,7 +20,7 @@ Each activation record has a base, and the **base pointer (BP)** is a machine re
 
 The **calling convension** fixes in what order arguments to a function must be pushed by the caller to the called function, the place in the activation record where the return value is expected to be written by the callee etc. The structure of the activation record explained below will clarify the calling convension.
 
-The stack is assumed to grow downwards.  
+The stack is assumed to grow downwards.
 ![](../img/data_structure_34.png)
 
 When a function is invoked, a part of the activation record is set up by the caller and the rest is set up after invocation of the function. Similarly, when a function returns, the callee and the caller are responsible for removing the parts they have set up.
@@ -94,7 +94,7 @@ int main(){
 }
 ```
 
-1.  The global variables are allocated statically in the initial portion of the stack. Note that stack begins at `4096` according to the [ABI specification](abi.html).
+1.  The global variables are allocated statically in the initial portion of the stack. Note that stack begins at `4096` according to the [ABI specification](abi.md).
 
     ![](../img/data_structure_39.png)
 
