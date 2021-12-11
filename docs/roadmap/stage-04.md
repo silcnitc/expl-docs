@@ -27,7 +27,7 @@ Type ::= INT | STR
 VarList ::= Varlist , ID | ID
 ```
 
-We will assume hereafter that all variables used in a program must be **declared** in the declaration section of the program (between the _decl_ and _enddecl_ keywords). Since string type variables are allowed, we will allow string constants as well. (See [ExpL specification](expl.html#nav-constant) for details).
+We will assume hereafter that all variables used in a program must be **declared** in the declaration section of the program (between the _decl_ and _enddecl_ keywords). Since string type variables are allowed, we will allow string constants as well. (See [ExpL specification](../expl.md#nav-constant) for details).
 
 A simple program in this language to find the sum of numbers entered from the console (until a zero is entered) would look like the following:
 
@@ -209,7 +209,7 @@ Check your implementation with the following test cases :
 
     **Output** : A sorted array of elements.
 
-    To get the code for this test program [click here](testprograms/stage4/bubblesort.html).
+    To get the code for this test program [click here](../testprograms/stage4/bubblesort.md).
 
 2. **Nth Fibonacci Number(iterative)**
 
@@ -218,7 +218,7 @@ Check your implementation with the following test cases :
     **Input** : 1.An integer n
     **Output** : nth fibonacci number
 
-    To get the code for this test program [click here](testprograms/stage4/fibaofn.html).
+    To get the code for this test program [click here](../testprograms/stage4/fibaofn.md).
 
 3. **Is Prime or Not**
 
@@ -227,7 +227,7 @@ Check your implementation with the following test cases :
     **Input** : 1.An integer n
     **Output** : Prime if n is prime else not a prime.
 
-    To get the code for this test program [click here](testprograms/stage4/prime.html).
+    To get the code for this test program [click here](../testprograms/stage4/prime.md).
 
 4. **Sum of n factorials (iterative)**
 
@@ -236,4 +236,4 @@ Check your implementation with the following test cases :
     **Input** : 1.An integer n
     **Output** : sum of factorial of all integers 1 to n.
 
-    To get the code for this test program [click here](testprograms/stage4/sum-to-n-fact.html).
+    To get the code for this test program [click here](../testprograms/stage4/sum-to-n-fact.md).

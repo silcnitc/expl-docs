@@ -10,7 +10,7 @@ hide:
     1 week, 5-10 hours/week
 
 !!! abstract "Prerequisites"
-    You must read the [label translation tutorial](label-translation.html) before proceeding with this stage.
+    You must read the [label translation tutorial](../label-translation.md) before proceeding with this stage.
 
 !!! example "Learning Objectives"
     In this stage, you will extend the straight-line-program compiler of Stage 2 to support control flow
@@ -66,7 +66,7 @@ For example, consider the AST for the following erratic expression.
 ```
 d = ( a + b ) + ( c < 3 )
 ```
-![](/img/ast3.png)
+![](../img/ast3.png)
 
 Here, the root of the AST is an assignment node which is **typeless**. (statements have no type, only expressions have a type associated with them). The left subtree of the root is a variable, and hence has type integer. The right subtree is a **+** node of type integer. Hence, at the root, there is no type mismatch. However, the right child of the right subtree has type boolean and does not match the operand type for the + operator. Hence the compiler must terminate compilation flagging error "type mismatch". Note that the compiler can stop processing when the first error is encountered without proceeding further with the tree construction.
 
@@ -127,7 +127,7 @@ The next task is to complete the back-end code generation phase. For better clar
 **Step 2:** Replace the labels with addresses.
 
 !!! note "Important note"
-    You must have read the [label translation tutorial](label-translation.html) before proceeding any further.
+    You must have read the [label translation tutorial](../label-translation.md) before proceeding any further.
 
 We will now look at Subtask 1. Consider the following statement:
 
@@ -139,7 +139,7 @@ while (a < b) {
 
 The expression tree for the above statement would look like:
 
-![](/img/ast31.png)
+![](../img/ast31.png)
 
 Suppose variable a is bound to address 4096, b to address 4097, then our plan is to generate code that would look like the following:
 
@@ -185,7 +185,7 @@ fprintf(target_file, "L%d", label_2);       // Place the second label here
 !!! question "Task 2"
     Complete the code generation with labels for while-do, if-then and if-then-else constructs.
 
-Now, we must complete Step 2 of replacing the labels with the correct addresses. This is explained in the [label translation documentation](label-translation.html).
+Now, we must complete Step 2 of replacing the labels with the correct addresses. This is explained in the [label translation documentation](../label-translation.md).
 
 !!! question "Task 3"
     Read the link specified above and complete the label translation for if-then, if-then-else and the while-do statement.

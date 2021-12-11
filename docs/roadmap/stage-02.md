@@ -12,8 +12,8 @@ hide:
     0.5 week, 5-10 hours/week
 
 !!! abstract "Prerequisites"
-    1. You must be comfortable with LEX and YACC. (If you are not, you must first do [LEX tutorial](lex.html), [YACC Tutorial](yacc.html) and [YACC+LEX tutorial](ywl.html).)
-    2. You must have completed the [XSM environment tutorial](xsm-environment-tut.html) before starting this stage.
+    1. You must be comfortable with LEX and YACC. (If you are not, you must first do [LEX tutorial](../lex.md), [YACC Tutorial](../yacc.md) and [YACC+LEX tutorial](../ywl.md).)
+    2. You must have completed the [XSM environment tutorial](../xsm-environment-tut.md) before starting this stage.
 
 !!! example "Learning Objectives"
     In this stage, you will extend the expression evaluator of the previous stage to support a set of pre-defined
@@ -40,7 +40,7 @@ AsgStmt ::== ID = E;
 
 ```
 
-Apart from the [literal tokens](lex.html), BEGIN, END, READ, and WRITE are tokens corresponding to keywords "begin", "end", "read" and "write". ID is a token for variables. We will permit only variables \[a-z\] in this stage.
+Apart from the [literal tokens](../lex.md), BEGIN, END, READ, and WRITE are tokens corresponding to keywords "begin", "end", "read" and "write". ID is a token for variables. We will permit only variables \[a-z\] in this stage.
 
 To support variables to appear in expressions, you must add the rule **E := ID** to the expression syntax used in Stage 1. The above syntax defines a small programming language that permits just straight line programs (programs without conditionals, loops, jumps or such control transfer constructs). There are only 26 pre-defined variables that are supported – a, b,c,..,z. A typical program would look like:
 
@@ -59,18 +59,18 @@ A conceptual point to note here is that apart from the addition of variables, th
 
 Another important conceptual point to note is that the introduction of variables also demand binding them to storage (memory) locations. The storage location associated with a variable must hold the value of the variable at each point of program execution. A statement (like the assignment statement or a read statement) that alters the value of a variable must result in a change the value stored in the corresponding storage location.
 
-In the present case, the compiler can fix the address for each variable in memory right at the time of program compilation. Since the ABI stipulate that storage allocation must be done in the stack region, we can pre-allocate the first 26 memory locations in the stack region of [memory](abi.html#nav-virtual-address-space-model) for the variables a-z. Thus, variable _a_ will refer to contents of address 4096, _b_ to contents of address 4097 and so on. Any time the compiler encounters the variable – say _a_, the address to be looked at is fixed – in this case 4096. Such allocation policy is called **static allocation**. In later stages you will encounter situations where it will not be possible for the compiler to fix memory address of a variable at compile time. This leads to **run time** and **dynamic memory allocation** policies. For now, we will be content with static allocation.
+In the present case, the compiler can fix the address for each variable in memory right at the time of program compilation. Since the ABI stipulate that storage allocation must be done in the stack region, we can pre-allocate the first 26 memory locations in the stack region of [memory](../abi.md#nav-virtual-address-space-model) for the variables a-z. Thus, variable _a_ will refer to contents of address 4096, _b_ to contents of address 4097 and so on. Any time the compiler encounters the variable – say _a_, the address to be looked at is fixed – in this case 4096. Such allocation policy is called **static allocation**. In later stages you will encounter situations where it will not be possible for the compiler to fix memory address of a variable at compile time. This leads to **run time** and **dynamic memory allocation** policies. For now, we will be content with static allocation.
 
 To implement the above, your compiler must:
 
 *   1\. Fix the storage location for each variable. As noted above, the first 26 locations of the stack region starting at address 4096 may be assigned for a to z. Note that the XSM machine can store an integer in a single memory location. Hence, for each variable we need to allocate only 1 memory word. Note that "allocation" here means that while generating code, the compiler assumes that the variable a is stored in location 4096, b in location 4097 and so forth.
 *   **Note** : Some programming languages stipulate that variables must be initialized to zero. In that case, the compiler must generate code to MOV 0 to each of these locations before generating code for statements in the program. Some machines provide machine instructions that support initializing memory to zero. Certain operating systems would have initialized all memory regions (except those to which code is loaded into) to zero at load time. We will not pursue these issues here.
 *   2\. To translate an assignment statement, the compiler must generate code to evaluate the expression and then MOV the contents of the register storing the result to the memory location allocated for the variable.
-*   3\. To translate a Read statement, the compiler must generate code to invoke the [library](abi.html#nav-eXpOS-system-library-interface) function for read, passing the address of the variable as argument. Write is implemented similarly.
+*   3\. To translate a Read statement, the compiler must generate code to invoke the [library](../abi.md#nav-eXpOS-system-library-interface) function for read, passing the address of the variable as argument. Write is implemented similarly.
 
 But before getting into code generation, we must create an **abstract syntax tree (AST)** for the program. An abstract syntax tree is a tree representation of the program, just like an expression tree for expressions. An abstract syntax tree for the above program would look like the following:
 
-![](img/ast_stage2.png)
+![](../img/ast_stage2.png)
 
 Observe that each node now needs to store distinguishing information like:
 

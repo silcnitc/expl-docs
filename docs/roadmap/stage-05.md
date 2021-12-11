@@ -13,8 +13,8 @@ hide:
 !!! abstract "Prerequisites"
     You must read the following documents before proceeding with this stage:
 
-    1. The main page of the document [Run time allocation](run-data-structures.html).
-    2. [Run time stack Allocation](run_data_structures/run-time-stack.html).
+    1. The main page of the document [Run time allocation](../run-data-structures.md).
+    2. [Run time stack Allocation](../run_data_structures/run-time-stack.md).
 
 !!! example "Learning Objectives"
     You will extend the language of Stage 4 by adding functions with support for recursion. Addition of functions to the language requires handling **scope** of variables. Support for recursion demands **run-time storage allocation**. Only _integer_ and _string_ type variables will be supported.
@@ -22,7 +22,7 @@ hide:
 This is the first major stage in the ExpL project. A skeletal outline of the syntax rules for defining the extension of the language of Stage 4 to support subroutines is as below. You are required to fill in rules required to complete the grammar. Note that variables may be only of type integer/string.
 
 ```c
-Program ::= GDeclBlock FdefBlock [MainBlock](grammar-outline.html)
+Program ::= GDeclBlock FdefBlock MainBlock
         | GdeclBlock MainBlock
         | MainBlock
 
@@ -67,7 +67,7 @@ ArgList ::= ArgList, E | E
 
 ```
 
-Here is an [example](run_data_structures/run-time-stack.html#nav-illustration) for a program with a function. We will take up semantic analysis and AST representation before proceeding to code generation.
+Here is an [example](../run_data_structures/run-time-stack.md#nav-illustration) for a program with a function. We will take up semantic analysis and AST representation before proceeding to code generation.
 
 Each function requires a **declaration**. The declaration of functions must be made along with the global declarations. The declaration of a function must specify the types and names of the **formal parameters** and the **return type** of the function. The compiler must store the declaration information in the global symbol table. For example, the declaration
 
@@ -142,21 +142,21 @@ To keep track of the local variable and scope information, our strategy is to ke
   **struct Lsymbol \*next;**   //points to the next Local Symbol Table entry
 **};**
 
-**Note:** As noted in the [run time storage allocation](run-data-structures.html) documentation, local variables cannot be assigned static memory addresses. Hence, the binding of a local variable is a relative address within the function's activation record. We will discuss this matter in detail later.
+**Note:** As noted in the [run time storage allocation](../run-data-structures.md) documentation, local variables cannot be assigned static memory addresses. Hence, the binding of a local variable is a relative address within the function's activation record. We will discuss this matter in detail later.
 
-What is the **stored in flabel**? When the compiler generates code for the function, a label is placed at the start of the function. A call to the function is translated to a low-level CALL to the corresponding label. Later, the label has to be replaced by the address of the instruction during the [label translation phase](label-translation.html).
+What is the **stored in flabel**? When the compiler generates code for the function, a label is placed at the start of the function. A call to the function is translated to a low-level CALL to the corresponding label. Later, the label has to be replaced by the address of the instruction during the [label translation phase](../label-translation.md).
 
 The simple scheme we suggest here is to put the label F0 before the code of the first function declared in the program, F1 before the code of the second and so on. Hence, in the flabel field of the first function, store 0. Similarly, store 1 in the flabel field of the second function and so on. A call to the first function must be translated to CALL F0 and so on.
 
-With this, the global symbol table for the [program](run_data_structures/run-time-stack.html#nav-illustration) would be as below.
+With this, the global symbol table for the [program](../run_data_structures/run-time-stack.md#nav-illustration) would be as below.
 
-![](img/gsymboltable3.png)
+![](../../img/gsymboltable3.png)
 
 Continuing with the above example, we need two local symbol tables – one for the main function and one for the factorial function. The local symbol table holds the (name, type, binding) triple for each **formal parameter** as well as **local variables** of the function. We will discuss the binding of formal parameters and local variables later. The local symbol tables of main and factorial would look as the following:
 
-![](img/localsymboltable2.png) ![](img/localsymboltable1.png)
+![](../../img/localsymboltable2.png) ![](../img/localsymboltable1.png)
 
-See [LINK](data_structures/local-symbol-table.html) for more details. For now, ignore the type table pointer in the structure given in the link. This will be discussed in the next stage.
+See [LINK](../data_structures/local-symbol-table.md) for more details. For now, ignore the type table pointer in the structure given in the link. This will be discussed in the next stage.
 
 **Task 1**: Complete the program to build the global symbol table. Test your program by printing out all global declarations in the program by displaying the contents of the symbol table. You must not permit two variables/functions (or a function and a variable) to have the same name.
 
@@ -187,13 +187,13 @@ t = Compute(a+b,find(a-b));
 The statement is semantically valid provided a, b, and c integer type variables. Note that the call might occur in the code of _any function (including the same function – as in the case of a recursive call)_.
 
 The expression tree for this could look as below:
-![](img/expression tree.png)
+![](../img/expression tree.png)
 
 A tree node for a function call contains a pointer to a list of expressions, one expression for each argument. **The compiler must type check each argument and match it with the type of the corresponding formal parameter of the called function.**
 
-To get an overall picture of what is going on, you may read the documentation on [compile time data structures](data-structures.html) at this juncture. **Ignore type table entries for now** as we permit only integer/string variables in the present stage.
+To get an overall picture of what is going on, you may read the documentation on [compile time data structures](data-structures.md) at this juncture. **Ignore type table entries for now** as we permit only integer/string variables in the present stage.
 
-The expression tree structure given [HERE](data_structures/abstract-syntax-tree.html) can be used (again, ignore type table pointer) The details of implementation are left to you.
+The expression tree structure given [HERE](data_structures/abstract-syntax-tree.md) can be used (again, ignore type table pointer) The details of implementation are left to you.
 
 With this information, the task of completing type checking and building expression tree for a function is straightforward.
 
@@ -220,7 +220,7 @@ The dynamics of a function call can be understood easily by dividing the process
 
 The machine code for actions in Step 1 and Step 3 must be generated when the compiler encounters a function call in the caller's code. The compiler generates code for Step 2 while generating code for the callee function.
 
-To implement the above plan, we need to create storage space whenever a function call is encountered. We will be focusing on generating code containing labels. Translation of labels to actual addresses can be easily done at the end as was done in Stage 4 following the [Label Translation Documentation](label-translation.html).
+To implement the above plan, we need to create storage space whenever a function call is encountered. We will be focusing on generating code containing labels. Translation of labels to actual addresses can be easily done at the end as was done in Stage 4 following the [Label Translation Documentation](label-translation.md).
 
 **Implementation Strategy**.
 
@@ -233,9 +233,9 @@ The fundamental strategy for space allocation is to create an **activation recor
 *   5\. If function A calls function B, the address of the instruction in A to resume execution (**return address** – value of current-IP +2 in XSM machine- why?) upon return from B must be saved. Similarly, the **base pointer of the caller** (BP value) of A **must be saved in the stack** before BP is changed to point to the base of B. Both the return address and BP values will be stored in pre-defined locations of the activation record of B.
 *   6\. In addition to the above, one additional **space** must be reserved in the activation record of B **to store the return value**.
 
-A thorough reading of this [page](run_data_structures/run-time-stack.html) is **absolutely essential** to proceed any further. Suppose a function has n arguments (arg\_1, arg\_2,...,arg\_n) and m local variables (loc\_1, loc\_2, ..., loc\_m), its activation record in the stack may look as the following.(The stack is assumed to grow downwards.)
+A thorough reading of this [page](run_data_structures/run-time-stack.md) is **absolutely essential** to proceed any further. Suppose a function has n arguments (arg\_1, arg\_2,...,arg\_n) and m local variables (loc\_1, loc\_2, ..., loc\_m), its activation record in the stack may look as the following.(The stack is assumed to grow downwards.)
 
-![](img/stack.png)
+![](../img/stack.png)
 
 In this scheme, the following code must be generated by the caller when a call to the above function is encountered:
 
@@ -245,11 +245,11 @@ In this scheme, the following code must be generated by the caller when a call t
 *   4\. Generate **Call instruction** to the binding (label) of the function. (The call instruction will push IP+2 into the stack and jump to label.)
 
 Stack before the call instruction :
-![](img/before call.png)
+![](../img/before call.png)
 
 
 Stack after the call instruction :
-![](img/after call.png)
+![](../img/after call.png)
 Figure: Actions in the stack done by the caller before the call
 
 
@@ -269,7 +269,7 @@ Now, we turn to the actions to be done by the callee. The callee must generate t
 
 Relative to the BP value set in step 2 above, \[BP-2\] is the address to which the return value must be stored. \[BP-3\] stores arg\_1, \[BP-4\] stores arg\_2 and so on. \[BP+1\] is for loc\_1, \[BP+2\] for loc\_2 and so on. Thus, after seeing the local variable declarations, the compiler can set the binding values for local variables relative to the base of activation record (BP) value as:
 
-![](img/var-bind table.png)
+![](../img/var-bind table.png)
 
 With this convention, the code for each instruction inside a function can be generated following the rule: **local variables/arguments are to be dereferenced a by adding the binding value to the contents of the BP register**. Almost every modern architecture supports function calls by providing an explicit base pointer register.
 
@@ -356,12 +356,12 @@ You have enough background now to complete the final task of this stage.
 
 Check your implementation with the following test cases :
 
-- [Test Program 1 : Bubblesort (recursive)](testprograms.html#test3)
-- [Test Program 2 : Factorial (recursive)](testprograms.html#test5)
-- [Test Program 3 : Quicksort (recursive)](testprograms.html#test6)
-- [Test Program 4 : Constant Program (recursive)](testprograms.html#test7)
-- [Test Program 5 : Fibonacci (recursive)](testprograms.html#test10)
-- [Test Program 6 : Extended Euclid(with a Function)](testprograms.html#test2)
-- [Test Program 7 : BubbleSort (iterative)](testprograms.html#test1)
-- [Test Program 8 : Extended Euclid(iterative)](testprograms.html#test12)
+- [Test Program 1 : Bubblesort (recursive)](../testprograms/test-program-03.md)
+- [Test Program 2 : Factorial (recursive)](../testprograms/test-program-05.md)
+- [Test Program 3 : Quicksort (recursive)](../testprograms/test-program-06.md)
+- [Test Program 4 : Constant Program (recursive)](../testprograms/test-program-07.md)
+- [Test Program 5 : Fibonacci (recursive)](../testprograms/test-program-10.md)
+- [Test Program 6 : Extended Euclid(with a Function)](../testprograms/test-program-02.md)
+- [Test Program 7 : BubbleSort (iterative)](../testprograms/test-program-01.md)
+- [Test Program 8 : Extended Euclid(iterative)](../testprograms/test-program-12.md)
 
