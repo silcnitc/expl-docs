@@ -41,8 +41,8 @@ struct Paramstruct{
 
 ## Associated Methods
 
-- `struct Gsymbol* GInstall(char *name,struct Typetable *type, int size, struct ParamStruct *paramlist)`: Creates a Global Symbol entry of given 'name', 'type', 'size' and 'parameter list' and assigns a static address('binding') to the variable (or label for the function).
-- `struct Gsymbol* GLookup(char *name)` : Search for a GST entry with the given 'name', if exists, return pointer to GST entry else return NULL.
+- `#!c struct Gsymbol* GInstall(char *name,struct Typetable *type, int size, struct ParamStruct *paramlist)`: Creates a Global Symbol entry of given 'name', 'type', 'size' and 'parameter list' and assigns a static address('binding') to the variable (or label for the function).
+- `#!c struct Gsymbol* GLookup(char *name)` : Search for a GST entry with the given 'name', if exists, return pointer to GST entry else return NULL.
 
 Illustration
 ------------
