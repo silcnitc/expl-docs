@@ -44,7 +44,7 @@ We have two subtrees for 'while' nodetype. 'ptr1' representing the conditional e
 
 For the code generation for functions, the activities are given [here.](run_data_structures/run-time-stack.md)
 
-For making library calls, follow the steps given in the [invoking a library module](abi.md#nav-eXpOS-system-library-interface) section in [Application Binary Interface](abi.html) documentation.
+For making library calls, follow the steps given in the [invoking a library module](abi.md#nav-eXpOS-system-library-interface) section in [Application Binary Interface](abi.md) documentation.
 
 ## Illustration
 
