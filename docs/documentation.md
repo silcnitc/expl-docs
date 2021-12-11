@@ -10,7 +10,7 @@ hide:
 - [Using `YACC`](./yacc.md)
 - [Using `YACC` with `lex`](./ywl.md)
 - [ExPL Specification](./expl.md)
-- [ExpL Grammar Outline](./grammer-outline.md)
+- [ExpL Grammar Outline](./grammar-outline.md)
 - [OExpL Specification](./oexpl-specification.md)
 - [OExpL Grammar Outline](./oexpl-grammar-outline.md)
 - [Compile Time Data Structures for ExpL](./data-structures.md)
@@ -24,5 +24,5 @@ hide:
 - [XSM Simulator Installation](./install.md).
 - [XSM Simulator Usage Instructions](./xsmusagespec.md).
 - [XSM Execution Environment Tutorial](./xsm-environment-tut.md).
-- [ExpL Test Programs](./testprograms.md).
+- [ExpL Test Programs](./testprograms/index.md).
 - [OExpL Test Programs](./oexpl-testprograms.md).

@@ -347,7 +347,7 @@ For further details on the topics covered in this document, the reader may refer
 
 - [http://epaperpress.com/lexandyacc/pry1.html](http://epaperpress.com/lexandyacc/pry1.html)
 - [http://www.sci.brooklyn.cuny.edu/~zhou/teaching/cis707/attr/tsld003.htm](http://www.sci.brooklyn.cuny.edu/~zhou/teaching/cis707/attr/tsld003.htm)
-- [http://cs.nyu.edu/~gottlieb/courses/2008-09-fall/compilers/lectures/lecture-08.html](http://cs.nyu.edu/~gottlieb/courses/2008-09-fall/compilers/lectures/lecture-08.html)
+- [https://cs.nyu.edu/~gottlieb/courses/2000s/2008-09-fall/compilers/lectures/lecture-08.html](https://cs.nyu.edu/~gottlieb/courses/2000s/2008-09-fall/compilers/lectures/lecture-08.html)
 - [http://en.wikipedia.org/wiki/Compilers:\_Principles,\_Techniques,\_and\_Tools](http://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools)
 - Compilers : Principles,Techniques and Tools by Alfred V.Aho, Monica S. Lam, Ravi Sethi and Jeffrey D.Ulman .
 - Modern Compiler Implementation in C by Andrew W.Appel

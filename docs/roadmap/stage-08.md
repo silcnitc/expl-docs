@@ -37,7 +37,7 @@ An extended class inherits all the member fields and methods of the parent class
 
 From an implementation perspective, the compiler may **initially copy the signatures of all methods of the parent to the class table entry of the descendent**. New entries will have to be created for methods that defined in the descendent, but not present in the parent. Finally, the present implementation restricts the number of methods in a class ( including inherited methods ) to 8.
 
-What about the labels of the methods of the descendent class? **If a method is over-ridden or defined new in a class, the compiler must assign a new label for the method and store this label in the _Flabel_ field of the method in the [class table entry](oexpl-data-structures.md). Otherwise, the class inherits the parent's method and the label of the method in the parent class ( specified by the _Flabel_ field of the parent class ) must be copied into the _Flabel_ field of the method in the descendent class** ( See Memberfunclist in the class table ).
+What about the labels of the methods of the descendent class? **If a method is over-ridden or defined new in a class, the compiler must assign a new label for the method and store this label in the _Flabel_ field of the method in the [class table entry](../oexpl-data-structures.md). Otherwise, the class inherits the parent's method and the label of the method in the parent class ( specified by the _Flabel_ field of the parent class ) must be copied into the _Flabel_ field of the method in the descendent class** ( See Memberfunclist in the class table ).
 
 Once the class table entries are created as described above, syntax and semantic analysis phases of compilation can be completed easily.
 
@@ -96,11 +96,11 @@ An assignment of the form y=x, if valid semantically, will result in both the po
 
 Note that once the base of the correct virtual function table is known, invoking the right function simply involves adding the offset of the function to the base and making a call to the address (label) stored in the virtual function table entry.
 
-Note that the labels will be automatically translated to actual addresses during the [label translation phase](label-translation.md).
+Note that the labels will be automatically translated to actual addresses during the [label translation phase](../label-translation.md).
 
 To implement virtual function tables on the eXpOS ABI, the suggested method is to allocate space (8 words each) for storing the virtual function tables of each class in the stack before allocating space for global variables.
 
-**Read the [OExpL run time data structures documentation](oexpl-run-data-structures.md) before proceeding further.**
+**Read the [OExpL run time data structures documentation](../oexpl-run-data-structures.md) before proceeding further.**
 
 **Task 2:** Complete the OExpL compiler.
 
@@ -108,10 +108,10 @@ To implement virtual function tables on the eXpOS ABI, the suggested method is t
 
 Check your implementation with the following test cases :
 
-- [Test Program 1: Testing the runtime binding of the variables of a class](oexpl-testprograms.md#test4)
-- [Test Program 2: Testing the correct set up of the virtual function table](oexpl-testprograms.md#test5)
-- [Test Program 3: Testing the implementation of inheritance and subtype polymorphism](oexpl-testprograms.md#test6)
-- [Test Program 4: Testing the implementation of inheritance and subtype polymorphism](oexpl-testprograms.md#test7)
+- [Test Program 1: Testing the runtime binding of the variables of a class](../oexpl-testprograms.md#test4)
+- [Test Program 2: Testing the correct set up of the virtual function table](../oexpl-testprograms.md#test5)
+- [Test Program 3: Testing the implementation of inheritance and subtype polymorphism](../oexpl-testprograms.md#test6)
+- [Test Program 4: Testing the implementation of inheritance and subtype polymorphism](../oexpl-testprograms.md#test7)
 
 !!! question "Exercise 1"
     This exercise asks you to add a limited form of **function overloading** support to the language.

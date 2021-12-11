@@ -14,7 +14,7 @@ This test program inserts elements into a binary search tree and prints the elem
 
 This program test the iteration, recursion, conditional, arrays and passing of user-defined datatype as return value of function.
 
-The code for the test progam can be found [here](oexpltestprograms/test1.html)
+The code for the test progam can be found [here](./oexpltestprograms/test1.md)
 
 ## Test Program 2 : Linked list
 
@@ -26,7 +26,7 @@ This test program reads elements into a linked list and prints them.
 
 This program test the working of dynamic memory allocation functions like Initialize(), Alloc() and Free().
 
-The code for the test progam can be found [here](oexpltestprograms/test2.html)
+The code for the test progam can be found [here](./oexpltestprograms/test2.md)
 
 ## Test Program 3 : Sum of Factorials
 
@@ -38,7 +38,7 @@ This test program reads an element and finds the sum of factorials of all the nu
 
 This program tests the declaration of a member field which is an object of another class. This program also tests the recursion, parameter passing, calling a function inside the call of another function.
 
-The code for the test progam can be found [here](oexpltestprograms/test3.html)
+The code for the test progam can be found [here](./oexpltestprograms/test3.md)
 
 ## Test Program 4
 
@@ -46,19 +46,19 @@ This program tests the runtime binding of the variables of a class.
 
 **Input** : If any input > 0
 
-**Output** :  
-In A F1  
+**Output** :
+In A F1
 0
 
 **Input** : If any input <= 0
 
-**Output** :  
-In B F1  
+**Output** :
+In B F1
 1
 
 This program uses the concepts of inheritance and subtype polymorphism.
 
-The code for the test progam can be found [here](oexpltestprograms/test4.html)
+The code for the test progam can be found [here](./oexpltestprograms/test4.md)
 
 ## Test Program 5
 
@@ -78,28 +78,28 @@ This program tests the correct set up of the virtual function table by the compi
 
 This program uses the virtual function table, inheritance and subtype polymorphism.
 
-The code for the test progam can be found [here](oexpltestprograms/test5.html)
+The code for the test progam can be found [here](./oexpltestprograms/test5.md)
 
 ## Test Program 6
 
 This program tests the implementation of inheritance and subtype polymorphism.
 
-**Input** :  
-1  
-length  
+**Input** :
+1
+length
 breadth
 
 **Output** : length \* breadth
 
-**Input** :  
-2  
+**Input** :
+2
 length
 
 **Output** : length \* length
 
 This test program uses the concepts of inheritance.
 
-The code for the test progam can be found [here](oexpltestprograms/test6.html)
+The code for the test progam can be found [here](./oexpltestprograms/test6.md)
 
 ## Test Program 7
 
@@ -107,18 +107,18 @@ This program tests the implementation of inheritance and subtype polymorphism.
 
 **Input** : > 0
 
-**Output** :  
-Rogers  
+**Output** :
+Rogers
 37
 
 **Input** : <= 0
 
-**Output** :  
-Mathew  
-35  
-999  
+**Output** :
+Mathew
+35
+999
 CS
 
 This program tests the concepts of inheritance, subtype polymorphism and virtual function table.
 
-The code for the test progam can be found [here](oexpltestprograms/test7.html)
+The code for the test progam can be found [here](./oexpltestprograms/test7.md)

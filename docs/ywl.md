@@ -113,7 +113,7 @@ An example of the contents of y.tab.h file is shown below.
 #define DIGIT 253
 ```
 
-Note that '253' is a YACC generated constant to represent DIGIT. The constant may vary at different executions of YACC. YACC represents a token by defining a [macro identifier](http://gcc.gnu.org/onlinedocs/cpp/Macros.md) corresponding to it.
+Note that '253' is a YACC generated constant to represent DIGIT. The constant may vary at different executions of YACC. YACC represents a token by defining a [macro identifier](http://gcc.gnu.org/onlinedocs/cpp/Macros.html) corresponding to it.
 
 The y.tab.h file must be _included_ in the declarations section of the LEX program. This makes the token declarartions accessible to the LEX program. We will see an example in the next section.
 

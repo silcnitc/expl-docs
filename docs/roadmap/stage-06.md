@@ -16,7 +16,7 @@ title: 'Stage 6: User defined types and Dynamic Memory Allocation'
 
 This is the second major stage of the ExpL compiler project and will be implemented in two parts. In the first part, we will see how user defined types can be added to the language syntax and how semantic analysis can be performed. The ExpL specification demands storage for user-defined types dynamically. We will discuss how dynamic memory allocation can be achieved in the second part.
 
-See the [ExpL language specification](../expl.md) for an informal description of the language. It is suggested that you design your own grammar using the outline provided [here](../grammar-outline.md) as a reference. The following [link](../testprograms.md#test8) provide examples of ExpL programs containing user defined types.
+See the [ExpL language specification](../expl.md) for an informal description of the language. It is suggested that you design your own grammar using the outline provided [here](../grammar-outline.md) as a reference. The following [link](../testprograms/index.md#test8) provide examples of ExpL programs containing user defined types.
 
 We will now take up the front end - semantic analysis and AST representation - before proceeding to code generation and dynamic memory allocation.
 
