@@ -1,5 +1,8 @@
-Binary Search Tree  
+---
+title: 'Binary Search Tree'
+---
 
+```
 type
   bst{
   int a;
@@ -11,9 +14,9 @@ endtype
 decl
   int in,opt;
   bst insert(bst h, int key);
-  int inOrder(bst h); 
+  int inOrder(bst h);
   int preOrder(bst h);
-  int postOrder(bst h);           
+  int postOrder(bst h);
 enddecl
 
 bst insert(bst h, int key)
@@ -33,18 +36,18 @@ bst insert(bst h, int key)
                  h.right = insert(h.right, key);
               endif;
           endif;
-    endif;   
-   
+    endif;
+
     return h;
   end
 }
 
 int inOrder(bst h){
-     
+
   begin
-    
+
   if(h!=null) then
-     
+
     in=inOrder(h.left);
     write(h.a);
     in=inOrder(h.right);
@@ -54,13 +57,13 @@ int inOrder(bst h){
 }
 
 int preOrder(bst h){
-     
+
   begin
-    
+
   if(h!=null) then
     write(h.a);
     in=preOrder(h.left);
-    
+
     in=preOrder(h.right);
   endif;
   return 1;
@@ -68,13 +71,13 @@ int preOrder(bst h){
 }
 
 int postOrder(bst h){
-     
+
   begin
-    
+
   if(h!=null) then
-    
+
     in=postOrder(h.left);
-    
+
     in=postOrder(h.right);
     write(h.a);
   endif;
@@ -83,7 +86,7 @@ int postOrder(bst h){
 }
 
 int main()
-{ 
+{
   decl
   int val,flag;
   bst Root;
@@ -103,7 +106,8 @@ int main()
     in = inOrder(Root);
     in = preOrder(Root);
     in = postOrder(Root);
-  
+
   return 9;
   end
 }
+```

@@ -1,5 +1,10 @@
-Extended Euclid(User defined types)  
+---
+title: 'Extended Euclid(User defined types)'
+---
+# Extended Euclid(User defined types)
 
+
+```
 type
   node
   {
@@ -30,7 +35,7 @@ node gcd(int a,int b)
       z = gcd(b,r);
       temp = z.s;
       y.s = z.t;
-      y.t = temp - (q\*z.t);
+      y.t = temp - (q*z.t);
     endif;
 
   return y;
@@ -57,3 +62,4 @@ int main()
   return 0;
   end
 }
+```

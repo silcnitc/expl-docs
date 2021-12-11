@@ -1,5 +1,8 @@
-Linked List  
+---
+title: 'Linked List'
+---
 
+```
 type
   List
   {
@@ -21,9 +24,9 @@ int main()
 
   begin
     x = initialize();
-    
+
     head=null;
-    read(length); 
+    read(length);
 
     q=head;
     while (length!=0)  do
@@ -39,7 +42,7 @@ int main()
       q.next=p;
       q=q.next;
       endif;
-      
+
       length=length-1;
     endwhile;
 
@@ -52,3 +55,4 @@ int main()
     return 1;
   end
 }
+```

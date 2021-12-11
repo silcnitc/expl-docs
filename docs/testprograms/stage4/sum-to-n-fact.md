@@ -1,4 +1,8 @@
-Sum of N factorials  
+---
+title: 'Sum of N factorials'
+---
+
+```
 
 decl
     int n,i,j,sum,k;
@@ -13,7 +17,7 @@ enddecl
 			i=1;
 			j=1;
 			while(i≤k)do
-				j=j\*i;
+				j=j*i;
 				i=i+1;
 			endwhile;
 			sum=sum+j;
@@ -21,3 +25,4 @@ enddecl
 		k=k+1;
 	endwhile;
 	write(sum);
+```

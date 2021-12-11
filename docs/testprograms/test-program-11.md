@@ -1,5 +1,7 @@
-Extended Euclid(Linked List)  
-
+---
+title: 'Extended Euclid(Linked List)'
+---
+```
 type
   node
   {
@@ -60,11 +62,11 @@ node gcd(int m,int n){
         y.t = 0;
     else
         q = m/n;
-        r = m-q\*n;
+        r = m-q*n;
         z = gcd(n,r);
         temp = z.s;
         y.s = z.t;
-        y.t = temp - (q\*z.t);
+        y.t = temp - (q*z.t);
     endif;
     temp=insert(m,n,y);
     return y;
@@ -101,3 +103,4 @@ int main()
     return 0;
   end
 }
+```

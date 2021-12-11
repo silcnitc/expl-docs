@@ -1,5 +1,8 @@
-Prime or Not  
+---
+title: 'Prime or Not'
+---
 
+```
 decl
 	int n,i,j;
 enddecl
@@ -20,3 +23,4 @@ enddecl
 		write("Prime");
 	else write("Not Prime");
 	endif;
+```

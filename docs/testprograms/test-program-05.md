@@ -1,5 +1,8 @@
-Factorial  
+---
+title: 'Factorial (recursive)'
+---
 
+```
 decl
   int fact(int n);
 enddecl
@@ -14,7 +17,7 @@ int fact(int n)
     if(n<=1) then
       f=1;
     else
-      f=n\*fact(n-1);
+      f=n*fact(n-1);
     endif;
 
     return f;
@@ -33,5 +36,6 @@ int main()
     write(res);
 
     return 0;
-  end  
+  end
 }
+```

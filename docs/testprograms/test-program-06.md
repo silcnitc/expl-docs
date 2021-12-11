@@ -1,7 +1,10 @@
-Quicksort  
+---
+title: 'Quicksort(recursive)'
+---
 
+```
 decl
-  int a,b,n,arr\[10\];
+  int a,b,n,arr[10];
   int swap(int index, int newindex);
   int readarr(int temp);
   int writearr(int temp);
@@ -16,9 +19,9 @@ int swap(int index ,int newindex)
   enddecl
 
   begin
-    s = arr\[index\];
-    arr\[index\] = arr\[newindex\];
-    arr\[newindex\] = s;
+    s = arr[index];
+    arr[index] = arr[newindex];
+    arr[newindex] = s;
 
     return s;
   end
@@ -34,7 +37,7 @@ int readarr(int temp)
     count=0;
 
     while(count < temp) do
-      read(arr\[count\]);
+      read(arr[count]);
       count=count+1;
     endwhile;
 
@@ -52,7 +55,7 @@ int writearr(int temp)
     count = 0;
 
     while(count < temp) do
-      write(arr\[count\]);    
+      write(arr[count]);
       count = count+1;
     endwhile;
 
@@ -68,12 +71,12 @@ int partition (int low, int high)
   enddecl
 
   begin
-    pivot = arr\[high\];
+    pivot = arr[high];
     j = low;
     i = low;
 
     while(i < high) do
-      if (arr\[i\] <= pivot) then
+      if (arr[i] <= pivot) then
       t = swap (i , j);
       j = j+1;
       endif;
@@ -81,7 +84,7 @@ int partition (int low, int high)
     endwhile;
 
     i = swap (j , high);
-    
+
     return j;
   end
 }
@@ -99,7 +102,7 @@ int quicksort (int low , int high)
     if (low < high) then
       pp = partition (low , high);
       temp = quicksort(pp+1,high);
-      t = quicksort(low , pp-1);    
+      t = quicksort(low , pp-1);
     endif;
 
     return 1;
@@ -123,3 +126,4 @@ int main()
     return junk;
   end
 }
+```

@@ -1,5 +1,8 @@
-Constant Function  
+---
+title: 'Constant Function'
+---
 
+```
 decl
  int fun(int x),a;
 enddecl
@@ -31,3 +34,4 @@ int main()
   return 0;
  end
 }
+```
