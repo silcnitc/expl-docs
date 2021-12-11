@@ -15,22 +15,21 @@ All the class definitions in a program must be placed together, between the keyw
 
 Since OExpL is designed for pedegogical purposes, the following restrictions are imposed to simplify implementation.
 
-1.  **The member fields of a class may be of type integer, string, user defined types, previously defined classes or of the same class.** Thus the language supports both [_Composition and Inheritance._](https://en.wikipedia.org/wiki/Composition_over_inheritance)
-2.  **Member fields of a class are private to the class** in the sense that they can be accessed only by the methods defined in the class. The language does not permit _access modifiers_ like [**public** or **protected**.](https://en.wikipedia.org/wiki/Access_modifiers)
-3.  **Class variables can be declared only globally. Class variables cannot be arguments to functions; a function cannot have a class as its return type** and class variables cannot occur as local variables within functions.
-4.  All the member fields and methods should be declared between _decl_ and _enddecl_.
-5.  In methods defined within a class, the special keyword **self** refers to the instance of the class through which the method was invoked. ( The usage is similar in spirit to [**this** in C++.](https://en.wikipedia.org/wiki/This_(computer_programming)) )
-6.  The methods defined in a class may have parameters as well as local variables. The syntax and semantics rules are similar to other ExpL functions. However, there are some important differences:
-    
+1. **The member fields of a class may be of type integer, string, user defined types, previously defined classes or of the same class.** Thus the language supports both [_Composition and Inheritance._](https://en.wikipedia.org/wiki/Composition_over_inheritance)
+2. **Member fields of a class are private to the class** in the sense that they can be accessed only by the methods defined in the class. The language does not permit _access modifiers_ like [**public** or **protected**.](https://en.wikipedia.org/wiki/Access_modifiers)
+3. **Class variables can be declared only globally. Class variables cannot be arguments to functions; a function cannot have a class as its return type** and class variables cannot occur as local variables within functions.
+4. All the member fields and methods should be declared between _decl_ and _enddecl_.
+5. In methods defined within a class, the special keyword **self** refers to the instance of the class through which the method was invoked. ( The usage is similar in spirit to [**this** in C++.](https://en.wikipedia.org/wiki/This_(computer_programming)) )
+6. The methods defined in a class may have parameters as well as local variables. The syntax and semantics rules are similar to other ExpL functions. However, there are some important differences:
+
     a) **Methods** of a class, apart from its arguments and local variables, **have access only to the member fields of the corresponding class.**  
     b) **A method can invoke only functions of the same class or functions inherited from its parent class or methods of class variables occuring as member fields of the class.** (Be aware of the [_fragile base class problem_](https://en.wikipedia.org/wiki/Fragile_base_class)).
-    
 
 To put in short
 
-1.  class variables can only be global.
-2.  Member functions of a class can access only its member fields, methods, local variables, arguments and methods of member fields.
-3.  Member fields of a class can be accessed from outside only through member functions of the class.
+1. class variables can only be global.
+2. Member functions of a class can access only its member fields, methods, local variables, arguments and methods of member fields.
+3. Member fields of a class can be accessed from outside only through member functions of the class.
 
 ## Inheritance
 
@@ -38,8 +37,8 @@ The language supports class **extension**. A class defined by extension of anoth
 
 The semantics of class extension can be summarized as follows:
 
-1.  **The derived class inherits all member fields of the parent class automatically.** If additional fields are defined, they will be specific to the derived class. **The derived class cannot re-declare a member field already declared in the parent class.**
-2.  **The derived class inherits only those methods of the parent class which are not re-defined (overridden).** If a method is overridden, the new definition will be the only valid definition for the derived class. All the overridden methods must be declared again in the derived class. **The signature of the overridden method must match exactly in both number and types of arguments with the signature of the function in the parent class.** Only one function of the same name is permitted in a class. Thus, the language does **not** permit [function overloading]( https://en.wikipedia.org/wiki/Function_overloading).
+1. **The derived class inherits all member fields of the parent class automatically.** If additional fields are defined, they will be specific to the derived class. **The derived class cannot re-declare a member field already declared in the parent class.**
+2. **The derived class inherits only those methods of the parent class which are not re-defined (overridden).** If a method is overridden, the new definition will be the only valid definition for the derived class. All the overridden methods must be declared again in the derived class. **The signature of the overridden method must match exactly in both number and types of arguments with the signature of the function in the parent class.** Only one function of the same name is permitted in a class. Thus, the language does **not** permit [function overloading]( https://en.wikipedia.org/wiki/Function_overloading).
 
 ## Class variables and Instantiation
 
@@ -47,7 +46,7 @@ Class variables are declared just like other variables in the global declaration
 
 Example:
 
-Object instance is created for a variable of a class with the built-in function _new_. The language does not support [constructors and destructors](https://en.wikipedia.org/wiki/Constructor_(object-oriented_programming). Hence intitialization of objects has to be done explicitly. An object can be deallocated using the built-in function _delete_. The function _new_ will create an object of a specified class at run time, and assigns a _reference_ to the object into a variable. A variable of a given class may be assigned a reference to an object of any desendent class using _new_. Access semantics of class variables is similar to ExpL user-defined-types, except for the details associated with methods defined within classes. These details are described below.
+Object instance is created for a variable of a class with the built-in function _new_. The language does not support [constructors and destructors](<https://en.wikipedia.org/wiki/Constructor_(object-oriented_programming>). Hence intitialization of objects has to be done explicitly. An object can be deallocated using the built-in function _delete_. The function _new_ will create an object of a specified class at run time, and assigns a _reference_ to the object into a variable. A variable of a given class may be assigned a reference to an object of any desendent class using _new_. Access semantics of class variables is similar to ExpL user-defined-types, except for the details associated with methods defined within classes. These details are described below.
 
 ## Subtype Polymorphism
 
@@ -86,4 +85,3 @@ new
 delete
 
 self
-

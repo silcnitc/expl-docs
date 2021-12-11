@@ -5,6 +5,7 @@ title: YACC
 # YACC Examples
 
 ## YACC Program
+
 in2post.y
 
 ```c
@@ -35,6 +36,7 @@ main()
 ```
 
 ## LEX Program
+
 in2post.l
 
 ```c
@@ -43,11 +45,11 @@ in2post.l
     #include "y.tab.h"
 %}
 %%
-[0-9]+	return DIGIT;
-'+'	return PLUS;
-'*'	return STAR;
-'('	return \*yytext;
-')'	return \*yytext;
+[0-9]+ return DIGIT;
+'+' return PLUS;
+'*' return STAR;
+'(' return \*yytext;
+')' return \*yytext;
 %%
 yywrap()
 {
@@ -56,4 +58,3 @@ yywrap()
 
 
 ```
-

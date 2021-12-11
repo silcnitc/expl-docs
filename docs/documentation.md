@@ -106,10 +106,10 @@ OExpL Test Programs
 
 The programs can be found [here](oexpl-testprograms.html).
 
-*   [Github](https://github.com/silcnitc)
+* [Github](https://github.com/silcnitc)
 
 [↑](#navtop "Go back up")
 
-*   [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
-*   [Home](index.html)
-*   [About](about.html)
+* [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
+* [Home](index.html)
+* [About](about.html)

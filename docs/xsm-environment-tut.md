@@ -19,15 +19,15 @@ The XSM simulator given to you is actually much more than a bare XSM hardware si
 
 Your compiler simply needs to generate an executable file following the XEXE executable format and store it on the local machine. When you use the XSM simulator to run the program, the following actions take place.
 
-*   1\. The script that runs the simulator transfers the file from your local machine's disk to the XSM machine's (simulated) hard disk.
-*   2\. It then boots up the operating system (the OS is already preloaded in the simulator's hard disk). The bootstrap loader starts in the kernel mode and sets up a user process in memory, allocating an address space. Then, it transfers the executable file from the hard disk to the [code region](abi.html#nav-virtual-address-space-model) of this memory. Page tables are also set up to run the process in user mode.
-*   3\. Finally, the simulator sets the instruction pointer (IP) to the address specified in the **entry-point field** of the header of the executable file and control transfers to this instruction, resulting in execution of the loaded program starting with the instruction specified by the entry point. The machine also switches from the kernel mode to the user mode. (Technically, the OS code pushes the entry point address on to the program's stack and executes the [IRET instruction](http://exposnitc.github.io/arch_spec-files/instruction_set.html) resulting in transfer of control in user mode to the specified memory address. These details are not relevant for your work and are noted just for the sake of information.)
+* 1\. The script that runs the simulator transfers the file from your local machine's disk to the XSM machine's (simulated) hard disk.
+* 2\. It then boots up the operating system (the OS is already preloaded in the simulator's hard disk). The bootstrap loader starts in the kernel mode and sets up a user process in memory, allocating an address space. Then, it transfers the executable file from the hard disk to the [code region](abi.html#nav-virtual-address-space-model) of this memory. Page tables are also set up to run the process in user mode.
+* 3\. Finally, the simulator sets the instruction pointer (IP) to the address specified in the **entry-point field** of the header of the executable file and control transfers to this instruction, resulting in execution of the loaded program starting with the instruction specified by the entry point. The machine also switches from the kernel mode to the user mode. (Technically, the OS code pushes the entry point address on to the program's stack and executes the [IRET instruction](http://exposnitc.github.io/arch_spec-files/instruction_set.html) resulting in transfer of control in user mode to the specified memory address. These details are not relevant for your work and are noted just for the sake of information.)
 
 We start now by generating a small XEXE executable file containing an XSM program to find the sum of two numbers and store the value in a register. The value of the register will have to be inspected in order to view the ouput. This is possible by executing the XSM simulator in [debug mode](xsmusagespec.html#nav-debug). Later we will see how console input and output are handled.
 
 ---
 
-## **Experiment I** : Adding two numbers using registers.
+## **Experiment I** : Adding two numbers using registers
 
 As noted above, executable programs must be designed in such a way that it must be possible for the file to be loaded and executed by the underlying operating system. When a program is loaded into memory by the OS, the OS typically assigns a virtual address space (or simply an address space). In the present case, the address space of a program starts at address 0 of the memory and ends at address 5119. This means that while designing the target program, you may assume that this is the total computer memory accessible to the program.
 
@@ -81,6 +81,7 @@ fprintf(target_file, " %d\n %d\n %d\n %d\n %d\n %d\n %d\n %d\n ",0,2056,0,0,0,0,
 ```
 
 `target_file` after adding header
+
 ```asm
 0
 2056
@@ -151,9 +152,7 @@ This command displays the contents of all the machine registers namely IP, SP, B
 !!! question "Exercise 2"
     Modify your code generation module to store the result of the previous program in the first location in [stack region](abi.html#nav-virtual-address-space-model) namely address 4096 and watch the contents in debug mode after execution.
 
-
 ## **Experiment II** : Input/Output using OS system call interface
-
 
 !!! abstract "Reading Assignment"
     Read the low level system call interface of the [ABI](abi.html#nav-lowlevel-syscall-interface)
@@ -211,6 +210,7 @@ PUSH R0
     Whenever there is a blank argument or a space to be pushed on to the stack, we follow the convention of pushing R0 on to the stack and the status of stack in the figure will be shown using blank argument only.
 
 **Argument 3** : Blank /\* Push any register \*/
+
 ```asm
 PUSH R0
 ```
@@ -327,9 +327,7 @@ Suppose you need three variables to be read, then you may reserve the first thre
     Exercises 4 and 5 essentially ask you to handle conditional and iterative constructs in assembly language.
     These exercises give insight into how machine code must be genrated for **if-then-else** and **while-do** constructs of programming languages.
 
-
 ## **Experiment III**: Understanding the Library Interface
-
 
 !!! abstract "Prerequisite Reading"
     Read and understand the [library interface](abi.html#nav-eXpOS-system-library-interface).
@@ -381,6 +379,7 @@ PUSH R2
 ```
 
 **Argument 2** : Data to be written (For this example, data is present in R0. So, we are pushing R0)
+
 ```asm
 PUSH R0
 ```
@@ -519,6 +518,7 @@ MOV [R2], R1
 ```
 
 The library.lib file will look as shown below after adding the code to handle Write system call.
+
 ```asm
 MOV R1, SP
 MOV R2, 5
@@ -554,8 +554,6 @@ MOV [R2], R1
 RET
 ```
 
-
-
 !!! tip "Important note"
     Your library code for read, write and exit may modify some of the registers R0, R1 etc.
     Hence, if you had stored some values into these registers before the call, those values will be lost
@@ -565,7 +563,6 @@ RET
     2. Now, code the library call and return steps.
     3. After return POP out the registers saved in the stack. (Note that you must pop the registers out in reverse order of push).
 
-
 !!! question "Exercise 6"
     Implement `read()` and `exit()` functions of the library.
 
@@ -574,5 +571,3 @@ RET
 
 !!! question "Exercise 8"
     Modify the program to read numbers until a zero is entered from the console and print their sum to perform I/O using the library interface.
-
-

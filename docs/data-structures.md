@@ -9,10 +9,9 @@ hide:
 
 ## Introduction
 
-The compilation of an ExpL program involves two phases. In the first phase (called the **analysis phase**), the source ExpL program is analyzed (_lexical, syntax and semantic_ analysis are completed in this phase) and if the program is free of syntax and semantic errors, an _intermediate representation_ of the source program called the **abstract syntax tree** is generated. 
+The compilation of an ExpL program involves two phases. In the first phase (called the **analysis phase**), the source ExpL program is analyzed (_lexical, syntax and semantic_ analysis are completed in this phase) and if the program is free of syntax and semantic errors, an _intermediate representation_ of the source program called the **abstract syntax tree** is generated.
 
 This is followed by a second phase, the second phase (called the **synthesis phase**) recursively traverses the abstract syntax tree and generates target code.
-
 
 !!! note
     In the case of an _interpreter_, the second phase (called the execution phase) involves direct execution of the program by recursive evaluation of the abstract syntax tree.
@@ -22,21 +21,23 @@ This is followed by a second phase, the second phase (called the **synthesis pha
 
 There are four basic data structures that are maintained during the analysis phase. These are the following:
 
-1.  The **Type table** is used to store information regarding the primitive and user-defined types in the program.
-2.  The **global symbol table** is used to store information about the global variables and functions in the program.
-3.  For each function, a separate **local symbol table** is maintained to store the information about local variables and arguments of the function. 
-4.  Finally, the **abstract syntax tree** is constructed as the outcome of the analysis phase.
+1. The **Type table** is used to store information regarding the primitive and user-defined types in the program.
+2. The **global symbol table** is used to store information about the global variables and functions in the program.
+3. For each function, a separate **local symbol table** is maintained to store the information about local variables and arguments of the function.
+4. Finally, the **abstract syntax tree** is constructed as the outcome of the analysis phase.
 
 An abstract syntax tree is a tree representation of a program. It is a generalization of the tree representation for expressions (called the expression tree). For example, the arithmetic expression (3+5)\*(5+9) is typically represented as an expression tree as below:
 
 ![](img/data_structure_28.png)
 
 We can generalize this representation to come up with a tree representation for the whole sequence of statements of a ExpL function in a program. Each funcion in an ExpL program will be represented by an abstract syntax tree. Thus, the whole program will be a collection of abstract syntax trees, one for each function. As a very simple example, consider the three program statements:  
+
 ```
 a = b+c;
 d = a-b;
 c = a+d;
 ```
+
 A syntax tree representation for the three statements above would look as below:
 
 ![](img/symboltable.png)
@@ -65,4 +66,3 @@ In addition to the global symbol table, the ExpL compiler maintains a separate l
 #### ABSTRACT SYNTAX TREE
 
 The machine independent front-end phase of a compiler constructs an intermediate representation of the source program called the Abstract Syntax Tree (AST). An interpreter will evaluate ...[Read more](./data_structures/abstract-syntax-tree.md)
-

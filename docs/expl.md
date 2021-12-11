@@ -1,28 +1,26 @@
-ExpL Specification    
+ExpL Specification
 
 [![](img/logo.png)](index.html)
 
-*   [Home](index.html)
-*   [About](about.html)
-*   [Roadmap](roadmap.html)
-*   [Documentation](documentation.html)
+* [Home](index.html)
+* [About](about.html)
+* [Roadmap](roadmap.html)
+* [Documentation](documentation.html)
 
 * * *
 
 ExpL Specification
 
-  
-  
 [Download as PDF](pdfs/expl.pdf)
 
-*   [Introduction](#nav-intro)
-*   [Supported data types](#nav-data-types)
-*   [General Program Structure](#nav-general-program-structure)
-*   [Statements and Expressions](#nav-stmts-and-exprs)
-*   [Dynamic Memory Allocation](#nav-dynamic-memory-allocation)
-*   [Parameter passing](#nav-fun-par-passing)
-*   [Sample Programs](#nav-sample-programs)
-*   [Appendix](#nav-appendix)
+* [Introduction](#nav-intro)
+* [Supported data types](#nav-data-types)
+* [General Program Structure](#nav-general-program-structure)
+* [Statements and Expressions](#nav-stmts-and-exprs)
+* [Dynamic Memory Allocation](#nav-dynamic-memory-allocation)
+* [Parameter passing](#nav-fun-par-passing)
+* [Sample Programs](#nav-sample-programs)
+* [Appendix](#nav-appendix)
 
 Introduction
 ------------
@@ -37,12 +35,10 @@ Supported Data Types
 **Integer** : An integer type variable is declared using the keyword **int**. _Example_ :
 
                             int a, b, c;  /\* Declares variables a, b, c of type integer \*/
-                          
 
 **String** : A string is a sequence of alphanumeric characters. A string type variable is declared using the keyword **str**. _Example_ :
 
                               str mystring;   /\*  Declares a variable mystring of type string.  \*/
-                          
 
 **Boolean** : ExpL does not permit boolean variables. But logical expressions like (a < b) or (a==b) and (a< 5) are supported and are considered to be of type boolean.
 
@@ -56,7 +52,6 @@ _Example_ :
 
                               int a\[10\];            /\* array a indexed a\[0\],a\[1\],..a\[9\], can store 10 integers\*/
                               str stringlist\[10\];   /\* stringlist is an array of 10 strings \*/
-                            
 
 **User-defined types**
 
@@ -71,27 +66,22 @@ _Example_ : A user defined type, mytype is defined as:
                                  int a;
                                  str b;
                               }
-                            
 
 a variable of type mytype is declared as:
 
                               mytype var1, var2;
-                            
 
 Storage for the variable is allocated as:
 
                               var = alloc();   /\* Note:  Access without allocation can lead to run time errors \*/
-                            
 
 Its fields may be accessed as:
 
                               var.a = 10;     /\*  the “.” symbol is used to access member fields \*/
-                            
 
 The memory allocated may be freed as:
 
                               retval = free(var);
-                            
 
 _Note_ : The ExpL compiler may internally represent var like a pointer variable. The library function alloc may be designed so as to allocate memory and return a pointer to the allocated memory. The returned pointer is stored in var. (Library functions are explained in detail later on.)
 
@@ -100,9 +90,9 @@ General Program Structure
 
 An ExpL program consists of the following sections:
 
-*   Type Definitions - Optional (for user defined types)
-*   Global Declarations - for global variables, arrays and functions
-*   Function Definitions and the main Function Definition
+* Type Definitions - Optional (for user defined types)
+* Global Declarations - for global variables, arrays and functions
+* Function Definitions and the main Function Definition
 .
 
 The following subsections explain each program section.
@@ -124,7 +114,6 @@ For every function except the special **main** function defined in an ExpL progr
                             type VarName1, VarName2 ;    /\* variable declarations \*/
                             rettype FunctionName (ParameterList);    /\*  A function declaration \*/
                             type VarName\[ArraySize\];    /\* An array declaration \*/
-                        
 
 _Note_ : Declarations for variables/functions of the same type can be combined as shown in the following example.
 
@@ -136,7 +125,6 @@ _Example :_
                               mytype m, fun(mytype t);   /\* myptype must be  a user defined type \*/
                               /\*  The argument and the return value of fun are references to mytype \*/
                             enddecl
-                        
 
 Declaring functions at the beginning avoids the [forward reference](https://en.wikipedia.org/wiki/Forward_declaration) problem and facilitates single pass compilation. If a variable/function is declared multiple times, a compilation error should result.
 
@@ -149,7 +137,6 @@ All globally declared variables are visible inside a function, unless suppressed
                               Local Declarations
                               Function Body
                             }
-                        
 
 The names and types of the arguments and return value of each function definition should match exactly (_name equivalence_) with the corresponding declaration. Every declared function must have exactly one definition. The compiler should report error otherwise.
 
@@ -174,7 +161,6 @@ Example : The following is an example for a simple function definition.
                                 return c;
                               end
                             }
-                        
 
 Local Variables and parameters should be allocated space in the [run-time stack](https://en.wikipedia.org/wiki/Call_stack) of the function. The language **supports recursion**.
 
@@ -182,13 +168,13 @@ Each statement should end with a ‘;’ which is called the **statement termina
 
 There are seven types of statements in ExpL. They are:
 
-1.  Assignment Statement
-2.  Conditional Statement
-3.  Iterative statement
-4.  Return statement
-5.  Input/Output statements
-6.  Break statement
-7.  Continue statement
+1. Assignment Statement
+2. Conditional Statement
+3. Iterative statement
+4. Return statement
+5. Input/Output statements
+6. Break statement
+7. Continue statement
 
 The next section discusses statements and expressions in ExpL.
 
@@ -232,7 +218,6 @@ Any variable of a user defined type or invocation of a function whose return typ
 The general syntax of the assignment statement is :
 
                               Lvalue = Rvalue;
-                            
 
 The possible Lvalues are variables or indexed array variables. If the Lvalue has type integer (or string) , the Rvalue must be an arithmetic (or string) expression. If the Lvalue is a user defined variable, then the Rvalue must either be an expression of the same type, or the special constant NULL, or an invocation of the function _alloc()_ (to be explained later).
 
@@ -249,7 +234,6 @@ The ExpL conditional statement has the following syntax:
                             else
                              Statements
                             endif;
-                            
 
 The **else** part is optional. The statements inside an **if**\-block may be conditional, iterative, assignment, input/output, break or continue statements, but **not** the return statement.
 
@@ -260,7 +244,6 @@ The eXpL iterative statement has the following syntax:
                             while < Logical Expression > do
                                Statements
                             endwhile;
-                            
 
 Standard conventions apply in this case too. The statements inside a **while**\-block may be conditional, iterative, assignment, input/output, break or continue statements, but **not** the return statement.
 
@@ -270,7 +253,6 @@ The body of each function (including main) should have **exactly one** return st
 
                           return < Expression\* > ; /\* The type of the expression should match with the return type of the function\*/
                           Note\* : As an exception to the rule above, the expression returned by a function whose return type is a user defined type can be the constant NULL.
-                          
 
 If the return type of the function does not match the type of the expression/variable returned, a compilation error should occur. The return type of a function can be of type **int** , **str** or **user-defined type**. The **return type of main is integer** by specification
 
@@ -281,12 +263,10 @@ If the return type of the function does not match the type of the expression/var
 Using read statement, we can **read a string or an integer into a variable** of type string or integer respectively from the standard input. The syntax of the input statement is as follows :
 
                                   read( < variable > );
-                              
 
 Using the write statement, we can **write** the value of an **integer or string type variable** or **the value of an arithmetic expression** to the standard output. The output statement is as follows :
 
                                   write( < expr > );
-                              
 
 ### Break and Continue Statements
 
@@ -299,7 +279,6 @@ The next section briefly discusses the library functions for dynamic memory allo
 This statement results in the ExpL compiler setting a break point in the program. This feature is useful for debugging.
 
                                     breakpoint;
-                                
 
 Dynamic memory allocation
 -------------------------
@@ -309,7 +288,6 @@ The library functions **initialize()**, **alloc()** and **free()** are used as f
                           intialize(); /\* To Intialise the heap. \*/
                           t = alloc(); /\* Allocates contiguous locations in the heap, t must be a user defined variable \*/
                           retval = free(t);  /\* Free the allocated block , t must be a user defined variable \*/
-                        
 
 Intialize() must be invoked before any allocation is made and it resets the heap to default values. A call to alloc() allocates contiguous memory locations in the **heap memory** (memory reserved for dynamic memory allocation) and returns the address of the starting location. The Expl compiler sets the variable (of a user defined type) on the left of the assignment to store this memory address. A call to free() deallocates contiguous memory locations in the heap memory that is referenced by the user defined type variable. The function free() returns NULL on successful deallocation. Otherwise, the value of t is unchanged by a call to free(). All unallocated user defined variables are set to the predefined constant NULL.
 
@@ -381,8 +359,6 @@ main
 
 free
 
-  
-
 #### Operators and Delimiters
 
 The following are the operators and delimiters in ExpL
@@ -433,8 +409,6 @@ OR
 
 .
 
-  
-
 #### Identifiers
 
 Identifiers are names of variables and user-defined functions. Identifiers should start with an letter, and may contain both letters and digits. Special characters are not allowed in identifiers.
@@ -445,19 +419,15 @@ digit -> \[0-9\]
 
 identifier -> (letter)(letter | digit)\*
 
-  
-
 * * *
 
-*   [Github](http://github.com/silcnitc)
-*   [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
+* [Github](http://github.com/silcnitc)
+* [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
 
 Contributed By : Ashwathy T Revi, Subisha V,  
 [Nunnaguppala Surya Harsha](https://www.linkedin.com/in/suryaharshanunnaguppala), [Vishnu Priya Matha](https://in.linkedin.com/in/vishnupriyamatha)
 
-*   [Home](index.html)
-*   [About](about.html)
-
-  
+* [Home](index.html)
+* [About](about.html)
 
 window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\\/script>')

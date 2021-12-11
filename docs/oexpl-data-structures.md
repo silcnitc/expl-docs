@@ -14,14 +14,14 @@ The structure of Class Table(CT) is as follows:
 
 ```c
 struct Classtable {
- 	char *Name;                           //name of the class
-	struct Fieldlist *Memberfield;        //pointer to Fieldlist
-	struct Memberfunclist *Vfuncptr;      //pointer to Memberfunclist
-	struct Classtable *Parentptr;         //pointer to the parent's class table
-	int Class_index;                      //position of the class in the virtual function table
-	int Fieldcount;                       //count of fields
-  	int Methodcount;                      //count of methods
-	struct Classtable *Next;              //pointer to next class table entry
+  char *Name;                           //name of the class
+ struct Fieldlist *Memberfield;        //pointer to Fieldlist
+ struct Memberfunclist *Vfuncptr;      //pointer to Memberfunclist
+ struct Classtable *Parentptr;         //pointer to the parent's class table
+ int Class_index;                      //position of the class in the virtual function table
+ int Fieldcount;                       //count of fields
+   int Methodcount;                      //count of methods
+ struct Classtable *Next;              //pointer to next class table entry
 };
 ```
 
@@ -30,23 +30,24 @@ struct Classtable {
 
 ```c
 struct Fieldlist{
-	char *Name;			//name of the field
-	int Fieldindex;			//position of the field
-	struct Typetable *Type;		//pointer to typetable
-	struct Classtable *Ctype;	//pointer to the class containing the field
-	struct Fieldlist *Next;		//pointer to next fieldlist entry
+ char *Name;   //name of the field
+ int Fieldindex;   //position of the field
+ struct Typetable *Type;  //pointer to typetable
+ struct Classtable *Ctype; //pointer to the class containing the field
+ struct Fieldlist *Next;  //pointer to next fieldlist entry
 };
 ```
 
 Memberfunc list is used to store the information regarding the type, name of the function, argument list, it's flabel and it's position.
+
 ```c
 struct Memberfunclist {
- 	char *Name;                      //name of the member function in the class
-	struct Typetable *Type;          //pointer to typetable
-	struct Paramstruct *paramlist;   //pointer to the head of the formal parameter list
-	int Funcposition;                //position of the function in the class table
- 	int Flabel;                      //A label for identifying the starting address of the function's code in the memory
-	struct Memberfunclist *Next;     //pointer to next Memberfunclist entry
+  char *Name;                      //name of the member function in the class
+ struct Typetable *Type;          //pointer to typetable
+ struct Paramstruct *paramlist;   //pointer to the head of the formal parameter list
+ int Funcposition;                //position of the function in the class table
+  int Flabel;                      //A label for identifying the starting address of the function's code in the memory
+ struct Memberfunclist *Next;     //pointer to next Memberfunclist entry
 };
 ```
 
@@ -79,80 +80,79 @@ struct Memberfunclist {
 ## Illustration
 
 Here is an example illustrating it.
+
 ```
 class
 Person{
-	decl
-		str name;
-		int age;
-		int printDetails();
-		str findName();
-		int createPerson(str name, int age);
-	enddecl
-	int printDetails(){
-		decl
-		enddecl
-		begin
-			write(self.name);
-			write(self.age);
-			return 1;
-		end
-	}
-	str findName(){
-		decl
-		enddecl
-		begin
-			return self.name;
-		end
-	}
-	int createPerson(str name, int age){
-		decl
-		enddecl
-		begin
-			self.name=name;
-			self.age=age;
-			return 1;
-		end
-	}
+ decl
+  str name;
+  int age;
+  int printDetails();
+  str findName();
+  int createPerson(str name, int age);
+ enddecl
+ int printDetails(){
+  decl
+  enddecl
+  begin
+   write(self.name);
+   write(self.age);
+   return 1;
+  end
+ }
+ str findName(){
+  decl
+  enddecl
+  begin
+   return self.name;
+  end
+ }
+ int createPerson(str name, int age){
+  decl
+  enddecl
+  begin
+   self.name=name;
+   self.age=age;
+   return 1;
+  end
+ }
 }     /*end of Person class */
 Student extends Person{
 
-	decl
-		int rollnumber;               /*  The members name and age are inherited from the parent class */
-		str dept;
-		int printDetails();
-		int createStudent(str name, int age,int rollNo, str dept);
-	enddecl
-  	int createStudent(str name, int age,int rollNo, str dept){
-		decl
-		enddecl
-		begin
-			self.name =name;
-           		self.age = age;
-            		self.rollnumber = rollNo;
-            		self.dept = dept;
-            		return 1;
-		end
-	}
-	int printDetails(){  /* This function is also overridden in the derived class */
-		decl
-		enddecl
-		begin
-			write(self.name);
-			write(self.age);
-			write(self.rollnumber);
-			write(self.dept);
-			return 1;
-		end
-	}         /**  The derived class inherits the findName() function from the parent **/
+ decl
+  int rollnumber;               /*  The members name and age are inherited from the parent class */
+  str dept;
+  int printDetails();
+  int createStudent(str name, int age,int rollNo, str dept);
+ enddecl
+   int createStudent(str name, int age,int rollNo, str dept){
+  decl
+  enddecl
+  begin
+   self.name =name;
+             self.age = age;
+              self.rollnumber = rollNo;
+              self.dept = dept;
+              return 1;
+  end
+ }
+ int printDetails(){  /* This function is also overridden in the derived class */
+  decl
+  enddecl
+  begin
+   write(self.name);
+   write(self.age);
+   write(self.rollnumber);
+   write(self.dept);
+   return 1;
+  end
+ }         /**  The derived class inherits the findName() function from the parent **/
 }  /* end of student class */
 endclass
 ```
 
-
-1.  As soon as the compiler encounters the class name, it installs the class name and the parent class name if present into the class table. Subsequently, If there is an extension to the parent class, all the member fields and methods of parent class are inherited. Following is how class table looks when class _Person_ is installed.  
+1. As soon as the compiler encounters the class name, it installs the class name and the parent class name if present into the class table. Subsequently, If there is an extension to the parent class, all the member fields and methods of parent class are inherited. Following is how class table looks when class _Person_ is installed.  
     [![](/img/class_table_1.png)](/img/class_table_1.png)
-2.  Following is how class table looks when class _Student_ is installed.  
-      
-    [![](/img/class_table_2.png)](/img/class_table_2.png)
+2. Following is how class table looks when class _Student_ is installed.  
 
+    [![](/img/class_table_2.png)](/img/class_table_2.png)

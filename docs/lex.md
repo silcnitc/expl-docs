@@ -14,13 +14,12 @@ The source ExpL program is fed as the input to the the lexical analyzer which pr
 Each token is specified by a token name. The token name is an abstract symbol representing the kind of lexical unit, e.g., a particular keyword, or a sequence of input characters denoting an identifier. The token names are the input symbols that the parser processes. For instance integer, boolean, begin, end, if, while etc. are tokens in ExpL.
 
 ```c
-"integer"  	{return ID_TYPE_INTEGER;}
+"integer"   {return ID_TYPE_INTEGER;}
 ```
 
 This example demonstrates the specification of a **rule** in LEX. The rule in this example specifies that the lexical analyzer must return the token named ID\_TYPE\_INTEGER when the pattern “integer” is found in the input file. A rule in a LEX program comprises of a 'pattern' part (specified by a regular expression) and a corresponding (semantic) 'action' part (a sequence of C statements). In the above example, “integer” is the pattern and {return ID\_TYPE\_INTEGER;} is the corresponding action. The statements in the action part will be executed when the pattern is detected in the input.
 
 [Lex](https://en.wikipedia.org/wiki/Lex_(software)) was developed by [Mike Lesk](https://en.wikipedia.org/wiki/Mike_Lesk) and [Eric Schmidt](https://en.wikipedia.org/wiki/Eric_Schmidt) at [Bell labs](https://en.wikipedia.org/wiki/Bell_Labs).
-
 
 ## The structure of LEX programs
 
@@ -47,14 +46,15 @@ The auxiliary declarations are copied as such by LEX to the output _lex.yy.c_ fi
 LEX allows the use of short-hands and extensions to regular expressions for the regular definitions. A regular definition in LEX is of the form : **D   R**    where D is the symbol representing the regular expression R.
 
 **Example:**
+
 ```c
 /*Declarations section start here*/
 
 /* Auxiliary declarations start here*/
 
 %{
-	#include <stdio.h>
-	int global_variable;
+ #include <stdio.h>
+ int global_variable;
 %}
 
 /*Auxiliary declarations end & Regular definitions start here*/
@@ -72,6 +72,7 @@ LEX allows the use of short-hands and extensions to regular expressions for the 
 
 /* Auxiliary functions */
 ```
+
 ### Rules
 
 Rules in a LEX program consists of two parts :
@@ -114,6 +115,7 @@ LEX obtains the regular expressions of the symbols 'number' and 'op' from the de
 LEX generates C code for the rules specified in the Rules section and places this code into a single function called _yylex()_. (To be discussed in detail later). In addition to this LEX generated code, the programmer may wish to add his own code to the _lex.yy.c_ file. The auxiliary functions section allows the programmer to achieve this.
 
 **Example:**
+
 ```c
 /* Declarations */
 %%
@@ -131,7 +133,6 @@ The auxiliary declarations and auxiliary functions are copied as such to the lex
 
 Once the code is written, _lex.yy.c_ maybe generated using the command _lex "filename.l"_ and compiled as _gcc lex.yy.c_
 
-
 ## The yyvariables
 
 The following variables are offered by LEX to aid the programmer in designing sophisticated lexical analyzers. These variables are accessible in the LEX program and are automatically declared by LEX in _lex.yy.c_.
@@ -145,6 +146,7 @@ The following variables are offered by LEX to aid the programmer in designing so
 _yyin_ is a variable of the type FILE\* and points to the input file. _yyin_ is defined by LEX automatically. If the programmer assigns an input file to _yyin_ in the auxiliary functions section, then _yyin_ is set to point to that file. Otherwise LEX assigns _yyin_ to stdin(console input).
 
 **Example:**
+
 ```c
 /* Declarations */
 %%
@@ -153,14 +155,14 @@ _yyin_ is a variable of the type FILE\* and points to the input file. _yyin_ is 
 
 main(int argc, char* argv[])
 {
-	if(argc > 1)
-	{
-		FILE *fp = fopen(argv[1], "r");
-		if(fp)
-			yyin = fp;
-	}
-	yylex();
-	return 1;
+ if(argc > 1)
+ {
+  FILE *fp = fopen(argv[1], "r");
+  if(fp)
+   yyin = fp;
+ }
+ yylex();
+ return 1;
 }
 ```
 
@@ -184,11 +186,12 @@ main(int argc, char* argv[])
 _yytext_ is of type _char\*_ and it contains the _lexeme_ currently found. A **lexeme** is a sequence of characters in the input stream that matches some pattern in the Rules Section. (In fact, it is the first matching sequence in the input from the position pointed to by _yyin_.) Each invocation of the function _yylex()_ results in _yytext_ carrying a pointer to the lexeme found in the input stream by _yylex()_. The value of yytext will be overwritten after the next _yylex()_ invocation.
 
 **Example:**
+
 ```c
 %option noyywrap
 %{
-	#include <stdlib.h>
-	#include <stdio.h>
+ #include <stdlib.h>
+ #include <stdio.h>
 %}
 
 number [0-9]+
@@ -201,15 +204,15 @@ number [0-9]+
 
 int main()
 {
-	yylex();
-	return 1;
+ yylex();
+ return 1;
 }
 ```
 
 In the above example, if a lexeme is found for the pattern defined by number then corresponding action is executed . Consider the following sample i/o,
 
-  
 Sample Input/Output:
+
 ```
 I: 25
 O: Found : 25
@@ -239,12 +242,13 @@ _yyleng_ is a variable of the type int and it stores the length of the lexeme po
 %%
 {number} printf("Number of digits = %d",yyleng);
 ```
+
 Sample Input/Output
+
 ```
 I: 1234
 O: Number of digits = 4
 ```
-
 
 ## The yyfunctions
 
@@ -259,6 +263,7 @@ _yylex()_ is a function of return type int. LEX automatically defines _yylex()_ 
     That yylex() need not necessarily be invoked in the Auxiliary Functions Section of LEX program when used with [YACC](http://silcnitc.github.io/yacc.html).
 
 **Example:**
+
 ```c
 /* Declarations */
 
@@ -270,9 +275,9 @@ _yylex()_ is a function of return type int. LEX automatically defines _yylex()_ 
 
 int main()
 {
-	int num = yylex();
-	printf("Found: %d",num);
-	return 1;
+ int num = yylex();
+ printf("Found: %d",num);
+ return 1;
 }
 ```
 
@@ -308,39 +313,40 @@ LEX declares the function yywrap() of return-type int in the file _lex.yy.c_ . L
 As LEX does not define yywrap() in lex.yy.c file but makes a call to it under yylex(), the programmer must define it in the Auxiliary functions section or provide %option noyywrap in the declarations section. This options removes the call to yywrap() in the lex.yy.c file. Note that, it is **mandatory** to either define yywrap() or indicate the absence using the %option feature. If not, LEX will flag an error
 
 **Example:**
+
 ```c
 %{
-	#include<stdio.h>
-	char *file1;
+ #include<stdio.h>
+ char *file1;
 %}
 
 %%
 
-[0-9]+ 	printf("number");
+[0-9]+  printf("number");
 
 %%
 
 int yywrap()
 {
-  	FILE *newfile_pointer;
-  	char *file2="input_file_2.l";
-  	newfile_pointer = fopen("input_file_2.l","r");
-  	if(strcmp(file1,file2)!=0)
-  	{
-  		file1=file2;
-  		yyin = newfile_pointer;
-    		return 0;
-  	}
-  	else
-  		return 1;
+   FILE *newfile_pointer;
+   char *file2="input_file_2.l";
+   newfile_pointer = fopen("input_file_2.l","r");
+   if(strcmp(file1,file2)!=0)
+   {
+    file1=file2;
+    yyin = newfile_pointer;
+      return 0;
+   }
+   else
+    return 1;
 }
 
 int main()
 {
-	file1="input_file.l";
-  	yyin = fopen("input_file.l","r");
-  	yylex();
-  	return 1;
+ file1="input_file.l";
+   yyin = fopen("input_file.l","r");
+   yylex();
+   return 1;
 }
 ```
 
@@ -353,8 +359,8 @@ When yylex() finishes scanning the first input file, `input_file.l` yylex() invo
     - Initially from a file input\_file.l and then from the console
     - Twice from the console
 
-
 ## `even-odd.l` - a complete LEX program
+
 ```c
 %{
 
@@ -407,8 +413,6 @@ int main()
 }
 ```
 
-
-
 Disambiguation Rules
 --------------------
 
@@ -420,8 +424,8 @@ yylex() uses two important disambiguation rules in selecting the right action to
 **Example:**
 
 ```c
-“break”			{ return BREAK; }
-[a-zA-Z][a-zA-Z0-9]*  	{ return IDENTIFIER; }
+“break”   { return BREAK; }
+[a-zA-Z][a-zA-Z0-9]*   { return IDENTIFIER; }
 ```
 
 If "break" is found in the input, it is matched with the first pattern and yylex() returns BREAK. If "breakdown" is found, it is matched with the second pattern and yylex() returns IDENTIFIER. Note the use of disambiguation rules here.
@@ -443,6 +447,7 @@ If "break" is found in the input, it is matched with the first pattern and yylex
 Assume that the function calling yylex() prints the name of the token.
 
 Sample Input/Output :
+
 ```
 I: -
 O: MINUS
@@ -456,13 +461,12 @@ O: DECREMENT MINUS
 
 Note that, in case of an -- input to the lexical analyzer, yylex() does not return two MINUS tokens, but instead returns a DECREMENT token, by the second disambiguation rule.
 
-
 ## Pattern matching using LEX
 
 Conceptually, LEX constructs a finite state machine to recognize all the regular expression patterns specified in the LEX program file. The code written by the programmer in the action part is executed when the machine is in accept state. The lex.yy.c program stores information about the finite state machine in the form of a decision table (transition table). A transition(current\_state,input\_char) function is used to access the decision table. LEX makes it's decision table visible if we compile the program with the -T flag. The finite state machine used by LEX is deterministic finite state automaton. The lex.yy.c simulates the DFA.
 
-
 ## A token simulator program
+
 ```c
 %{
 
@@ -505,9 +509,11 @@ int main()
   return 1;
 }
 ```
+
 In this program, the main() function obtains the tokens returned by yylex() and checks if the input contains a valid identifier.
 
 Sample Input/Output :
+
 ```
 I: Var9
 O: Acceptable
@@ -515,24 +521,25 @@ O: Acceptable
 
 When 'Var9' is provided as the input, the DFA constructed by LEX accepts the string, and the corresponding action 'return ID' executed. As a result _yylex()_ returns the token ID, and the _main()_ function prints 'Acceptable' on the screen.
 
-
 ## Construction of a DFA from a regular expression
 
 (This section explains how LEX converts a reqular expression to a finite automaton. An understanding of the contents of this section is not necessary to proceed to the next section.)
 
 The construction of a DFA from a regular expression takes place in two steps.
 
-*   Constructing a syntax tree from the regular expression
-*   Converting the syntax tree into a DFA
+- Constructing a syntax tree from the regular expression
+- Converting the syntax tree into a DFA
 
 ### The intermediate syntax tree
 
 Consider the first rule in the token simulator program in section 8. It consists of the following regular expression :
+
 ```
 ({low}|{upp})({low}|{upp})*({number})
 ```
 
 For convenience in representation , let it be represented by :
+
 ```
 ( a | A ) ( a | A )* (N)
 ```
@@ -576,31 +583,28 @@ The DFA obtained for the above syntax tree would look like :
 
 This DFA represents the regular expression provided as a specification (i.e. pattern to be matched) in the first rule of the token simulator program in section 9. When the DFA is in the final state i.e. III, then the corresponding action is executed as instructed in the lex.yy.c file. The constructed DFA is simulated using a simulation algorithm.
 
-  
 ### The DFA simulation algorithm
 
 The working of the constructed DFA is simulated using the following algorithm.
 
 ```c
 DFA_simulator()
-	current_state = start_state
-	c = get_next_char()
-	while(c != EOF)
-		current_sate = transition(current_state , c)
-  	c = get_next_char()
-		if(current_state ∈ Final_states)
-			/*ACCEPT*/
-		else
-			/*REJECT*/
+ current_state = start_state
+ c = get_next_char()
+ while(c != EOF)
+  current_sate = transition(current_state , c)
+   c = get_next_char()
+  if(current_state ∈ Final_states)
+   /*ACCEPT*/
+  else
+   /*REJECT*/
 ```
 
 The information about all the transitions made by the DFA can be obtained from the decision table (generally a two dimensional matrix) through the transition() function.
 
-
 ## Using the generated lexical analyzer
 
 In this document, we have learned to use LEX to build a lexical analyzer. A lexical analyzer generated by LEX can be used for lexical analysis of ExpL. Lexical analysis is the inital stage of compiling a source language. We will learn more about how to use the lexical analyzer in later stages of the documentation.
-
 
 !!! question "Exercise"
     1. Write a lex file
@@ -608,7 +612,6 @@ In this document, we have learned to use LEX to build a lexical analyzer. A lexi
         2. To count the number of integers and floating point numbers appearing in the input.
         3. To list out all words of length three, starting with "A" to uppercase.
         4. To list out all C-like comments (both single line and multi line comments) from a text file.
-
 
 ## References
 
@@ -618,5 +621,3 @@ For further details on the topics covered in this document, the reader may refer
 2. Modern Compiler Implementation in C by Andrew W.Appel
 3. Flex & Bison by John Levine
 4. [http://dinosaur.compilertools.net/](http://dinosaur.compilertools.net/)
-
-

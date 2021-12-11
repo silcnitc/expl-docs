@@ -9,7 +9,6 @@ hide:
 
 An outline for the OExpL grammar is given here. Calls to functions that update the symbol table, type table, class table and the abstract syntax tree data structures are indicated as semantic actions at certain places.
 
-
 === "1. Program"
 
 === "TypeDefBlock"
@@ -51,13 +50,13 @@ An outline for the OExpL grammar is given here. Calls to functions that update t
     ;
     Classdef      : Cname '{'DECL Fieldlists MethodDecl ENDDECL MethodDefns '}'
     ;
-    Cname         : ID       	{Cptr = Cinstall($1->Name,NULL);}
-                  | ID Extends ID	{Cptr = Cinstall($1->Name,$3->Name);}
+    Cname         : ID        {Cptr = Cinstall($1->Name,NULL);}
+                  | ID Extends ID {Cptr = Cinstall($1->Name,$3->Name);}
     ;
-    Fieldlists 	: Fieldlists Fld
+    Fieldlists  : Fieldlists Fld
             |
     ;
-    Fld         : ID ID ';'		{Class_Finstall(Cptr,$1->Name,$2->Name);} //Installing the field to the class
+    Fld         : ID ID ';'  {Class_Finstall(Cptr,$1->Name,$2->Name);} //Installing the field to the class
     ;
     MethodDecl : MethodDecl MDecl
            | MDecl
@@ -81,11 +80,11 @@ An outline for the OExpL grammar is given here. Calls to functions that update t
               | FieldFunction
     ;
     Field:    SELF '.' ID
-              |ID '.' ID 		//This will not occur inside a class.
+              |ID '.' ID   //This will not occur inside a class.
               |Field '.' ID
     ;
     FieldFunction : SELF '.' ID '(' Arglist ')'
-                    |ID '.' ID '(' Arglist ')'  	//This will not occur inside a class.
+                    |ID '.' ID '(' Arglist ')'   //This will not occur inside a class.
                     |Field '.' ID '(' Arglist ')'
     ;
     Arglist: Arglist ',' Expr

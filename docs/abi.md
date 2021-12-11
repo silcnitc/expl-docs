@@ -3,15 +3,14 @@ title: 'Application Binary Interface'
 ---
 # Application Binary Interface
 
-
 ## Introduction
 
 The ExpL compiler needs to translate a given source program and generate the **target machine code** into an **executable file** in a format which is recognized by the load module of the target operating system. Thus, in order to generate the executable, the following information needs to be made available to the compiler :
 
-1.  The **virtual machine model** and the **instruction set** of the target machine.
-2.  The (virtual) **address space** model available for the target program. Conventionally, this address space is logically divided into regions like **code, data, stack, heap** etc.
-3.  The format for the target file (**executable format**). The compiler typically passes information regarding the sizes and address regions allocated to the code, data, stack, text and heap regions to the loader by setting appropriate values in the **header** of the executable file.
-4.  **Interfaces to OS (kernel) routines** that needs to be invoked to get certain operations like input/output done. This is specified in [the library interface](#nav-eXpOS-system-library-interface) documentation.
+1. The **virtual machine model** and the **instruction set** of the target machine.
+2. The (virtual) **address space** model available for the target program. Conventionally, this address space is logically divided into regions like **code, data, stack, heap** etc.
+3. The format for the target file (**executable format**). The compiler typically passes information regarding the sizes and address regions allocated to the code, data, stack, text and heap regions to the loader by setting appropriate values in the **header** of the executable file.
+4. **Interfaces to OS (kernel) routines** that needs to be invoked to get certain operations like input/output done. This is specified in [the library interface](#nav-eXpOS-system-library-interface) documentation.
 
 **These specifications depend not only on the target machine architecture, but also on the operating system** upon which the target machine code must execute. Typically these specifications are collected together in the OS specification into a document called the Application Binary Interface (ABI).
 
@@ -32,6 +31,7 @@ The following figure gives a high level picture of the XSM virtual machine model
 The XSM virtual machine instruction set specifies the set of assembly level instructions. The compiler must translate the source ExpL program to a target program containing only these instructions. The assembly instructions allowed include Data Transfer Instructions, Arithmetic Instructions, Logical Instructions, Stack Instructions, Sub-routine instructions, Debug instructions and Software interrupts. The machine registers available to the target program are R0-R19, SP, BP and IP.
 
 #### Data Transfer Instructions
+
 <div class="md-typeset__scrollwrap">
 <div class="md-typeset__table">
 <table>
@@ -69,12 +69,9 @@ The XSM virtual machine instruction set specifies the set of assembly level inst
 </div>
 </div>
 
-
-
 #### Arithmetic Instructions
 
 Arithmetic Instructions perform arithmetic operations on registers containing integers. If the register contains a non-integer value, an exception (illegal instruction) is raised.
-
 
 <div class="md-typeset__scrollwrap">
 <div class="md-typeset__table">
@@ -110,7 +107,6 @@ For all the above instructions, Ri/Rj may be any register except IP.
 
 Logical instructions are used for comparing values in registers. Strings can also be compared according to the lexicographic ordering of ASCII. If one of the operands is a string, the other operand will also be considered as a string. The logical instructions are LT, GT, EQ, NE, GE and LE.
 
-
 <div class="md-typeset__scrollwrap">
 <div class="md-typeset__table">
 <table  style="text-align:left">
@@ -130,11 +126,9 @@ Logical instructions are used for comparing values in registers. Strings can als
 </div>
 </div>
 
-
 #### Branching Instructions
 
 Branching is achieved by changing the value of the IP to the word address of the target instruction specified by 'target\_address'.
-
 
 <div class="md-typeset__scrollwrap">
 <div class="md-typeset__table">
@@ -189,10 +183,7 @@ Branching is achieved by changing the value of the IP to the word address of the
 </table>
 </div></div>
 
-
 For both these instructions Ri may be any register except IP.
-
-
 
 #### Subroutine Instructions
 
@@ -221,20 +212,15 @@ The CALL instruction copies the address of the next instruction to be fetched(th
 </table>
 </div></div>
 
-
-
 #### Debug Instruction
 
 _Syntax_ : BRKP
 _Semantics_ : The machine when run in [debug mode](xsmusagespec.html#nav-debug) invokes the debugger when this intruction is executed. This instruction can be used for debugging system code.
 
-
-
 #### Software Interrupt
 
 _Syntax_ : INT n
 _Semantics_ : Generates an interrupt to the kernel with the interrupt number (n between 4 to 18) as an argument. The interrupt numbers relevant to the present project are given below.
-
 
 <div class="md-typeset__scrollwrap">
 <div class="md-typeset__table">
@@ -265,8 +251,6 @@ The (virtual) address space of any eXpOS process is logically divided into four 
 
 ![](img/memory_model_1.png)
 
-
-
 The **Library** contains routines for implementing dynamic memory allocation functions Alloc(), Free() and Initialize() as well as the input output functions Read() and Write(). The eXpOS loader links the library routines at load time when a program is loaded into the memory for execution. The compiler can therefore assume that the library code will be "there" at run-time and hence need not generate the code for implementing the library. The compiler however must generate code to invoke the correct library routines with appropriate arguments while translating the high level functions Alloc(), Free(), Initialize(), Read() and Write(). The ABI specifies how this must be done. Among these, Alloc(), Free() and Initialize() are implemented as part of the library itself. The library will re-direct Read() and Write() to low level OS system calls. (One of the advanced stages of the ExpL project will ask you to implement the library itself.) The ABI stipulates that eXpOS will load the library between addresses 0 and 1023 of the address space. Note that since each XSM instruction takes up two memory words, the library can be of size at most 512 instructions.
 
 **Heap** is the portion of the address space reserved as the memory pool from which dynamic memory allocation is done by the allocator routine (Alloc() function) of the library. The memory region between addresses 1024 and 2047 is reserved for the heap. The routine Initialize() will intialize the data structures associated with the memory allocator, Alloc() will allocate memory and Free() will de-allocate a previously allocated memory block. A discussion on dynamic memory allocation and de-allocation can be found [here](http://silcnitc.github.io/run_data_structures/heap.html).
@@ -282,8 +266,8 @@ The compiler must generate target code into a file in the format specified below
 
 Executable files in eXpOS must be in the XEXE format as eXpOS executes only files of such format. An XEXE executable file in eXpOS consists of two parts:
 
-*   Header
-*   Code
+* Header
+* Code
 
 ![](img/exe_file.jpeg)
 
@@ -304,7 +288,6 @@ Note : The present eXpOS virtual address space model requires that the data and 
 If the **Runtime Library** must be included when the file is loaded, the Library Flag is set to 1 in the executable file. If this flag is not set then neither memory is allocated for the heap nor the library linked to the address space of the process at execution time.
 
 In summary, the eXpOS loader maps an executable file into its virtual address according to the following table :
-
 
 <div class="md-typeset__scrollwrap">
 <div class="md-typeset__table">
@@ -362,10 +345,10 @@ PUSH R0             // Push an empty space for RETURN VALUE
 CALL 0              // Pass the control to virtual address 0.
                     // (eXpOS loader links the library to virtual address 0)
 ```
+
 A library module invocation using the high level application programmer's interface of a programming language like ExpL must be translated by the compiler to a set of machine instructions as given above.
 
 Following are the library functions and details relevant for ExpL Compilation:
-
 
 <div class="md-typeset__scrollwrap">
 <div class="md-typeset__table">
@@ -464,13 +447,12 @@ In order to implement the library, one must know the low level system call inter
 
 For an application program, there are two stages in executing a system call:
 
-*   1\. **Before the system call** : The calling application must set up the arguments in the (user) stack before executing the trap instruction.
-*   2\. **After the system call** : The return value of the system call must be extracted from the stack.
+* 1\. **Before the system call** : The calling application must set up the arguments in the (user) stack before executing the trap instruction.
+* 2\. **After the system call** : The return value of the system call must be extracted from the stack.
 
 ### Invoking a system call
 
 A user program invokes a system call by first pushing the system call number and then the arguments into the stack and then invoking the **INT** machine instruction corresponding to the system call. The eXpOS ABI stipulates that the number of arguments pushed into the stack is fixed at three.
-
 
 ```asm
 PUSH System\_Call\_Number     // Push system call number
@@ -483,10 +465,7 @@ INT number                  // Invoke the corresponding INT instruction.
 
 ```
 
-
 The ExpL library must translate Read() and Write() calls to a set of machine instructions (see the instructions to the right). These are the stack operations that must be performed by the user program before the INT instruction is executed.
-
-
 
 ![](img/system_call_stack1.png){ align=left }
 
@@ -494,8 +473,6 @@ The arguments must be pushed into the stack in such a way that the last argument
 
 ![](img/system_call_stack2.png){ align=right }
 The INT instruction in XSM will push the value of IP + 2 on to the stack. This is the address of the instruction immediately following the INT instruction in the calling program. Each instruction is 2 words, hence IP is incremented by 2. Upon execution of the IRET instruction from the system call, execution resumes from this value of IP. The INT instruction changes mode from **User** mode to **Kernel** mode and passes control to the Interrupt Routine corresponding to the system call. The figure to the right shows the contents of the stack immediately after the execution of the INT instruction.
-
-
 
 ### After return from the system call
 
@@ -509,7 +486,6 @@ POP Rj           // Pop and discard argument 1
 POP Rj           // Pop and discard the system call number
                  // Now the stack is popped back to the state before call
 ```
-
 
 The machine code to the left pops the values from the stack. The system call number and arguments were inputs to the system call and hence they may be discarded now. The return value which is stored in the stack by the system call is fetched and used by the user program by popping out to some register.
 
@@ -562,4 +538,3 @@ Associated with each system call, there is a system call number and interrupt ro
 
 \*Note: The Read() library function expects a memory address from (or to) which read is performed.
 +Note: The Write() library function expects Data (final value to be printed) as argument.
-

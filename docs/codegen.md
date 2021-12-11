@@ -2,7 +2,7 @@
 title: 'Code Generation'
 ---
 
-#Code Generation
+# Code Generation
 
 ## Introduction
 
@@ -25,7 +25,6 @@ i = codeGen(t->ptr1);
 j = codeGen(t->ptr2);
 ```
 
-
 Finally, the value to the current node is evaluated and saved to register Ri and Rj is freed.
 
 ```c
@@ -33,16 +32,15 @@ fprintf(); //Add this during implementation
 free_register(j);
 ```
 
-
 Following is how code is generated for the nodetype 'while'. Note that, the labels generated here are psuedo addresses. We will deal about replacing the labels with actual address in the [label translation](label-translation.html) documentation.
 
 We have two subtrees for 'while' nodetype. 'ptr1' representing the conditional expression in while statement and 'ptr2' representing the body of while statement.
 
-1.  Get two labels using get\_label() function and write down the first label, say 'LL1' to the intermediate code, so that we can identify where exactly the code for while starts.
-2.  Then, the code for conditional expresssion represented by 'ptr1' is generated and value stored into a register, say Ri.
-3.  Next, we would check the value in Ri, if its zero, i.e, conditional expression has evaluated to false, we would jump to the end of the while code. So, the next instruction is to check if Ri is zero and jump on to second label, say LL2 where the code to the body of while statement ends.
-4.  If the value in register Ri is not zero, i.e, the conditional expression evaluted to true, the we would execute the body of while. Therefore, after the above steps code for 'ptr2' is generated and at the end of it, the jump statement to the first label, LL1 is given, so that, the conditional expression can be evalauted again and the decision whether to execute the body of while is made.
-5.  Finally the second label is given,so that we can mark the end of while statement.
+1. Get two labels using get\_label() function and write down the first label, say 'LL1' to the intermediate code, so that we can identify where exactly the code for while starts.
+2. Then, the code for conditional expresssion represented by 'ptr1' is generated and value stored into a register, say Ri.
+3. Next, we would check the value in Ri, if its zero, i.e, conditional expression has evaluated to false, we would jump to the end of the while code. So, the next instruction is to check if Ri is zero and jump on to second label, say LL2 where the code to the body of while statement ends.
+4. If the value in register Ri is not zero, i.e, the conditional expression evaluted to true, the we would execute the body of while. Therefore, after the above steps code for 'ptr2' is generated and at the end of it, the jump statement to the first label, LL1 is given, so that, the conditional expression can be evalauted again and the decision whether to execute the body of while is made.
+5. Finally the second label is given,so that we can mark the end of while statement.
 
 For the code generation for functions, the activities are given [here.](run_data_structures/run-time-stack.html)
 
@@ -73,7 +71,9 @@ int main(){
     end
 }
 ```
+
 The XSM instructions for the above while code (lines 11-12) will be as follows:
+
 ```asm
 L0:
 MOV R0,[4096]

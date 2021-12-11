@@ -1,53 +1,50 @@
-Data Structures    
+Data Structures
 
 [![](img/logo.png)](index.html)
 
-*   [Home](index.html)
-*   [About](about.html)
-*   [Roadmap](roadmap.html)
-*   [Documentation](documentation.html)
+* [Home](index.html)
+* [About](about.html)
+* [Roadmap](roadmap.html)
+* [Documentation](documentation.html)
 
 * * *
 
 Data Structures for ExpL Compilation/Interpretation
 
-  
-  
-
-*   [Introduction](#nav-introduction)
-*   [Data Structures for Analysis Phase](#nav-analysis-structures)
-*   [Type Table](#nav-typetable)
-*   [Symbol Table](#nav-symbol-table)
-*   [Global Symbol Table](#nav-global-symbol-table)
-*   [Local Symbol Table](#nav-local-symbol-table)
-*   [Abstract Syntax Tree](#nav-abstract-syntax-tree)
-*   [Data Structures for execution phase](#nav-execution-structures)
-*   [The memory model](#nav-memory-model)
-*   [Register Allocation](#nav-register-allocation)
-*   [Static Allocation](#nav-static-allocation)
-*   [Run Time Stack Allocation](#nav-run-time-stack)
-*   [Heap Allocation](#nav-heap)
+* [Introduction](#nav-introduction)
+* [Data Structures for Analysis Phase](#nav-analysis-structures)
+* [Type Table](#nav-typetable)
+* [Symbol Table](#nav-symbol-table)
+* [Global Symbol Table](#nav-global-symbol-table)
+* [Local Symbol Table](#nav-local-symbol-table)
+* [Abstract Syntax Tree](#nav-abstract-syntax-tree)
+* [Data Structures for execution phase](#nav-execution-structures)
+* [The memory model](#nav-memory-model)
+* [Register Allocation](#nav-register-allocation)
+* [Static Allocation](#nav-static-allocation)
+* [Run Time Stack Allocation](#nav-run-time-stack)
+* [Heap Allocation](#nav-heap)
 
 INTRODUCTION
 ------------
 
-The compilation/interpretation of an ExpL program involves two phases. In the first phase (called the **analysis phase**), the source ExpL program is analyzed (lexical, syntax and semantic analysis are completed in this phase) and if the program is free of syntax and semantic errors, an intermediate representation of the source program called the **abstract syntax tree** is generated. 
+The compilation/interpretation of an ExpL program involves two phases. In the first phase (called the **analysis phase**), the source ExpL program is analyzed (lexical, syntax and semantic analysis are completed in this phase) and if the program is free of syntax and semantic errors, an intermediate representation of the source program called the **abstract syntax tree** is generated.
 
 This is followed by a second phase, whose functionality is different for a compiler and an interpreter.
 
-In the case of a compiler, the second phase (called the **synthesis phase**) recursively traverses the abstract syntax tree and generates target code. 
+In the case of a compiler, the second phase (called the **synthesis phase**) recursively traverses the abstract syntax tree and generates target code.
 
 \[**Note**: the abstract syntax tree representation is only one among several intermediete representations used in practical compilers. “Lower level” intermediete representations like three address code are often more useful for applying code optimization algorithms. In our present experiment, we do not perform any code optimizations and hence the code generation phase will directly work with the abstract syntax tree.\]
 
-In the case of interpretation, the second phase (called the execution phase) involves direct execution of the program by recursive evaluation of the abstract syntax tree. 
+In the case of interpretation, the second phase (called the execution phase) involves direct execution of the program by recursive evaluation of the abstract syntax tree.
 
 _The description of data structures below assumes an interpreter is being designed_. This choice has been made to avoid target machine dependency in the documentation.  Notes/comments  are added wherever appropriate explaining the modifications to be made to the data structures to implement a compiler.
 
 There are three basic data structures that are maintained during the analysis phase. These are the following:
 
-1.  The **global symbol table** is used to store information about the global variables and functions in the program.
-2.  For each function, a separate **local symbol table** is maintained to store the information about local variables and arguements of the function. 
-3.  Finally, the **abstract syntax tree** that is constructed as the outcome of the analysis phase is the third data structure.
+1. The **global symbol table** is used to store information about the global variables and functions in the program.
+2. For each function, a separate **local symbol table** is maintained to store the information about local variables and arguements of the function.
+3. Finally, the **abstract syntax tree** that is constructed as the outcome of the analysis phase is the third data structure.
 
 An abstract syntax tree is a tree representation of a program. It is a generalization of the tree representation for expressions (called the expression tree). For example, the arithmetic expression (3+5)\*(5+9) is typically represented as an expression tree as below:
 
@@ -73,27 +70,27 @@ The variable 'fields' is a pointer to the head of 'fieldlist'. Here 'fieldlist' 
 
 #### Associated Methods
 
-*   void TypeTableCreate() : Function to initialise the type table entries with primitive types _(int,str)_ and internal data types _(boolean,null,void)_.
-*   struct Typetable\* TLookup(char \*name) : Search through the type table and return pointer to type table entry of type 'name'.
-*   struct Typetable\* TInstall(char \*name, struct Fieldlist \*fields) : Creates a type table entry for the type of 'name' with given 'fields' and returns the pointer to the type table entry.
-*   void FInstall(char \*name, struct Typetable \*type) : Adds a fieldlist entry with given 'name' and 'type'.
-*   struct Fieldlist\* FLookup(char \*name, struct Fieldlist \*list) : Searches for a field of given 'name' in the given 'fieldlist' (of some user-defined type) and returns a pointer to the matching entry.
+* void TypeTableCreate() : Function to initialise the type table entries with primitive types _(int,str)_ and internal data types _(boolean,null,void)_.
+* struct Typetable\* TLookup(char \*name) : Search through the type table and return pointer to type table entry of type 'name'.
+* struct Typetable\* TInstall(char \*name, struct Fieldlist \*fields) : Creates a type table entry for the type of 'name' with given 'fields' and returns the pointer to the type table entry.
+* void FInstall(char \*name, struct Typetable \*type) : Adds a fieldlist entry with given 'name' and 'type'.
+* struct Fieldlist\* FLookup(char \*name, struct Fieldlist \*list) : Searches for a field of given 'name' in the given 'fieldlist' (of some user-defined type) and returns a pointer to the matching entry.
 
 #### Illustration
 
 Let us consider the following sample code:
 
-1.  The type table is first created and initialised to contain the default entries for each of the primitive and internal datatypes. This is done through a call to the function TypeTableCreate() from main function before yyparse() is called to start parsing the code. After the execution of TypeTableCreate() , the type table will be as follows:  
+1. The type table is first created and initialised to contain the default entries for each of the primitive and internal datatypes. This is done through a call to the function TypeTableCreate() from main function before yyparse() is called to start parsing the code. After the execution of TypeTableCreate() , the type table will be as follows:  
     ![](img/data_structure_1.png)  
-    
-2.  As soon as the compiler encounters the declaration of a user defined type, it is installed into the type table. Subsequently the fields are attached to this type table entry. For instance, in the case of the user-defined type _linkedlist_, as soon as the name _linkedlist_ is encountered, a type table entry with 'name' set to _linkedlist_ and 'fields' set to _NULL_ is created. Later, on finishing the complete parse of the type definition, the fieldlist is created and it is attached to the type table entry.  
+
+2. As soon as the compiler encounters the declaration of a user defined type, it is installed into the type table. Subsequently the fields are attached to this type table entry. For instance, in the case of the user-defined type _linkedlist_, as soon as the name _linkedlist_ is encountered, a type table entry with 'name' set to _linkedlist_ and 'fields' set to _NULL_ is created. Later, on finishing the complete parse of the type definition, the fieldlist is created and it is attached to the type table entry.  
     **NOTE** : A type table entry is created as soon as the type name is seen. This is because a field of the type may be of same type (For example, just like _next_ is of type _linkedlist_ in the type definition of _linkedlist_). When the 'fieldlist' is created, the type of the field is set by looking up the type table.  
     ![](img/data_structure_2.png)  
-    
-3.  Similar actions are carried out for user-defined type _marklist_ also.  
+
+3. Similar actions are carried out for user-defined type _marklist_ also.  
     ![](img/data_structure_3.png)  
-    
-4.  Once the type declaration section is completely parsed, the type table is fully created and will not be further modified or updated.
+
+4. Once the type declaration section is completely parsed, the type table is fully created and will not be further modified or updated.
 
 Symbol Tables
 -------------
@@ -116,17 +113,17 @@ Read about ASTNode [here](#nav-abstract-syntax-tree).
 
 ###### Associated Methods
 
-*   struct Gsymbol\* GInstall(char \*name,struct Typetable \*type, int size, struct ArgStruct \*arglist) : Creates a Global Symbol object of given 'name', 'type', 'size' and 'argument list' and assigns a 'binding' to the variable.
-*   struct Gsymbol\* GLookup(char \*name) : Search for a GST entry with the given 'name', if exists, return pointer to GST entry else return NULL.
+* struct Gsymbol\* GInstall(char \*name,struct Typetable \*type, int size, struct ArgStruct \*arglist) : Creates a Global Symbol object of given 'name', 'type', 'size' and 'argument list' and assigns a 'binding' to the variable.
+* struct Gsymbol\* GLookup(char \*name) : Search for a GST entry with the given 'name', if exists, return pointer to GST entry else return NULL.
 
 ###### Illustration
 
 Continuing with earlier example, let us add Global declaration section to it.
 
-1.  As soon as the compiler encounters the global declaration of a variable or funtion, it is installed into Global Symbol Table. Subsequently, the arguments are attached to the entry in case of functions. Following is how GST looks when _studentname_ is installed. [![](img/data_structure_5.png)](img/data_structure_5.png)
-2.  Similarly for _rollno,average,findaverage(linkedlist marks)_, symbol table entries are formed and installed. The fbinding for a function is the abstract syntax tree of the function definition and is set only after complete parsing of the function definition.  
+1. As soon as the compiler encounters the global declaration of a variable or funtion, it is installed into Global Symbol Table. Subsequently, the arguments are attached to the entry in case of functions. Following is how GST looks when _studentname_ is installed. [![](img/data_structure_5.png)](img/data_structure_5.png)
+2. Similarly for _rollno,average,findaverage(linkedlist marks)_, symbol table entries are formed and installed. The fbinding for a function is the abstract syntax tree of the function definition and is set only after complete parsing of the function definition.  
     [![](img/data_structure_6.png)](img/data_structure_6.png)
-3.  After this, the types for rollno,average and findaverage will be set and these objects are appended to the global symbol table. The final Global Symbol table looks as follows:  
+3. After this, the types for rollno,average and findaverage will be set and these objects are appended to the global symbol table. The final Global Symbol table looks as follows:  
     [![](img/data_structure_7.png)](img/data_structure_7.png)
 
 #### Local Symbol Table
@@ -137,8 +134,8 @@ In addition to the global symbol table, the ExpL compiler maintains a separate l
 
 ###### Associated methods
 
-*   struct Lsymbol\* LInstall(char \*name,struct Typetable \*type) : Creates a local symbol tbale with given 'name' and 'type' and also sets its 'binding'.
-*   struct Lsymbol\* LLookup(char \*name) : search the LST and if any entry with given 'name' is found ,return the entry,else returns NULL.
+* struct Lsymbol\* LInstall(char \*name,struct Typetable \*type) : Creates a local symbol tbale with given 'name' and 'type' and also sets its 'binding'.
+* struct Lsymbol\* LLookup(char \*name) : search the LST and if any entry with given 'name' is found ,return the entry,else returns NULL.
 
 Arrays cannot be local variables, so we don't need to store the size of a variables. Also nested functions are not allowed in ExpL, so we don't require fbinding and arglist as in Gsymbol. The LST is formed for the Local Declaration Section in the same way GST was created for the Global declaration section.
 
@@ -153,7 +150,7 @@ The union Constant is used to store the value of an integer or sting constant.
 
 ###### Associated methods
 
-*   struct ASTNode\* TreeCreate (  
+* struct ASTNode\* TreeCreate (  
     struct Typetable \*type,  
     int nodetype,  
     char \*name,  
@@ -164,16 +161,15 @@ The union Constant is used to store the value of an integer or sting constant.
     struct ASTNode \*ptr3  
     )  
     Creates a node with the fields set according to the arguements passed.
-*   regindex evaluate(struct ASTNode \*t)  
+* regindex evaluate(struct ASTNode \*t)  
     Evaluation of an AST node results in a value. A compiler generates code for evaluating an AST node and assigns the result of evaluation to a register. An interpreter directly evaluates the AST node and simulates the compiler by storing the result in an array (called reg) and returning the index. We make use of the following structure to store the results of evaluation by an interpreter:
-    
+
     In 'valstruct' the field 'valtype' can take one of the following values:
-    
-    1.  EMPTY : Indicates that no value is stored in it.
-    2.  INT : Indicates that value stored in the union constant 'value' is an integer.
-    3.  STR : Indicates the value stored in the union constant 'value' is a string.
-    4.  H\_INDEX : Indicates that valstruct stores the (integer) index of a location in the heap.
-    
+
+    1. EMPTY : Indicates that no value is stored in it.
+    2. INT : Indicates that value stored in the union constant 'value' is an integer.
+    3. STR : Indicates the value stored in the union constant 'value' is a string.
+    4. H\_INDEX : Indicates that valstruct stores the (integer) index of a location in the heap.
 
 Follwing are the nodetypes that may appear while contructing the abstract syntax free for ExpL program:
 
@@ -298,54 +294,44 @@ Consider the following program
 
 1\. Lets construct the abstract syntax tree step by step. The AST for conditional expression `n==1` (in line 9) will be as follows:
 
-  
 ![](img/data_structure_50.png)  
 
 2\. Similarly we have AST fot `n==0` (in line 9) as follows.
 
-  
 ![](img/data_structure_51.png)  
 
 3\. Next consider the complete conditional expression `n==1 || n==0`.
 
-  
 ![](img/data_structure_52.png)  
 
 4.Next we will form the AST for assignment statement `f = 1` (in line 10).
 
-  
 ![](img/data_structure_53.png)  
 
 5\. Next, lets consider the statement `f = n * factorial(n-1)` which consists of arthimetic expressions with operands '-','\*' and an assignment statement.
 
 AST for `n-1` is as follows.
 
-  
 ![](img/data_structure_54.png)  
 
 AST for `n * factorial(n-1)` is as follows.
 
-  
 ![](img/data_structure_55.png)  
 
 AST for `f = n * factorial(n-1)` is as below.
 
-  
 ![](img/data_structure_56.png)  
 
 6\. Following is the AST for the if condition.
 
-  
 ![](img/data_structure_57.png)  
 
 7\. The AST for return statement is as folows
 
-  
 ![](img/data_structure_58.png)  
 
 8\. Finally the AST for the factorial function will be as follows.
 
-  
 ![](img/data_structure_59.png)  
 
 DATA STRUCTURES FOR EXECUTION PHASE
@@ -394,10 +380,8 @@ The memory model
 
 Our interpreter will simulate machine memory and registers by defining three memory arrays, named _stack, heap and registers_.
 
-  
 ![](img/data_structure_33.png)  
   
-
 The basic unit of memory (called a **memory word**) is assumed to be able to store an integer or a string. This model is assumed because the primitive data types of ExpL are integer and string. The interpreter therefore defines the following memory structure:
 
 The interpreter works with three arrays of memory words, to implement temporary storage (registers), the run time stack and the heap. There will be no sperarate memory array for static data. Instead, the intial part of the stack will be used for storing static data.
@@ -407,8 +391,8 @@ Register Allocation
 
 Register allocation is performed through two simple functions.
 
-*   int get\_register(): Allocates a free register from the register pool reg\[16\] and returns the index of the register, returns -1 if no free register is available.
-*   int free\_register(): Frees the last register that was allocated,returns 0 if success, returns -1 if the function is called with none of the registers being allocated.
+* int get\_register(): Allocates a free register from the register pool reg\[16\] and returns the index of the register, returns -1 if no free register is available.
+* int free\_register(): Frees the last register that was allocated,returns 0 if success, returns -1 if the function is called with none of the registers being allocated.
 
 The interpreter invokes these functions in the course of evalaution of expressions to create temporary store.
 
@@ -422,9 +406,9 @@ Run Time Stack Allocation
 
 During run-time, when an ExpL function is invoked, space has to be allocated for storing
 
-*   the arguments to the function,
-*   return value of the function,
-*   local variables declared in the function.
+* the arguments to the function,
+* return value of the function,
+* local variables declared in the function.
 
 For this, an **activation record** is created in the stack for each function call (and the stack grows). The activation record is also used to save the state (registers in use) of the invoking function and some control information (like the return address of the calling program in the case of a compiler).
 
@@ -438,77 +422,67 @@ When a function is invoked, a part of the activation record is set up by the cal
 
 The following sequence of actions occur when a function A calls another function B.
 
-1.  A pushes its machine state (registers in use) into the stack so that the registers are free for use in B.
-2.  A pushes to arguments to B in the order they appear in the declaration.
-3.  A pushes one empty space in the stack for B to place its return value.
-4.  A invokes B. (In the case of a compiler, this results in generation of a CALL instruction which results in pushing the instruction pointer into the stack and transfer of control to B).
+1. A pushes its machine state (registers in use) into the stack so that the registers are free for use in B.
+2. A pushes to arguments to B in the order they appear in the declaration.
+3. A pushes one empty space in the stack for B to place its return value.
+4. A invokes B. (In the case of a compiler, this results in generation of a CALL instruction which results in pushing the instruction pointer into the stack and transfer of control to B).
 
 Inside B, the following space allocations take place:
 
-5.  B saves the BP value of A to the stack and sets its own BP to the location where the BP of A is stored.
-6.  B allocates space for local variables (in the order in which they appear in the delcaration.
+5. B saves the BP value of A to the stack and sets its own BP to the location where the BP of A is stored.
+6. B allocates space for local variables (in the order in which they appear in the delcaration.
 
 This completes the activation record for B. If B later calls another function C, then it starts saving its registers, pushes arguments to C and so on.
 
 When B completes execution the following sequence of actions take place:
 
-1.  B pops out the local variables.
-2.  The old BP value is popped off and saved into BP.
-3.  B returns (in the case of a compiler, this results in generation of a RET instruction which results in setting the instruction pointer to the value saved in the stack).
+1. B pops out the local variables.
+2. The old BP value is popped off and saved into BP.
+3. B returns (in the case of a compiler, this results in generation of a RET instruction which results in setting the instruction pointer to the value saved in the stack).
 
 On re-entry, A does the following:
 
-4.  Retrieve the return value from stack and save it to a new register. This is the result of the function call.
-5.  Pop off the arguments.
-6.  Restore the saved register context.
+4. Retrieve the return value from stack and save it to a new register. This is the result of the function call.
+5. Pop off the arguments.
+6. Restore the saved register context.
 
 Consider the following example:
 
-1.  The global variables are allocated statically in the initial portion of the stack.
-    
-      
+1. The global variables are allocated statically in the initial portion of the stack.
+
     ![](img/data_structure_39.png)  
-    
-2.  The main functions sets up stack locations for its local variables and calls the function factorial(3) after setting up a part of the callee's activation record.
-    
-      
+
+2. The main functions sets up stack locations for its local variables and calls the function factorial(3) after setting up a part of the callee's activation record.
+
     ![](img/data_structure_40.png)  
-    
-3.  Factorial(3) saves the old Base pointer and sets up locations for its local variables.
-    
-      
+
+3. Factorial(3) saves the old Base pointer and sets up locations for its local variables.
+
     ![](img/data_structure_41.png)  
-    
-4.  Factorial(3) calls factorial(2) and the activation record of factorial(2) is setup similar to the above steps.
-    
-      
+
+4. Factorial(3) calls factorial(2) and the activation record of factorial(2) is setup similar to the above steps.
+
     ![](img/data_structure_42.png)  
-    
-5.  Activation record for factorial(1) (called by factorial(2)) is seup similarly.
-    
-      
+
+5. Activation record for factorial(1) (called by factorial(2)) is seup similarly.
+
     ![](img/data_structure_43.png)  
-    
-6.  factorial(1) calculates the result and returns it by setting the value at return value location and pops off it local variables and sets back the base pointer.
-    
-      
+
+6. factorial(1) calculates the result and returns it by setting the value at return value location and pops off it local variables and sets back the base pointer.
+
     ![](img/data_structure_44.png)  
-    
-7.  Similarly, factorial(2) calculates the steps and pops off its activation record till the result value after setting back the old base pointer.
-    
-      
+
+7. Similarly, factorial(2) calculates the steps and pops off its activation record till the result value after setting back the old base pointer.
+
     ![](img/data_structure_45.png)  
-    
-8.  Similarly, factorial(3) also calculates the result and returns it to the main function.
-    
-      
+
+8. Similarly, factorial(3) also calculates the result and returns it to the main function.
+
     ![](img/data_structure_46.png)  
-    
-9.  Main function calculates and sets the 'result' variable.
-    
-      
+
+9. Main function calculates and sets the 'result' variable.
+
     ![](img/data_structure_47.png)  
-    
 
 Stack
 -----
@@ -522,18 +496,18 @@ So, for the implementation of the interpreter, we create a stack which is an arr
 
 The type field in memstruct can take the following values
 
-1.  EMPTY : Indicates no value is stored in it.
-2.  INT : Indicates that it stores an integer value.
-3.  STR : Indicates that it stores a string value.
-4.  H\_INDEX : Indicates that valstruct stores the (integer) index of a location in the heap.
-5.  SIZE : Indicates that this memstruct is the first index of the allocated block for a dynamically allocated variable, and it stores the size of the block allocated for the variable.
+1. EMPTY : Indicates no value is stored in it.
+2. INT : Indicates that it stores an integer value.
+3. STR : Indicates that it stores a string value.
+4. H\_INDEX : Indicates that valstruct stores the (integer) index of a location in the heap.
+5. SIZE : Indicates that this memstruct is the first index of the allocated block for a dynamically allocated variable, and it stores the size of the block allocated for the variable.
 
 ###### Associated methods
 
-*   void push(struct valstruct \*v) : pushes the values in valstruct to stack accordingly.
-*   struct valstruct\* pop() : pops a value on top of the stack as a valstruct.
-*   void load(struct memstruct \*m, struct valstruct \*v) : loads the values in stack location pointed by m to the value structure v
-*   void store(struct memstruct \*m,struct valstruct \*v) : stores the values in value structure v to the stack location pointed by m.
+* void push(struct valstruct \*v) : pushes the values in valstruct to stack accordingly.
+* struct valstruct\* pop() : pops a value on top of the stack as a valstruct.
+* void load(struct memstruct \*m, struct valstruct \*v) : loads the values in stack location pointed by m to the value structure v
+* void store(struct memstruct \*m,struct valstruct \*v) : stores the values in value structure v to the stack location pointed by m.
 
 NOTE : valstruct and memstruct structures have been used here to keep the fine line between a value object and a object in the memory.
 
@@ -546,9 +520,9 @@ In interpreter, for heap we will be using an memstruct array of size 1024.
 
 ###### Associated methods
 
-*   void intialise() : To initialise the heap with required initial values.
-*   int alloc(int size) : allocates continuos locations of given size and returns the starting address of allocated block.
-*   int free(int addr) : frees the memory block starting with the given addr are erasing the data in that block and returns a value indicating the success and failure of free operation.
+* void intialise() : To initialise the heap with required initial values.
+* int alloc(int size) : allocates continuos locations of given size and returns the starting address of allocated block.
+* int free(int addr) : frees the memory block starting with the given addr are erasing the data in that block and returns a value indicating the success and failure of free operation.
 
 ###### Allocation algorithms
 
@@ -564,43 +538,43 @@ The first block in the list is reserved. Initially, the first index of reserved 
 
 Following is the **allocation algorithm.**
 
-1.  First index of reserved block is checked, let the value be v.
-2.  If v is -1, return -1 indicating no free blocks are available.
-3.  Else, allocate the free block at v, after copying the next free block index stored at v to the reserved block.Return v.
+1. First index of reserved block is checked, let the value be v.
+2. If v is -1, return -1 indicating no free blocks are available.
+3. Else, allocate the free block at v, after copying the next free block index stored at v to the reserved block.Return v.
 
 Following is the pseudo code of the algorithm.
 
 Following is the **deallocation algorithm.**
 
-1.  The arguement passed : starting address of the block(say s) to be deallocated
-2.  The block s is cleared by setting all memstructs in the block to type EMPTY.
-3.  The value in the first index of reserved block is copied to first index of block s.
-4.  The first index of reserved block is set with starting address of block s.
+1. The arguement passed : starting address of the block(say s) to be deallocated
+2. The block s is cleared by setting all memstructs in the block to type EMPTY.
+3. The value in the first index of reserved block is copied to first index of block s.
+4. The first index of reserved block is set with starting address of block s.
 
 ###### Illustration
 
 This section shows how the heap looks after each step of allocation or free. This is for the better understanding of the algorithms.
 
-*   x = alloc();
-    
+* x = alloc();
+
     ![](img/data_structure_11.png)
-    
+
     x is a memstruct in the run-time stack of type MEMSTRUCT\_BIND with intval 8.
-    
-*   y = alloc();
-    
+
+* y = alloc();
+
     ![](img/data_structure_12.png)
-*   z = alloc();
-    
+* z = alloc();
+
     ![](img/data_structure_13.png)
-*   dealloc(x);
-    
+* dealloc(x);
+
     ![](img/data_structure_14.png)
-*   dealloc(z);
-    
+* dealloc(z);
+
     ![](img/data_structure_15.png)
-*   z = alloc();
-    
+* z = alloc();
+
     ![](img/data_structure_16.png)
 
 ###### Buddy Memory Allocation
@@ -613,11 +587,11 @@ Starting off, the size of the smallest possible block is determined, i.e. the sm
 
 In our implementation, we have a heap of size 1024. The smallest block size possible in the heap is 8 (order 0). The highest block size of 2n that is free is 1024.We maintain a free list for all possible block sizes. So we have freelists for sizes 8,16,32,64,128,256,512 and 1024, i.e, we maintain eight freelists.
 
-*   We have only one block of size 1024 and so the size of freelist for 1024 is 1(20).
-*   In the 1024 sized heap, we have two blocks of size 512. Note that, both blocks cannot be free at the same time. If both blocks are free, they will be merged to a free block of size 1024(whose information will be maintained in the freelist for blocks of 1024 size). So at a time, maximum number of blocks that are free of size 512 is 1 ( 20).
-*   Similarly in case of blocks of size 256, 1024 sized heap has 4 blocks of size 256 (say a,b,c and d in their respective order).a and b are buddies of each other, of which both cannot be free at a time due to merging, so only one of them can be free. Similarly in case of c and d, only one of them can be free. 1 + 1 , 2 ( 21) is the maximum size of free list for blocks of 256.
-*   Similarly, there are 8 blocks of 128 in 1024 (a,b,c,d,e,f,g and h). (a,b)(c,d)(e,f)(g,h) are buddy pairs and only one of each pair can be free. So the maximum size of freelist for blocks of 128 is 4 ( 22).
-*   Similarly, the maximum size of freelist for blocks of sizes 64,32,16 and 8 are 8 ( 23),16( 24),32( 25) and 64( 26) respectively.
+* We have only one block of size 1024 and so the size of freelist for 1024 is 1(20).
+* In the 1024 sized heap, we have two blocks of size 512. Note that, both blocks cannot be free at the same time. If both blocks are free, they will be merged to a free block of size 1024(whose information will be maintained in the freelist for blocks of 1024 size). So at a time, maximum number of blocks that are free of size 512 is 1 ( 20).
+* Similarly in case of blocks of size 256, 1024 sized heap has 4 blocks of size 256 (say a,b,c and d in their respective order).a and b are buddies of each other, of which both cannot be free at a time due to merging, so only one of them can be free. Similarly in case of c and d, only one of them can be free. 1 + 1 , 2 ( 21) is the maximum size of free list for blocks of 256.
+* Similarly, there are 8 blocks of 128 in 1024 (a,b,c,d,e,f,g and h). (a,b)(c,d)(e,f)(g,h) are buddy pairs and only one of each pair can be free. So the maximum size of freelist for blocks of 128 is 4 ( 22).
+* Similarly, the maximum size of freelist for blocks of sizes 64,32,16 and 8 are 8 ( 23),16( 24),32( 25) and 64( 26) respectively.
 
 So, the size of the complete freelist is 20 + 20 + 21 + 22 + 23 + 24 + 25 +26 = 128.
 
@@ -629,19 +603,19 @@ The free-list in the heap has to be initialised as above. Also, the first index 
 
 Following is the **allocation algorithm** : (argument : Request for a block of size 'A')
 
-*   Look for a memory slot of suitable size(i.e, the **minimal 2k block** that is larger or equal to that of the requested memory A + 1, a plus one as first index is used to store the size of block allocated), lets call the ceiled size as 'B'.
-    1.  If found, the starting index of the allocated block is returned to the program after removing it from the freelist.
-    2.  If not, it tries to make a suitable memory slot by following the below steps
-        1.  Split a the **next larger suitable free memory slot** into half.(Remove the next larger suitable free memory slot from it free list and add both the halves to the corresponding freelist).(Note : of there is no larger free memory slot - return -1 indicating that no free space is available).
-        2.  If the required size 'B' is reached, one of the halves is allocated to the program.
-        3.  Else go to the step a and repeat it until the memory slot of required size 'B' is found.
+* Look for a memory slot of suitable size(i.e, the **minimal 2k block** that is larger or equal to that of the requested memory A + 1, a plus one as first index is used to store the size of block allocated), lets call the ceiled size as 'B'.
+    1. If found, the starting index of the allocated block is returned to the program after removing it from the freelist.
+    2. If not, it tries to make a suitable memory slot by following the below steps
+        1. Split a the **next larger suitable free memory slot** into half.(Remove the next larger suitable free memory slot from it free list and add both the halves to the corresponding freelist).(Note : of there is no larger free memory slot - return -1 indicating that no free space is available).
+        2. If the required size 'B' is reached, one of the halves is allocated to the program.
+        3. Else go to the step a and repeat it until the memory slot of required size 'B' is found.
 
 Following is the **deallocation algorithm** (arguement : the starting address of the allocated block)
 
-1.  Get the size, say 's' of the block from the first index of the block. Free the complete block with the help of size obtained by setting all the memstruct type to MEMSTRUCT\_EMPTY.
-2.  Check if the buddy of the block is free by checking the whether the buddy's starting address is present in the free list for blocks of size 's' .
-3.  If the buddy is not free, add the current freed block to its free list.
-4.  If the buddy is free, remove the buddy from the freelist and combine the two, and go back to step 2 to check for the buddy of merged block. Repeat this process until the upper limit is reached or buddy is not free.
+1. Get the size, say 's' of the block from the first index of the block. Free the complete block with the help of size obtained by setting all the memstruct type to MEMSTRUCT\_EMPTY.
+2. Check if the buddy of the block is free by checking the whether the buddy's starting address is present in the free list for blocks of size 's' .
+3. If the buddy is not free, add the current freed block to its free list.
+4. If the buddy is free, remove the buddy from the freelist and combine the two, and go back to step 2 to check for the buddy of merged block. Repeat this process until the upper limit is reached or buddy is not free.
 
 The psuedo code for alloc and dealloc functions is as follows :
 
@@ -651,36 +625,33 @@ For a better understanding purpose, we will have a simple illustration of how he
 
 For illustration, we will have 64-sized heap and smallest block size as 8. So we free lists for sizes 8,16 and 32 of lengths 4 ,2 and 1. So we will use a 8-size block to store the free-list.
 
-1.  The heap looks initially as follows.
-    
+1. The heap looks initially as follows.
+
     ![](img/data_structure_18.png)
-2.  Request for memory of size 5. Lets call this request as A. The nearest 2^k value for 5 is 8. We search for a 8 sized free block. We have one such! Allocate it!
-    
+2. Request for memory of size 5. Lets call this request as A. The nearest 2^k value for 5 is 8. We search for a 8 sized free block. We have one such! Allocate it!
+
     ![](img/data_structure_19.png)  
-    
-3.  Next we will have a reuqest B of size 14.
-    
+
+3. Next we will have a reuqest B of size 14.
+
     ![](img/data_structure_20.png)  
-    
-4.  Now we have a request C of size 7.
-    
+
+4. Now we have a request C of size 7.
+
     ![](img/data_structure_21.png)  
     ![](img/data_structure_22.png)  
     ![](img/data_structure_23.png)  
-    
-5.  Now, C releases its memory.
-    
+
+5. Now, C releases its memory.
+
     ![](img/data_structure_24.png)  
     ![](img/data_structure_25.png)  
     ![](img/data_structure_26.png)  
-    
 
-*   [Github](http://github.com/silcnitc)
-*   [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
+* [Github](http://github.com/silcnitc)
+* [![Creative Commons License](img/creativecommons.png)](http://creativecommons.org/licenses/by-nc/4.0/)
 
-*   [Home](index.html)
-*   [About](about.html)
-
-  
+* [Home](index.html)
+* [About](about.html)
 
 window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\\/script>')

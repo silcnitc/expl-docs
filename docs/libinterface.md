@@ -4,7 +4,7 @@ hide:
     - toc
 ---
 
-#High Level Library Interface For eXpOS
+# High Level Library Interface For eXpOS
 
 The High Level Library Interface is a unified interface to access system call routines and dynamic memory management functions from application programs. The ExpL language allows applications to access the OS routines only through the library interface. The syntax for the call to the library function in ExpL is :
 
@@ -34,7 +34,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <tr><td>-1 - No Space for file</td></tr>
 <tr><td>-2 - If the file already Exists</td></tr>
 
-
 <tr>
 <td rowspan="4">Open</td>
 <td rowspan="4">"Open"</td>
@@ -46,8 +45,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <tr><td>-2 - Process has reached its limit of resources</td></tr>
 <tr><td>-3 - System has reached its limit of open files</td></tr>
 
-
-
 <tr>
 <td rowspan="3">Close</td>
 <td rowspan="3">"Close"</td>
@@ -57,7 +54,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td>0 - Success</td></tr>
 <tr><td>-1 - invalid File descriptor</td></tr>
 <tr><td>-2 - File locked by calling process</td></tr>
-
 
 <tr>
 <td rowspan="4">Delete</td>
@@ -79,7 +75,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td>0 - Success</td></tr>
 <tr><td>-1 - File Descriptor given is invalid</td></tr>
 
-
 <tr>
 <td rowspan="3">Seek</td>
 <td rowspan="3">"Seek"</td>
@@ -89,7 +84,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td>0 - Success</td></tr>
 <tr><td>-1 - File Descriptor given is invalid</td></tr>
 <tr><td>-2 - Offset value moves the file pointer to a position outside the file</td></tr>
-
 
 <tr>
 <td rowspan="3">Read</td>
@@ -121,7 +115,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td rowspan="2">-</td>
 <td>-1 - File not found or file is of invalid type</td></tr>
 <tr><td>-2 - Out of memory or disk swap space</td></tr>
-
 
 <tr>
 <td>Exit</td>
@@ -159,7 +152,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td>0 - Success</td></tr>
 <tr><td>-1 - Given process identifier is invalid or it is the pid of the invoking process.</td></tr>
 
-
 <tr>
 <td>Signal</td>
 <td>"Signal"</td>
@@ -168,7 +160,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td>-</td>
 <td>0 - Success</td>
 </tr>
-
 
 <tr>
 <td rowspan="3">FLock</td>
@@ -180,7 +171,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <tr><td>-1 - File Descriptor is invalid</td></tr>
 <tr><td>-2 - Permission denied</td></tr>
 
-
 <tr>
 <td rowspan="3">FUnLock</td>
 <td rowspan="3">"FUnLock"</td>
@@ -190,7 +180,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td>0 - Success</td></tr>
 <tr><td>-1 - File Descriptor is invalid</td></tr>
 <tr><td>-2 - File was not locked by the calling process</td></tr>
-
 
 <tr>
 <td rowspan="3">Semget</td>
@@ -202,7 +191,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <tr><td>-1 - Process has reached its limit of resources</td></tr>
 <tr><td>-2 - Number of semaphores has reached its maximum</td></tr>
 
-
 <tr>
 <td rowspan="2">Semrelease</td>
 <td rowspan="2">"Semrelease"</td>
@@ -211,7 +199,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td rowspan="2">-</td>
 <td>0 - Success</td></tr>
 <tr><td>-1 - Semaphore Descriptor is invalid</td></tr>
-
 
 <tr>
 <td rowspan="2">SemLock</td>
@@ -231,7 +218,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td>0 - Success</td></tr>
 <tr><td>-1 - Semaphore Descriptor is invalid</td></tr>
 <tr><td>-2 - Semaphore was not locked by the calling process</td></tr>
-
 
 <tr>
 <td>Shutdown</td>
@@ -296,7 +282,6 @@ Depending on the `fun_code` the control is transferred to the system call routin
 <td>-1 - Invalid username or password</td></tr>
 <tr><td>-2 - Permission denied</td></tr>
 
-
 <tr>
 <td>Test</td>
 <td>"Test"</td>
@@ -348,8 +333,6 @@ Arguments: None
 
 Return Value:
 
-
-
 <div class="md-typeset__scrollwrap"><div class="md-typeset__table">
 <table>
 <tbody><tr>
@@ -362,8 +345,6 @@ Return Value:
 </tr>
 </tbody></table>
 </div></div>
-
-  
 
 Description: Intitalizes the heap data structures and sets up the heap area of the process.It is the applications responsibility to invoke Initialize() before the first use of Alloc(). The behaviour of Alloc() and Free() when invoked without an Intialize() operation is undefined. Any memory allocated before an Intialize() operation will be reclaimed for future allocation.
 
@@ -385,8 +366,6 @@ Return Value:
 </tr>
 </tbody></table>
 </div></div>
-
-  
 
 Description: The Alloc operation takes as input an integer, allocates contiguous words equal to the input specified and returns a pointer (i.e., an integer memory address) to the beginning of the allocated memory in the heap.
 
@@ -410,4 +389,3 @@ Return Value:
 </div></div>
 
 Description: The Free operation takes a pointer (i.e., an integer memory address) of a previously allocated memory block and returns it to the heap memory pool. If the pointer does not correspond to a valid reference to the beginning of a previously allocated memory block, the behaviour of Free is not defined.
-

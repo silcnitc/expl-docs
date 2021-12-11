@@ -6,8 +6,8 @@ hide:
 ---
 
 # Annotated ExpL Grammar outline
-An outline for the ExpL grammar is given here. Calls to functions that update the symbol table, type table and the abstract syntax tree data structures are indicated as semantic actions at certain places.
 
+An outline for the ExpL grammar is given here. Calls to functions that update the symbol table, type table and the abstract syntax tree data structures are indicated as semantic actions at certain places.
 
 === "1. Program"
 

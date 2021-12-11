@@ -30,39 +30,39 @@ The above procedure is demonstrated with the help of a program snippet.
 
 ```
 decl
-	int fact(int n);
+ int fact(int n);
 enddecl
 
 int fact(int n)
 {
-	decl
-		int f;
-	enddecl
-	begin
-		if(n<=1) then
-			f=1;
-		else
-			f=n*fact(n-1);
-		endif;
-		return f;
-	end
+ decl
+  int f;
+ enddecl
+ begin
+  if(n<=1) then
+   f=1;
+  else
+   f=n*fact(n-1);
+  endif;
+  return f;
+ end
 }
 
 int main()
 {
-	decl
-		int n,m,res;
-	enddecl
-	begin
-		read(n);
-		while( n >= 1 ) do
-			read(m);
-			res = fact(m);
-			write(res);
-			n = n-1;
-		endwhile;
-		return 0;
-	end
+ decl
+  int n,m,res;
+ enddecl
+ begin
+  read(n);
+  while( n >= 1 ) do
+   read(m);
+   res = fact(m);
+   write(res);
+   n = n-1;
+  endwhile;
+  return 0;
+ end
 }
 ```
 
@@ -486,7 +486,6 @@ The label translator program needs to parse the entire machine code two times. I
 In the second parse, we remove the label declarations and replace the labels in instructions like JUMP, CALL etc. with the corresponding memory address from the label-address table.
 
 The target code after the label translation is shown in the [figure 2](#fig2).
-
 
 ## Implementing Label Translation
 

@@ -12,22 +12,22 @@ yylval is a global variable of the default return type [YYSTYPE](#navyystype) de
 ```c
 %{
 
-	#include "y.tab.h"
-	#include<stdlib.h\>
-	#include<stdio.h\>
+ #include "y.tab.h"
+ #include<stdlib.h\>
+ #include<stdio.h\>
 
 %}
 
-	number  \[0-9\]+
+ number  \[0-9\]+
 
 %%
 
-	{number}	{
+ {number} {
                     yylval = atoi(yytext);
                     return DIGIT;
-			    }
+       }
 
-	.		return \*yytext;
+ .  return \*yytext;
 
 %%
 ```
@@ -45,13 +45,13 @@ The following code segment is a YACC program which declares the token DIGIT. Rec
 
 %%
 
-start : expr '\\n'		{printf("\\nComplete");exit(1);}
+start : expr '\\n'  {printf("\\nComplete");exit(1);}
     ;
 
-expr:  expr '+' expr		{printf("+ ");}
-    | expr '\*' expr		{printf("\* ");}
+expr:  expr '+' expr  {printf("+ ");}
+    | expr '\*' expr  {printf("\* ");}
     | '(' expr ')'
-    | DIGIT			{printf("%d ",$1);}
+    | DIGIT   {printf("%d ",$1);}
     ;
 
 %%
@@ -81,16 +81,16 @@ The value of a symbol 'B' can be referred to by $1, value of 'B' can be referred
 Consider the problem of displaying two numbers in an input stream if they occur as a pair separated by a comma. Also suppose that the numbers must be displayed ONLY after a pair is found. Let us look at a YACC program that solves the problem.
 
 ```c
-pair: number ',' number		{ printf("pair(%d,%d),$1,$3"); }
-	;
-number: DIGIT			{ $$=$1; }
-	;
+pair: number ',' number  { printf("pair(%d,%d),$1,$3"); }
+ ;
+number: DIGIT   { $$=$1; }
+ ;
 ```
 
 In the program segment, the first rule displays the value of the 'number' symbols when found as a pair in the input stream. The action of the rule refers to the value of the first number symbol as $1 and and the second number as $3. (Note that $2 refers to the _literal token_ ',' which does not have any value associated with it). Since 'number' is a non-terminal, its attribute cannot be set by yylex(). [Recall](yacc.html#navprod) that every non-terminal symbol in the CFG must have a corresponding production with the non-terminal as the head. The attribute value of a non-terminal is set by the action of the rule which contains the corresponding production. In the example, the value of the non-terminal 'number' is set by the rule:
 
 ```c
-number: DIGIT			{ $$=$1; }
+number: DIGIT   { $$=$1; }
 ```
 
 The action of the rule sets the value of 'number' (reffered to using $$) to the value of DIGIT (referred to using $1).
@@ -124,13 +124,13 @@ int result;
 
 %%
 
-start : expr '\\n'		{result = $1; exit(1);}
+start : expr '\\n'  {result = $1; exit(1);}
     ;
 
-expr:  expr '+' expr		{$$ = $1 + $2;}
-    | expr '\*' expr		{$$ = $1 \* $3;}
-    | '(' expr ')'	 	{$$ = $2;}
-    | DIGIT			{$$ = $1;}
+expr:  expr '+' expr  {$$ = $1 + $2;}
+    | expr '\*' expr  {$$ = $1 \* $3;}
+    | '(' expr ')'   {$$ = $2;}
+    | DIGIT   {$$ = $1;}
     ;
 
 %%
@@ -147,18 +147,19 @@ main()
     return 1;
 }
 ```
-      
 
 Sample I/O:
+
 ```
 I: 2+3\*(4+5)
 O: 29
 ```
 
 Consider the two productions from the example.
+
 ```
-expr:  expr '+' expr		{$$ = $1 + $2;}
-expr:  DIGIT			{$$ = $1;}
+expr:  expr '+' expr  {$$ = $1 + $2;}
+expr:  DIGIT   {$$ = $1;}
 ```
 
 When the input 2+3\*(4+5) is fed to the parser, yylex() reads the first character and finds a matching token DIGIT. yylex() returns DIGIT and asigns the value 2 to yylval. When yylex() has returned, yyparse() pushes DIGIT to the parse stack and the value of yylval to the attribute stack. $1, $2, $3 etc., refers to the attribute values on top of the stack before a reduction takes place. $$ refers to the attribute value of the non-terminal which is the head of the production which contains the handle. When the non-terminal is pushed on to the parse stack, the value of $$ is pushed on to the attribute stack. $$ refers to the symbol on top of the stack after a reduction has taken place. The following table shows the configuration of the parse stack and the attribute stack at every step of the parsing process. Assume that whenever yylex() returns a token with no attribute, yyparse() pushes a '**.**' to the attribute stack.
@@ -173,31 +174,31 @@ When the input 2+3\*(4+5) is fed to the parser, yylex() reads the first characte
 <tr>
 <td class="tg-031e"></td>
 <td class="tg-031e"></td>
-<td class="tg-031e">2 + 3 * (4 + 5) $<br></td>
+<td class="tg-031e">2 + 3 *(4 + 5) $<br></td>
 <td class="tg-031e">_</td>
 </tr>
 <tr>
 <td class="tg-031e">DIGIT</td>
 <td class="tg-031e">2</td>
-<td class="tg-031e">+ 3 * ( 4 + 5 ) $<br></td>
+<td class="tg-031e">+ 3* ( 4 + 5 ) $<br></td>
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
 <td class="tg-031e">expr</td>
 <td class="tg-031e">2</td>
-<td class="tg-031e">+ 3 * ( 4 + 5 ) $</td>
+<td class="tg-031e">+ 3 *( 4 + 5 ) $</td>
 <td class="tg-031e">REDUCE</td>
 </tr>
 <tr>
 <td class="tg-031e">expr +<br></td>
 <td class="tg-031e">2 <b>.</b></td>
-<td class="tg-031e">3 * ( 4 + 5 ) $</td>
+<td class="tg-031e">3* ( 4 + 5 ) $</td>
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
 <td class="tg-031e">expr + DIGIT<br></td>
 <td class="tg-031e">2 <b>.</b> 3</td>
-<td class="tg-031e">* ( 4 + 5 ) $</td>
+<td class="tg-031e">*( 4 + 5 ) $</td>
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
@@ -213,55 +214,55 @@ When the input 2+3\*(4+5) is fed to the parser, yylex() reads the first characte
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * (<br></td>
+<td class="tg-031e">expr + expr* (<br></td>
 <td class="tg-031e">2 <b>.</b> 3<b> . .</b></td>
 <td class="tg-031e">4 + 5 ) $<br></td>
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * ( DIGIT<br></td>
+<td class="tg-031e">expr + expr *( DIGIT<br></td>
 <td class="tg-031e">2 <b>.</b> 3 <b>. .</b> 4</td>
 <td class="tg-031e">+ 5 ) $</td>
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * ( expr<br></td>
+<td class="tg-031e">expr + expr* ( expr<br></td>
 <td class="tg-031e">2 <b>.</b> 3 <b>. .</b> 4 </td>
 <td class="tg-031e">+ 5 ) $</td>
 <td class="tg-031e">REDUCE</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * ( expr +<br></td>
+<td class="tg-031e">expr + expr *( expr +<br></td>
 <td class="tg-031e">2 <b>.</b> 3 <b>. .</b> 4 <b>.</b></td>
 <td class="tg-031e">5 ) $</td>
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * ( expr + DIGIT<br></td>
+<td class="tg-031e">expr + expr* ( expr + DIGIT<br></td>
 <td class="tg-031e">2 <b>.</b> 3 <b>. .</b> 4 <b>.</b> 5</td>
 <td class="tg-031e">) $<br></td>
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * ( expr + expr <br></td>
+<td class="tg-031e">expr + expr *( expr + expr <br></td>
 <td class="tg-031e">2 <b>.</b> 3 <b>. .</b> 4 <b>.</b> 5</td>
 <td class="tg-031e">) $<br></td>
 <td class="tg-031e">REDUCE</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * ( expr<br></td>
+<td class="tg-031e">expr + expr* ( expr<br></td>
 <td class="tg-031e">2 <b>.</b> 3 <b>. .</b> 9</td>
 <td class="tg-031e">) $<br></td>
 <td class="tg-031e">REDUCE</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * ( expr )<br></td>
+<td class="tg-031e">expr + expr *( expr )<br></td>
 <td class="tg-031e">2 <b>.</b> 3 <b>. .</b> 9 .</td>
 <td class="tg-031e">$</td>
 <td class="tg-031e">SHIFT</td>
 </tr>
 <tr>
-<td class="tg-031e">expr + expr * expr<br></td>
+<td class="tg-031e">expr + expr* expr<br></td>
 <td class="tg-031e">2 <b>.</b> 3 <b>.</b> 9</td>
 <td class="tg-031e">$</td>
 <td class="tg-031e">REDUCE</td>
@@ -286,14 +287,13 @@ When the input 2+3\*(4+5) is fed to the parser, yylex() reads the first characte
 </tr>
 </tbody></table>
 
-
 ## YYSTYPE
 
 Attributes of terminals can be passed from yylex() to yyparse() and attributes of a non-terminal can be **synthesized**. An attribute of a non-terminal grammar symbol is said to _synthesized_ if it has been calculated from the attribute values of it's children in the [parse tree](http://en.wikipedia.org/wiki/Parse_tree). A synthesized attribute is an attribute of a non-terminal than has been calculated using the attribute values of the symbols in the handle that it replaces. An example of synthesized attribute:
 
 ```c
-Z: X			{ printf("Result=%d",$1);}
-X: A '+' B		{ $$ = $1 + $3; }
+Z: X   { printf("Result=%d",$1);}
+X: A '+' B  { $$ = $1 + $3; }
 ```
 
 The attribute value of X is a synthesized attribute as it has been calculated using the attribute values of the symbols in the handle that it replaces. The attribute stack consists of attributes of token and synthesized attributes. The attribute stack is of the type YYSTYPE i.e, all the [stack variables](#navstackvar) are of the type YYSTYPE. For example, in the above production, $$,$1 and $3 are all of the type YYSTYPE. YYSTYPE is a YACC-defined data type. yylval is declared by YACC to be of the type YYSTYPE. By default YACC defines YYSTYPE to be the type int. It means that, by default only integer valued attributes can be passed from yylex() to yyparse() and only integer attributes can be synthesized. If we were to attempt to assign any other value to yylval or any of the attribute stack variables, a type error would be flagged on compiling y.tab.c using gcc.
@@ -318,8 +318,8 @@ But inorder to have multiple custom attribute values, YACC offers a useful featu
 /* YACC Declarations*/
 %union
 {
-	char character;
-	int integer;
+ char character;
+ int integer;
 };
 
 %token <character> OP
@@ -327,12 +327,11 @@ But inorder to have multiple custom attribute values, YACC offers a useful featu
 
 %%
 expr: expr OP expr { printf("%c %d %d",$2,$1,$3);}
-		| DIGIT {$$=$1;}
-		;
+  | DIGIT {$$=$1;}
+  ;
 %%
 /* Auxiliary functions */
 ```
-
 
 Note that the type of the attribute of each token must be mentioned when the token is being declared using the following syntax.
 
