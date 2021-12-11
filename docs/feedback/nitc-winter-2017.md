@@ -29,11 +29,11 @@ A feedback questionnaire was circulated to all the students who credited the cou
 
 <div class="two-col">
     <div>
-        <img src="../img/final_charts/2-8.png">
+        <img src="../../img/final_charts/2-8.png">
         <h5>All Students</h5>
     </div>
     <div>
-        <img src="../img/final_charts/2-4.png">
+        <img src="../../img/final_charts/2-4.png">
         <h5>Students who finished stage 5 or above</h5>
     </div>
 </div>
@@ -44,11 +44,11 @@ A feedback questionnaire was circulated to all the students who credited the cou
 
 <div class="two-col">
     <div>
-        <img src="../img/final_charts/11-8.png">
+        <img src="../../img/final_charts/11-8.png">
         <h5>All Students</h5>
     </div>
     <div>
-        <img src="../img/final_charts/11-4.png">
+        <img src="../../img/final_charts/11-4.png">
         <h5>Students who finished stage 5 or above</h5>
     </div>
 </div>
@@ -60,11 +60,11 @@ A feedback questionnaire was circulated to all the students who credited the cou
 
 <div class="two-col">
     <div>
-        <img src="../img/final_charts/12-8.png">
+        <img src="../../img/final_charts/12-8.png">
         <h5>All Students</h5>
     </div>
     <div>
-        <img src="../img/final_charts/12-4.png">
+        <img src="../../img/final_charts/12-4.png">
         <h5>Students who finished stage 5 or above</h5>
     </div>
 </div>
@@ -75,11 +75,11 @@ A feedback questionnaire was circulated to all the students who credited the cou
 
 <div class="two-col">
     <div>
-        <img src="../img/final_charts/14-8.png">
+        <img src="../../img/final_charts/14-8.png">
         <h5>All Students</h5>
     </div>
     <div>
-        <img src="../img/final_charts/14-4.png">
+        <img src="../../img/final_charts/14-4.png">
         <h5>Students who finished stage 5 or above</h5>
     </div>
 </div>
@@ -88,11 +88,11 @@ A feedback questionnaire was circulated to all the students who credited the cou
 
 <div class="two-col">
     <div>
-        <img src="../img/final_charts/7-8.png">
+        <img src="../../img/final_charts/7-8.png">
         <h5>All Students</h5>
     </div>
     <div>
-        <img src="../img/final_charts/7-4.png">
+        <img src="../../img/final_charts/7-4.png">
         <h5>Students who finished stage 5 or above</h5>
     </div>
 </div>
@@ -101,11 +101,11 @@ A feedback questionnaire was circulated to all the students who credited the cou
 
 <div class="two-col">
     <div>
-        <img src="../img/final_charts/6-8.png">
+        <img src="../../img/final_charts/6-8.png">
         <h5>All Students</h5>
     </div>
     <div>
-        <img src="../img/final_charts/6-4.png">
+        <img src="../../img/final_charts/6-4.png">
         <h5>Students who finished stage 5 or above</h5>
     </div>
 </div>

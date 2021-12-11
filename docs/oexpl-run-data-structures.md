@@ -110,19 +110,19 @@ endclass
         It is sufficient to place labels, and not addresses in the virtual function table, as the [label translation phase](/label-translation.html) will take care of translating labels to addresses
 
     In the example given, the function f0 in class A has funcposition 0 and say flabel F0 (we identify flabel 0 with F0) and the function f1 in class A gets a funcposition 1 and say flabel F1 (we identify flabel 1 with F1). The member function list of class A looks as shown in the below figure :
-    [![](img/virtual_function_table_3.png)](img/virtual_function_table_3.png)
+    [![](./img/virtual_function_table_3.png)](./img/virtual_function_table_3.png)
     The virtual function table of class A looks as shown in the figure below. It is constructed using member function list of class A which is shown in the figure above.
-    [![](img/virtual_function_table_1.png)](img/virtual_function_table_1.png)
+    [![](./img/virtual_function_table_1.png)](./img/virtual_function_table_1.png)
     As mentioned earlier, all the labels of the functions will be replaced with addresses during [label translation phase](/label-translation.html).
 
 4. Class B extends class A and over-rides f0(). Further, class B contains the newly defined method f2(). When a class extends another, all the member fields and methods of the parent class are inherited by the derived class, unless over-ridden by a new definition. Since the method f0() is over-ridden by B, a new label will have to be allocated for the function f0() in class B. In the present example, we set the new label to F2. Accordingly, the compiler must update _Memberfunclist_ entry of the method f0() in class B with the new _flabel_ value. Correspondingly, in the virtual function table entry for class B, the entry for method f0() must be F2 (over-riding F0). The entry for method f1() (label F1) will be inherited from class A. A new label (label F3 in the example) must be generated for the function f2() defined in class B. The labels for each method in class B is shown in the table below for easy reference.
 
-    [![](../img/virtual_function_table_8.png)](../img/virtual_function_table_8.png)
+    [![](./img/virtual_function_table_8.png)](./img/virtual_function_table_8.png)
 
     From an implementation point of view, it will be easier to (generate code to) copy all the virtual function table entries of A to the virtual function table of B and then (generate code to) modify the labels of over-ridden functions/add labels for new functions defined in B. The compilation for class C may proceed similarly. Note that OExpL specification stipulates that the signatures of the over-ridden methods must match exactly with the signature of the original definition in the parent class.
 
 
-    [![](img/virtual_function_table_4.png)](img/virtual_function_table_4.png)
+    [![](./img/virtual_function_table_4.png)](./img/virtual_function_table_4.png)
 
 
 
@@ -132,7 +132,7 @@ endclass
 
 
 
-    [![](img/virtual_function_table_2.png)](img/virtual_function_table_2.png)
+    [![](./img/virtual_function_table_2.png)](./img/virtual_function_table_2.png)
 
     ★ Overridden labels are marked in red
 
