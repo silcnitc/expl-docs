@@ -98,22 +98,22 @@ endclass
 
 1. Storage for virtual function tables start at 4096 in the stack. Eight consecutive words are allocated for storing the virtual function table of each class. Each word of virtual function table stores the call address of the corresponding function in the class. Thus, a class can contain atmost eight methods. Virtual function tables of various classes are stored in the order in which the classes are declared in the program. As noted earlier, we will allocate the space for global declarations after virtual function tables are allocated.
 
-    By using the _Class\_index_ field of the [class\_table](/oexpl-data-structures.html) entry, the starting address of the virtual function table for that particular class can be computed using the formula **4096 + (Class\_index \* 8)**. The class defined first will have _Class\_index_ zero, the next will have one and so on.
+    By using the _Class\_index_ field of the [class\_table](./oexpl-data-structures.md) entry, the starting address of the virtual function table for that particular class can be computed using the formula **4096 + (Class\_index \* 8)**. The class defined first will have _Class\_index_ zero, the next will have one and so on.
 
-2. **When the declaration of each method is found (in a class) a new label is generated for the function and the label is stored in the [class table entry](/oexpl-data-structures.html)** (See _Memberfunclist_ ) **for the function at compile time.** The compiler also must generate code to store these labels into the virtual function table entry of the function in the corresponding class. (Strictly speaking, an integer value called the "pseudo-address" for the function is stored in the _flabel_ field of the _Memberfunclist_ entry of the function. The pseudo addresses could be 0,1,2,3 and so on. When code is generated, for functions with _flabel_ values 0,1,2,3, etc., the actual labels placed could be F0,F1,F2,F3 etc to make them more human readable.)
+2. **When the declaration of each method is found (in a class) a new label is generated for the function and the label is stored in the [class table entry](./oexpl-data-structures.md)** (See _Memberfunclist_ ) **for the function at compile time.** The compiler also must generate code to store these labels into the virtual function table entry of the function in the corresponding class. (Strictly speaking, an integer value called the "pseudo-address" for the function is stored in the _flabel_ field of the _Memberfunclist_ entry of the function. The pseudo addresses could be 0,1,2,3 and so on. When code is generated, for functions with _flabel_ values 0,1,2,3, etc., the actual labels placed could be F0,F1,F2,F3 etc to make them more human readable.)
 
-3. **It is better to maintain the index of a method in the [class table](/oexpl-data-structures.html) (Funcposition) and the virtual function table to be the same.** This makes code generation for method invocations easier. When a method is invoked, the compiler can look up the index of the method from the appropriate class table and generate code to invoke the function whose call address (label) is stored in the virtual function table at the position determined by index.
+3. **It is better to maintain the index of a method in the [class table](./oexpl-data-structures.md) (Funcposition) and the virtual function table to be the same.** This makes code generation for method invocations easier. When a method is invoked, the compiler can look up the index of the method from the appropriate class table and generate code to invoke the function whose call address (label) is stored in the virtual function table at the position determined by index.
 
     !!! note
         that the class table is a static (compile time) data structure and will not be part of the target program. The compiler uses the class table information to generate code that will create the virtual function table at execution (run) time.
     !!! note
-        It is sufficient to place labels, and not addresses in the virtual function table, as the [label translation phase](/label-translation.html) will take care of translating labels to addresses
+        It is sufficient to place labels, and not addresses in the virtual function table, as the [label translation phase](./label-translation.md) will take care of translating labels to addresses
 
     In the example given, the function f0 in class A has funcposition 0 and say flabel F0 (we identify flabel 0 with F0) and the function f1 in class A gets a funcposition 1 and say flabel F1 (we identify flabel 1 with F1). The member function list of class A looks as shown in the below figure :
     [![](./img/virtual_function_table_3.png)](./img/virtual_function_table_3.png)
     The virtual function table of class A looks as shown in the figure below. It is constructed using member function list of class A which is shown in the figure above.
     [![](./img/virtual_function_table_1.png)](./img/virtual_function_table_1.png)
-    As mentioned earlier, all the labels of the functions will be replaced with addresses during [label translation phase](/label-translation.html).
+    As mentioned earlier, all the labels of the functions will be replaced with addresses during [label translation phase](./label-translation.md).
 
 4. Class B extends class A and over-rides f0(). Further, class B contains the newly defined method f2(). When a class extends another, all the member fields and methods of the parent class are inherited by the derived class, unless over-ridden by a new definition. Since the method f0() is over-ridden by B, a new label will have to be allocated for the function f0() in class B. In the present example, we set the new label to F2. Accordingly, the compiler must update _Memberfunclist_ entry of the method f0() in class B with the new _flabel_ value. Correspondingly, in the virtual function table entry for class B, the entry for method f0() must be F2 (over-riding F0). The entry for method f1() (label F1) will be inherited from class A. A new label (label F3 in the example) must be generated for the function f2() defined in class B. The labels for each method in class B is shown in the table below for easy reference.
 
@@ -181,7 +181,7 @@ For instance, the statement _obj = new(A);_ must result in two actions:
 
 Recall that the start address of the virtual function table for a class can be computed as (4096 + _class\_index_ \* 8). In the above example, since the _class\_index_ of class A is zero, the above statement sets the virtual function table pointer value of obj to the value 4096.
 
-Similarly the statement obj=new(B) results in the compiler generating code to store the value 4104 to the virtual function table pointer of the variable obj. obj=new(C) would result in storing the value 4112 to the virtual function table pointer of obj. As an illustration, assume that the compiler has allocated memory address 4120 and 4121 for storing the member field pointer and virtual function table pointer of obj. Assume that a call to the new function results in allocation of 8 words in the heap starting with the memory address 1024 (using the [Alloc()](/run_data_structures/heap.html) library function). The following figure shows how the values of memory locations 4120 and 4121 has to be set for various values of n.
+Similarly the statement obj=new(B) results in the compiler generating code to store the value 4104 to the virtual function table pointer of the variable obj. obj=new(C) would result in storing the value 4112 to the virtual function table pointer of obj. As an illustration, assume that the compiler has allocated memory address 4120 and 4121 for storing the member field pointer and virtual function table pointer of obj. Assume that a call to the new function results in allocation of 8 words in the heap starting with the memory address 1024 (using the [Alloc()](./run_data_structures/heap.md) library function). The following figure shows how the values of memory locations 4120 and 4121 has to be set for various values of n.
 
 if '( n < 0)' then the two words of obj is :
 
@@ -211,7 +211,7 @@ When compiler encounters the method invocation, **obj.f0()**, it first checks th
 
 In more detail, for the call _obj.f0()_, the compiler must do the following:
 
-1. Find the index of _f0()_ in the [class table](/oexpl-data-structures.html) entry of _obj_. Here _obj_ is declared to be of class A and the index (look up Funcposition field in the member function list of class A) of _f0()_ in class A will be 0.
+1. Find the index of _f0()_ in the [class table](./oexpl-data-structures.md) entry of _obj_. Here _obj_ is declared to be of class A and the index (look up Funcposition field in the member function list of class A) of _f0()_ in class A will be 0.
 2. Generate the code to push the registers in use into the stack
 3. Generate the code to move to a register (say R0) the label of the function at index 0 from the virtual function table of _obj_. The virtual function table pointer field of obj will point to the virtual function table.
 4. Generate code to push the "self object" into the stack as argument (i.e., the member field pointer of obj and the virtual function table pointer of obj must be pushed as arguments to the call to f0() - See Run time Stack Management for Method Invocations below .)
@@ -226,7 +226,7 @@ In more detail, for the call _obj.f0()_, the compiler must do the following:
 While generating the code for invoking a method of a class using an object of the class (for example, in the call obj.f0() above, f0() is invoked using the object obj of class A) **the member field pointer and virtual function table pointer of the object must be pushed to the stack in addition to normal arguments of the function.** We will follow the convention that these two values will be pushed before other arguments are pushed. This is how the runtime stack looks, when a method of a class is **called**.
 
 [![](./img/rts11.png)](./img/rts11.png)
-For instance, in the above [example](/oexpl-run-data-structures.html#nav-runtimebinding), The value of _n_ read from the input is 0, the following figure shows the run time stack. Note that the function f0 has no arguments.
+For instance, in the above [example](./oexpl-run-data-structures.md#nav-runtimebinding), The value of _n_ read from the input is 0, the following figure shows the run time stack. Note that the function f0 has no arguments.
 
 [![](./img/rts2.png)](./img/rts2.png)
 
