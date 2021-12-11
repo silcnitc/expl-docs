@@ -163,6 +163,6 @@ Check your implementation with the following test cases:
 
 - [Test Program 1: Linked List](../testprograms/test-program-08.md)
 - [Test Program 2: Binary Search Tree](../testprograms/test-program-09.md)
-- [Test Program 3: Extended Euclid Algorithm using linkedlist](../testprograms.md/test-program-11.md)
+- [Test Program 3: Extended Euclid Algorithm using linkedlist](../testprograms/test-program-11.md)
 - [Test Program 4: Extended Euclid Algorithm using Userdefined types](../testprograms/test-program-04.md)
 
