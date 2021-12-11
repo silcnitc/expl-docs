@@ -1,4 +1,7 @@
 site_name: EXPL NIT-C
+site_url: https://anandubajith.github.io/expl-docs/
+site_description: Compiler Lab website for NIT Calicut
+
 theme:
   name: material
   palette:
@@ -18,17 +21,22 @@ theme:
     - navigation.tabs
     - navigation.top
     - navigation.sections
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/silcnitc
+    - icon: fontawesome/brands/google
+      link: https://groups.google.com/g/expl-users
 
 extra_css:
   - extra.css
 
 copyright: >-
-  National Insititute of Technology, Calicut <br/>
   <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
     <img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/by-nc/4.0/80x15.png" />
   </a>
+  National Insititute of Technology, Calicut
 
-# Plugins
 plugins:
   - search
   - minify:
@@ -47,10 +55,12 @@ markdown_extensions:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
 
-
 nav:
   - Home: index.md
-  - About: about.md
+  - About:
+    - Philosophy: about/philosophy.md
+    - Authors: about/authors.md
+    - License: about/license.md
   - Roadmap:
     - Roadmap: roadmap/index.md
     - Stage 0: roadmap/stage-00.md
