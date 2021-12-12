@@ -10,20 +10,31 @@ hide:
     0.5 week, 5-10 hours/week
 
 !!! abstract "Prerequisites"
-    1. You must be comfortable with LEX and YACC. ( If you are not, you must first do [LEX](../lex.md) tutorial, [YACC](../yacc.md) Tutorial and [Using Lex with Yacc](../ywl.md) tutorials.)
-    2. You must have completed the [XSM environment tutorial](../xsm-environment-tut.md) **including all the exercises** before staring this stage.
+    1. You must be comfortable with LEX and YACC. ( If you are not, you must first do [LEX]
+        (../lex.md) tutorial, [YACC](../yacc.md) Tutorial and [Using Lex with Yacc](../ywl.md) tutorials.)
+    2. You must have completed the [XSM environment tutorial](../xsm-environment-tut.md)
+        **including all the exercises** before staring this stage.
 
 !!! example "Learning Objectives"
     In this stage, you will:
 
     1. Parse an input arithmetic expression and create an expression tree using YACC and LEX.
-    2. Recursively traverse the tree and generate assembly language code. The allocation of registers for storing results of intermediate computations will be handled enroute.
+    2. Recursively traverse the tree and generate assembly language code. The allocation of
+        registers for storing results of intermediate computations will be handled enroute.
 
-A compiler is a software that takes as input a high level program and produces a machine recognizible target program as output. The high level program typically allows variables, expressions, conditionals, iterative constructs, user defined types, functions etc. The low level target program on the other hand will be a sequence of assembly level instructions that can be run on a target machine (which is the XSM simulator in this project).
+A compiler is a software that takes as input a high level program and produces a machine
+recognizible target program as output. The high level program typically allows variables,
+expressions, conditionals, iterative constructs, user defined types, functions etc. The
+low level target program on the other hand will be a sequence of assembly level instructions
+that can be run on a target machine (which is the XSM simulator in this project).
 
-The strategy of the roadmap is to help you build the compiler in stages. We start here by building a very simple compiler whose input (high level) program contains only simple arithmetic expressions. In subsequent stages, we will add more and more constructs to the input language one by one, learning the relevant theoretical concepts along the way.
+The strategy of the roadmap is to help you build the compiler in stages. We start here by
+building a very simple compiler whose input (high level) program contains only simple
+arithmetic expressions. In subsequent stages, we will add more and more constructs to the
+input language one by one, learning the relevant theoretical concepts along the way.
 
-We assume that you have implemented the library routine for handling console output, which you were asked to do in the [XSM execution environment tutorial](../xsm-environment-tut.md).
+We assume that you have implemented the library routine for handling console output, which
+you were asked to do in the [XSM execution environment tutorial](../xsm-environment-tut.md).
 
 Consider arithmetic expressions with the following syntax.
 
@@ -32,7 +43,10 @@ E : E + E | (E) | NUM
 ```
 
 
-Where the [lexeme](../lex.md#navyytext) **NUM** correspond to integers. Assume left [associativity](../yacc.md#associativity) for '+'. Thus, the [tokens](../lex.md#token) relevant are NUM and +. The attribute value associated with a number is the number read. Assume that the input file is passed as argument to the main() function in YACC.
+Where the [lexeme](../lex.md#navyytext) **NUM** correspond to integers. Assume
+left [associativity](../yacc.md#associativity) for `+`, Thus, the [tokens](../lex.md#token)
+relevant are `NUM` and `+`. The attribute value associated with a number is the number read.
+Assume that the input file is passed as argument to the `main()` function in YACC.
 
 The lexer must pack the attribute into a tree node of the following structure:
 
@@ -65,20 +79,38 @@ struct tnode* makeOperatorNode(char op,struct tnode *l,struct tnode *r);
     !!! note
         You would have already completed this task if you have done the [Using Yacc With Lex tutorial](../ywl.md)
 
-Now, comes the next task - to generate assembly language program equivalent for the expression and write it out into an executable file in the XEXE format. Once this is done, you can use the simulator to load the XEXE file into the memory of the XSM machine and execute it as outlined in the [XSM run time environment tutorial](../xsm-environment-tut.md).
+Now, comes the next task - to generate assembly language program equivalent for the expression
+and write it out into an executable file in the XEXE format. Once this is done, you can use the
+simulator to load the XEXE file into the memory of the XSM machine and execute it as
+outlined in the [XSM run time environment tutorial](../xsm-environment-tut.md).
 
 To do this, one needs to know the following:
 
 1. The [machine model and the instruction set](../abi.md#nav-XSM-instruction-set) of the target machine.
 2. Format of the [executable file](../abi.md#nav-XEXE-executable-file-format).
-3. You need to know the address in the memory (in the target machine) where each instruction you generate will be loaded (by the OS loader). This is because program control instructions like JMP, CALL etc., requires specification of the jump address.
+3. You need to know the address in the memory (in the target machine) where each instruction you
+    generate will be loaded (by the OS loader). This is because program control instructions like
+    `JMP`, `CALL` etc., requires specification of the jump address.
 
-    As already outlined in the [XSM run time environment tutorial](../xsm-environment-tut.md), the header will be loaded into addresses 2048-2055. The first instruction generated by you will be loaded to the address 2056. Each XSM instruction occupies 2 memory words. Hence, the next instruction will be loaded at address 2058 and so on. The entry point field of the header must contain the address of the first instruction to be fetched and executed.
+    As already outlined in the [XSM run time environment tutorial](../xsm-environment-tut.md),
+    the header will be loaded into addresses 2048-2055. The first instruction generated by you will
+    be loaded to the address 2056. Each XSM instruction occupies 2 memory words. Hence,
+    the next instruction will be loaded at address 2058 and so on. The entry point field
+    of the header must contain the address of the first instruction to be fetched and executed.
 
-4. You need to fix the memory addresses where variables and other data is stored. For example, for each variable in the program, the compiler will have to allocate storage space in memory. The ABI stipulates that the region for this is the [stack region](../abi.md#nav-virtual-address-space-model). Thus each variable must be stored in some address between 4096 and 5119.
-5. Since XSM machine stipulates that arithmetic and logic instructions can be done only when operands are loaded into machine registers, we need to load the contents of variables/constants in the program into the machine registers before processing them. This brings in the problem of register allocation. The XSM machine makes available 20 registers (R0-R19) for the compiler.
+4. You need to fix the memory addresses where variables and other data is stored. For example, for
+    each variable in the program, the compiler will have to allocate storage space in memory. The ABI
+    stipulates that the region for this is the [stack region](../abi.md#nav-virtual-address-space-model).
+    Thus each variable must be stored in some address between 4096 and 5119.
 
-Of the above, the XSM execution environment tutorial has already explained (1) and (2). Evaluation of expressions do not involve either storage allocation or program control transfer (JMP). Hence, we will not take up (3) and (4) at this stage. However, we need to solve (5) now.
+5. Since XSM machine stipulates that arithmetic and logic instructions can be done only when operands
+    are loaded into machine registers, we need to load the contents of variables/constants in the
+    program into the machine registers before processing them. This brings in the problem of
+    register allocation. The XSM machine makes available 20 registers (`R0`-`R19`) for the compiler.
+
+Of the above, the XSM execution environment tutorial has already explained (1) and (2).
+Evaluation of expressions do not involve either storage allocation or program control
+transfer (`JMP`). Hence, we will not take up (3) and (4) at this stage. However, we need to solve (5) now.
 
 ## What must be the evaluation strategy?
 
@@ -93,7 +125,8 @@ The evaluation strategy will be:
 2. Store 2 in a register – say R1.
 3. ADD R0, R1.
 
-The result will be stored in R0 and is sufficient for us. To generate code for the above tasks and write it into a target\_file, you must write code as:
+The result will be stored in R0 and is sufficient for us. To generate code for the above tasks
+and write it into a `target_file`, you must write code as:
 
 ```c
 fprintf(target_file, "MOV R0, 3");
@@ -101,18 +134,19 @@ fprintf(target_file, "MOV R1, 2");
 fprintf(target_file, "ADD R0, R1");
 ```
 
-However, life becomes complicated if we have an expression like (3+2)+(5+6) resulting in the following tree.
+However, life becomes complicated if we have an expression like `(3+2)+(5+6)` resulting in the following tree.
 
 ![](../img/tree2.png)
 
 Of course, we can “hand craft” this case also. But the strategy will not generalize.
 The basic issue is that your compiler does not know the input expression before-hand.
-Technically speaking, the issue is that the “expression is not available at **compile time**, but only known at **run time**”.
-Your code generation module must be more _"intelligent"_ to handle _arbitrary expressions_.
+Technically speaking, the issue is that the “expression is not available at **compile time**,
+but only known at **run time**”. Your code generation module must be more _"intelligent"_
+to handle _arbitrary expressions_.
 
 The root of the problem with the above code is that R0 and R1 were picked by you and not by your compiler.
-Thus, we must have a **register assignment policy** (basically a function) that returns a free register whenever we require one.
-That is, you must design the following functions:
+Thus, we must have a **register assignment policy** (basically a function) that returns a free
+register whenever we require one. That is, you must design the following functions:
 
 ```c
 int getReg() // Allocate a free register
@@ -145,8 +179,11 @@ and hence can keep track of the correct register that must be allocated or freed
 
 The following summarizes the register allocation strategy:
 
-1. Whenever a register is needed, allocate the lowest numbered register that is free. (Thus, give R0 if possible, otherwise R1 etc.)
-2. Whenever we free a register, always release the highest used register that was allocated previously. (Thus, if R0, R1 and R2 were allocated, freeReg() must release R2).
+1. Whenever a register is needed, allocate the lowest numbered register that is free.
+    (Thus, give R0 if possible, otherwise R1 etc.)
+
+2. Whenever we free a register, always release the highest used register that was
+    allocated previously. (Thus, if R0, R1 and R2 were allocated, `freeReg()` must release R2).
 
 Finally, we must design a code generation module. The strategy here is to start with an expression tree and do the following:
 
@@ -161,8 +198,10 @@ Finally, we must design a code generation module. The strategy here is to start 
 
     d. Release the higher numbered register and return.
 
-In the above box, as step 2.a and 2.b requires finding the index of the register which stores the result of expression evaluation.
-The simplest strategy is to **design a `codeGen()` function that can take as input an expression tree and generates code for the expression, returning the index of the register storing the result**:
+In the above box, as step 2.a and 2.b requires finding the index of the register which stores
+the result of expression evaluation.
+The simplest strategy is to **design a `codeGen()` function that can take as input an expression
+tree and generates code for the expression, returning the index of the register storing the result**:
 
 ```c
 #define reg_index int;
@@ -173,12 +212,16 @@ reg_index codeGen( struct node *t) {
 }
 ```
 
-The codeGen() function takes as input a pointer to the root of an expression tree and generates code for the subtree rooted at that node. After generating code, the function must return the index of the register storing the result. See this [link](../codegen.md) for furthur details.
+The codeGen() function takes as input a pointer to the root of an expression tree and generates
+code for the subtree rooted at that node. After generating code, the function must return the
+index of the register storing the result. See this [link](../codegen.md) for furthur details.
 
 !!! question "Task 2"
     Complete the simple compiler for expression evaluation and generate the executable file.
-    The result of expression evaluation may be stored in the first location of the stack region – memory address 4096.
-    This value may be printed out using the write system call. Note that the XEXE executable format must be adhered so that the XSM simulator can load and execute the file.
+    The result of expression evaluation may be stored in the first location of the
+    stack region – memory address 4096. This value may be printed out using the write system call.
+    Note that the XEXE executable format must be adhered so that the XSM simulator
+    can load and execute the file.
 
 !!! note
     To run the simulator, you must prepare the library.lib together with the XEXE executable file.
