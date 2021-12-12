@@ -69,7 +69,7 @@ Do the following steps:
         Then you need to install:
         ```bash
         sudo apt-get install libfl-dev
-```
+        ```
         and edit the `Makefile` of `xsm_dev` folder, to proceed find the line where `-ll` is used as option
         and update it to ``-lfl`` to use the `flex` library we installed above.
         Now you can run `make` again after navigating into the folder `xsm_expl` through the terminal.
