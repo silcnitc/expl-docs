@@ -386,52 +386,26 @@ If the **Runtime Library** must be included when the file is loaded, the Library
 in the executable file. If this flag is not set then neither memory is allocated for the heap nor
 the library linked to the address space of the process at execution time.
 
-In summary, the eXpOS loader maps an executable file into its virtual 
+In summary, the eXpOS loader maps an executable file into its virtual
 address according to the following table :
 
-<div class="md-typeset__scrollwrap">
-<div class="md-typeset__table">
-<table >
-<tbody>
-<tr class="success">
-<th style="text-align: center;">Region</th>
-<th style="text-align: center;">Start Address</th>
-<th style="text-align: center;">End Address</th>
-</tr>
-<tr>
-<td>Library<!--<sup style="color:red">*</sup>--></td>
-<td>0</td>
-<td>1023</td>
-</tr>
-<tr>
-<td>Heap</td>
-<td>1024</td>
-<td>2047</td>
-</tr>
-<tr>
-<td>Code</td>
-<td>2048</td>
-<td>4095</td>
-</tr>
-<tr>
-<td>Stack<sup style="color:blue">†</sup></td>
-<td>4096</td>
-<td>5119</td>
-</tr>
-</tbody>
-</table>
 
-</div></div>
+|Region             |Start Address  |End Address|
+|------------------ |-------------- |---------- |
+|Library            |0              | 1023      |
+|Heap               |1024           | 2047      |
+|Code               |2048           | 4095      |
+|Stack :red_circle: |4096           | 5119      |
 
-† The Stack Pointer is not initialised to the address 4096 by the eXpOS loader.
+:red_circle: The Stack Pointer is not initialised to the address 4096 by the eXpOS loader.
 
 The library interface
 ---------------------
 
-The library provides a **uniform interface** through which an application program can invoke 
+The library provides a **uniform interface** through which an application program can invoke
 dynamic memory allocation / de-allocation routines (Alloc(), Free() and Initialize()),
 input - output routines (Read() and Write()) and program exit (Exit()).
-Thus, while translating a high level ExpL program containing calls to the above functions, 
+Thus, while translating a high level ExpL program containing calls to the above functions,
 a compiler needs to be concerned only about
 how to translate these high level function calls to the corresponding library function calls.
 
@@ -479,7 +453,7 @@ Following are the library functions and details relevant for ExpL Compilation:
 <td rowspan="3">Read</td>
 <td rowspan="3">"Read"</td>
 <td rowspan="3">-1</td>
-<td rowspan="3">Buffer (int/str)<font color="red">\*</font></td>
+<td rowspan="3">Buffer (int/str) <img alt="🔴" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f534.svg" title=":red_circle:"> </td>
 <td rowspan="3">-</td>
 <td>0 - Success</td></tr>
 <tr><td>-1 - File Descriptor given is invalid</td></tr>
@@ -488,7 +462,7 @@ Following are the library functions and details relevant for ExpL Compilation:
 <td rowspan="2">Write</td>
 <td rowspan="2"> "Write"</td>
 <td rowspan="2">-2</td>
-<td rowspan="2">Data<font color="red">+</font></td>
+<td rowspan="2">Data <img alt="🔵" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f535.svg" title=":blue_circle:"></td>
 <td rowspan="2">-</td>
 <td>0 - Success</td></tr>
 <tr><td>-1 - File Descriptor given is invalid</td></tr>
@@ -530,8 +504,11 @@ Following are the library functions and details relevant for ExpL Compilation:
 </tbody></table>
 </div></div>
 
-\*Note: The Read() library function expects a memory address from (or to) which read is performed.
-+Note: The Write() library function expects Data (final value to be printed) as argument.
+!!! note
+    :red_circle: The Read() library function expects a memory address from (or to) which read is performed.
+
+!!! note
+    :blue_circle: The Write() library function expects Data (final value to be printed) as argument.
 
 ### After return from the library module
 
@@ -593,11 +570,11 @@ into the stack and then invoking the **INT** machine instruction corresponding t
 The eXpOS ABI stipulates that the number of arguments pushed into the stack is fixed at three.
 
 ```asm
-PUSH System\_Call\_Number     // Push system call number
-PUSH Argument\_1             // Push argument 1 to the stack
-PUSH Argument\_2             // Push argument 2 to the stack
-PUSH Argument\_3             // Push argument 3 to the stack
-**PUSH R0                     // Push an empty space for RETURN VALUE**
+PUSH System_Call_Number     // Push system call number
+PUSH Argument_1             // Push argument 1 to the stack
+PUSH Argument_2             // Push argument 2 to the stack
+PUSH Argument_3             // Push argument 3 to the stack
+PUSH R0                     // Push an empty space for RETURN VALUE
 INT number                  // Invoke the corresponding INT instruction.
                             // The number can be any number between 4 and 18
 
@@ -651,8 +628,6 @@ Associated with each system call, there is a system call number and interrupt ro
 The system call number is used to identify a system call. The interrupt routine number denotes
 the number of the interrupt routine which handles the system call.
 
-<div class="md-typeset__scrollwrap">
-<div class="md-typeset__table">
 <table>
 <tbody><tr>
 <th>System Call</th>
@@ -668,31 +643,32 @@ the number of the interrupt routine which handles the system call.
 <td rowspan="3">7</td>
 <td rowspan="3">6</td>
 <td rowspan="3">-1</td>
-<td rowspan="3">Buffer (int/str)<font color="red">\*</font></td>
+<td rowspan="3">Buffer (int/str) <img alt="🔴" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f534.svg" title=":red_circle:"> </td>
 <td rowspan="3">-</td>
 <td>0 - Success</td></tr>
 <tr><td>-1 - File Descriptor given is invalid</td></tr>
 <tr><td>-2 - Read error</td></tr>
-
 <tr>
 <td rowspan="2">Write</td>
 <td rowspan="2">5</td>
 <td rowspan="2">7</td>
 <td rowspan="2">-2</td>
-<td rowspan="2">Data<font color="red">+</font></td>
+<td rowspan="2">Data <img alt="🔵" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f535.svg" title=":blue_circle:"></td>
 <td rowspan="2">-</td>
 <td>0 - Success</td></tr>
 <tr><td>-1 - File Descriptor given is invalid</td></tr>
 <tr>
-<td rowspan="1">Exit</td>
-<td rowspan="1">10</td>
-<td rowspan="1">10</td>
-<td rowspan="1">-</td>
+<td rowspan="3">Exit</td>
+<td rowspan="3">10</td>
+<td rowspan="3">10</td>
+<td rowspan="3">-</td>
 <td rowspan="1">-</td>
 <td rowspan="1">-</td>
 <td>-</td></tr>
 </tbody></table>
-</div></div>
 
-\*Note: The Read() library function expects a memory address from (or to) which read is performed.
-+Note: The Write() library function expects Data (final value to be printed) as argument.
+!!! note
+    :red_circle: The Read() library function expects a memory address from (or to) which read is performed.
+
+!!! note
+    :blue_circle: The Write() library function expects Data (final value to be printed) as argument.
