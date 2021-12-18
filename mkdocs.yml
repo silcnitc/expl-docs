@@ -4,6 +4,7 @@ site_description: Compiler Lab website for NIT Calicut
 
 theme:
   name: material
+  logo: img/nitc-logo.png
   palette:
       - media: "(prefers-color-scheme: light)"
         scheme: default
