@@ -40,57 +40,69 @@ An outline for the OExpL grammar is given here. Calls to functions that update t
 === "ClassDefBlock"
 
     ```c
-    Program : TypeDefBlock ClassDefBlock GlobalDeclBlock FuncDefBlock MainBlock
-    ;
-    ClassDefBlock : CLASS ClassDefList ENDCLASS
-                    |
-    ;
-    ClassDefList : ClassDefList ClassDef
-                   | ClassDef
-    ;
-    Classdef      : Cname '{'DECL Fieldlists MethodDecl ENDDECL MethodDefns '}'
-    ;
-    Cname         : ID        {Cptr = Cinstall($1->Name,NULL);}
-                  | ID Extends ID {Cptr = Cinstall($1->Name,$3->Name);}
-    ;
-    Fieldlists  : Fieldlists Fld
-            |
-    ;
-    Fld         : ID ID ';'  {Class_Finstall(Cptr,$1->Name,$2->Name);} //Installing the field to the class
-    ;
-    MethodDecl : MethodDecl MDecl
-           | MDecl
-    ;
-    MDecl      : ID ID '(' Paramlist ')' ';' {Class_Minstall(Cptr,$2->Name,Tlookup($1->Name),$4);}
-                                                //Installing the method to class
-    ;
-    MethodDefns : MethodDefns FDef
-                | FDef
-    ;
-    stmt :    ...
-              | Field ASSIGN Expr ';'
-              ...
-              | ID ASGN NEW '(' ID ')' ';'
-              | Field ASSIGN NEW ’(’ ID ’)’ ';'
-              | DELETE ’(’ Field ’)’ ';'
-    ;
+    Program         : TypeDefBlock ClassDefBlock GlobalDeclBlock FuncDefBlock MainBlock
+                    ;
 
-    Expr:     ...
-              | Field
-              | FieldFunction
-    ;
-    Field:    SELF '.' ID
-              |ID '.' ID   //This will not occur inside a class.
-              |Field '.' ID
-    ;
-    FieldFunction : SELF '.' ID '(' Arglist ')'
-                    |ID '.' ID '(' Arglist ')'   //This will not occur inside a class.
-                    |Field '.' ID '(' Arglist ')'
-    ;
-    Arglist: Arglist ',' Expr
-              |Expr
-              |
-    ;
+    ClassDefBlock   : CLASS ClassDefList ENDCLASS
+                    |
+                    ;
+    ClassDefList    : ClassDefList ClassDef
+                    | ClassDef
+                    ;
+
+    Classdef        : Cname '{'DECL Fieldlists MethodDecl ENDDECL MethodDefns '}'
+                    ;
+
+    Cname           : ID        {Cptr = Cinstall($1->Name,NULL);}
+                    | ID Extends ID {Cptr = Cinstall($1->Name,$3->Name);}
+                    ;
+
+    Fieldlists      : Fieldlists Fld
+                    |
+                    ;
+
+    Fld             : ID ID ';'  {Class_Finstall(Cptr,$1->Name,$2->Name);} //Installing the field to the class
+                    ;
+
+    MethodDecl      : MethodDecl MDecl
+                    | MDecl
+                    ;
+
+    MDecl           : ID ID '(' Paramlist ')' ';' {Class_Minstall(Cptr,$2->Name,Tlookup($1->Name),$4);}
+                                                //Installing the method to class
+                    ;
+
+    MethodDefns     : MethodDefns FDef
+                    | FDef
+                    ;
+
+    stmt            :    ...
+                    | Field ASSIGN Expr ';'
+                    ...
+                    | ID ASGN NEW '(' ID ')' ';'
+                    | Field ASSIGN NEW ’(’ ID ’)’ ';'
+                    | DELETE ’(’ Field ’)’ ';'
+                    ;
+
+    Expr            :     ...
+                    | Field
+                    | FieldFunction
+                    ;
+
+    Field           : SELF '.' ID
+                    | ID '.' ID   //This will not occur inside a class.
+                    | Field '.' ID
+                    ;
+
+    FieldFunction   : SELF '.' ID '(' Arglist ')'
+                    | ID '.' ID '(' Arglist ')'   //This will not occur inside a class.
+                    | Field '.' ID '(' Arglist ')'
+                    ;
+
+    ArgList         : Arglist ',' Expr
+                    |Expr
+                    |
+                    ;
     ```
 
 === "GDeclBlock"
