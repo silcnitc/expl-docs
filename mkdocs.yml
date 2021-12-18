@@ -5,6 +5,7 @@ site_description: Compiler Lab website for NIT Calicut
 theme:
   name: material
   logo: img/nitc-logo.png
+  custom_dir: overrides
   palette:
       - media: "(prefers-color-scheme: light)"
         scheme: default
@@ -151,3 +152,4 @@ nav:
   - Student Feedback:
     - Student Feedback: feedback/index.md
     - NIT-C Winter 2017: feedback/nitc-winter-2017.md
+    - NIT-C Winter 2020: feedback/nitc-winter-2020.md
