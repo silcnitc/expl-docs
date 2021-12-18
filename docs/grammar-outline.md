@@ -13,7 +13,7 @@ An outline for the ExpL grammar is given here. Calls to functions that update th
 
 === "TypeDefBlock"
 
-    ``` c++
+    ```c
     TypeDefBlock  : TYPE TypeDefList ENDTYPE
                   |
                   ;

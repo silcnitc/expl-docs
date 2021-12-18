@@ -133,7 +133,7 @@ An outline for the OExpL grammar is given here. Calls to functions that update t
 
 === "FDefBlock"
 
-    ```
+    ```c
     FDefList  : FDefBlock
               | FDefList FDefBlock
               ;

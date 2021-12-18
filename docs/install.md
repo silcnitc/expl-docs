@@ -42,7 +42,9 @@ Let us install XSM
 
 ### Step 1
 
-Download XSM Simulator : [Version 1](files/xsm_expl.tar.gz)
+Download XSM Simulator
+
+[Version 1 :octicons-download-16:](files/xsm_expl.tar.gz){ .md-button .md-button--primary }
 
 ### Step 2
 
