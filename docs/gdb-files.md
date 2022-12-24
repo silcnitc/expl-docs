@@ -1,0 +1,502 @@
+---
+title: "GDB Input Files"
+---
+
+## lex.l file
+
+```c
+%{
+  #include  "y.tab.h"
+  #include "tree.h"
+  int number;
+  char*temp;
+
+%}
+
+%%
+
+begin     {return begin;}
+end       {return END;}
+break     {return BREAK;}
+continue  {return CONTINUE;}
+read      {return READ;}
+write     {return WRITE;}
+then      {return then;}
+else      {return ELSE;}
+endif     {return endif;}
+if        {return IF;}
+do        {return DO;}
+endwhile  {return endwhile;}
+while     {return WHILE;}
+[0-9]+    {return NUM;}
+[a-z]+    {yylval.p=createTree(-1,tINT,yytext,tVAR,NULL,NULL,NULL); return ID;}
+"+"       {return PLUS;}
+"-"       {return MINUS;}
+"*"       {return MUL;}
+"/"       {return DIV;}
+"<="      {return LE;}
+">="      {return GE;}
+"<"       {return LT;}
+">"       {return GT;}
+"!="      {return NE;}
+"=="      {return EQ;}
+"="       {return ASSIGN;}
+";"       {return EOL;}
+[ \t]     {}
+[' ']     {}
+[()]      {return *yytext;}
+[\n]      {}
+.         {}
+
+
+%%
+
+int yywrap(void) {
+  return 1;
+}
+```
+
+## parser.y file
+
+```c
+%{
+  #include #include //#define YYSTYPE tnode*
+  #include "tree.h"
+  #include "tree.c"
+  extern struct tnode* idptr;
+  FILE* targetFile;
+  int yylex(void);
+  extern FILE *yyin;
+  extern char* yytext;
+%}
+
+%union{
+  struct tnode* p;
+}
+
+%token NUM PLUS MINUS MUL DIV ID begin END READ WRITE EOL IF then ELSE endif WHILE DO endwhile GT LT LE GE NE EQ ASSIGN BREAK CONTINUE
+
+%type expr Slist Stmt Breakstmt Continuestmt InputStmt OutputStmt AsgStmt Ifstmt Whilestmt ID
+
+%left PLUS MINUS
+%left MUL DIV
+%nonassoc GT LT LE GE EQ NE
+%%
+
+Program : begin Slist END EOL  {fprintf(targetFile,"%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\nMOV SP, 4121\n",0,2056,0,0,0,0,1,0);
+        //codeGen(targetFile,$2);
+        infixtoprefix(targetFile,$2);
+        printExit(targetFile);
+        return 0;
+        }
+  | begin END EOL  {printf("Empty program\n;");return 0;}
+  ;
+
+Slist : Slist Stmt    {$$=createTree(-1,-1,NULL,tCONNECT,$1,$2,NULL);}
+  | Stmt      {$$=$1;}
+  ;
+
+Stmt : InputStmt     {$$=$1;}
+  | OutputStmt     {$$=$1;}
+  | AsgStmt     {$$=$1;}
+  | Ifstmt    {$$=$1;}
+  | Whilestmt    {$$=$1;}
+  | Breakstmt    {$$=$1;}
+  | Continuestmt    {$$=$1;}
+  ;
+
+Breakstmt : BREAK EOL      {$$=createTree(-1,-1,NULL,tBREAK,NULL,NULL,NULL);}
+  ;
+
+Continuestmt : CONTINUE EOL    {$$=createTree(-1,-1,NULL,tCONTINUE,NULL,NULL,NULL);}
+  ;
+InputStmt : READ '(' ID ')' EOL  {$$=createTree(-1,-1,NULL,tREAD,$3,NULL,NULL);}
+  ;
+
+OutputStmt : WRITE '(' expr ')' EOL  {$$=createTree(-1,-1,NULL,tWRITE,$3,NULL,NULL);}
+  ;
+
+AsgStmt : ID ASSIGN expr EOL {$$ = createTree(-1,-1,NULL,tASSIGN,$1,$3,NULL);}
+  ;
+Ifstmt : IF '(' expr ')' then Slist ELSE Slist endif EOL  {$$=createTree(-1,-1,NULL,tIF,$3,$6,$8);}
+  | IF '(' expr ')' then Slist endif EOL    {$$=createTree(-1,-1,NULL,tIF,$3,$6,NULL);}
+  ;
+Whilestmt : WHILE '(' expr ')' DO Slist endwhile EOL    {$$=createTree(-1,-1,NULL,tWHILE,$3,$6,NULL);}
+  ;
+expr : expr PLUS expr    {$$ = createTree(-1,-1,"+",tADD,$1,$3,NULL);}
+   | expr MINUS expr    {$$ = createTree(-1,-1,"-",tSUB,$1,$3,NULL);}
+   | expr MUL expr  {$$ = createTree(-1,-1,"*",tMUL,$1,$3,NULL);}
+   | expr DIV expr  {$$ = createTree(-1,-1,"/",tDIV,$1,$3,NULL);}
+   | '(' expr ')'  {$$ = $2;}
+   | expr LT expr     {$$ = createTree(-1,-1,NULL,tLT,$1,$3,NULL);}
+   | expr GT expr     {$$ = createTree(-1,-1,NULL,tGT,$1,$3,NULL);}
+   | expr LE expr     {$$ = createTree(-1,-1,NULL,tLE,$1,$3,NULL);}
+   | expr GE expr     {$$ = createTree(-1,-1,NULL,tGE,$1,$3,NULL);}
+   | expr NE expr     {$$ = createTree(-1,-1,NULL,tNE,$1,$3,NULL);}
+   | expr EQ expr    {$$ = createTree(-1,-1,NULL,tEQ,$1,$3,NULL);}
+   | NUM      {$$ = createTree(atoi(yytext),tINT,NULL,tNUM,NULL,NULL,NULL);}
+   | ID      {$$=$1;}
+   ;
+
+%%
+
+yyerror(char const *s)
+{
+    printf("yyerror %s and %s",s,yytext);
+}
+
+
+int main(int argc, char*argv[]) {
+  targetFile=fopen("targetFile.xsm","w");
+  if(targetFile==NULL){
+    printf("file error\n");
+  }
+  yyin=fopen(argv[1],"r");
+  yyparse();
+  fclose(targetFile);
+  return 0;
+}
+```
+
+## infixtoprefix function
+
+```c
+void infixtoprefix(FILE* fp, struct tnode* root){
+  if(root!=NULL){
+    printf("%s ",root->symbol);
+    fprintf(fp,"%s ",root->symbol);
+    infixtoprefix(fp,root->left);
+    infixtoprefix(fp,root->right);
+  }
+}
+```
+
+## input file
+
+```
+abc+(bcd-efg)*hij
+```
+
+## tree.h file
+
+This is the header file for tree.c file
+
+```c
+#define tNUM 0
+#define tVAR 1
+#define tADD 2
+#define tSUB 3
+#define tMUL 4
+#define tDIV 5
+#define tREAD 6
+#define tWRITE 7
+#define tASSIGN 8
+#define tCONNECT 9
+#define tINT 10
+#define tLT 11
+#define tGT 12
+#define tLE 13
+#define tGE 14
+#define tNE 15
+#define tEQ 16
+#define tBOOL 17
+#define tWHILE 18
+#define tIF 19
+#define tBREAK 20
+#define tCONTINUE 21
+#define varLoc 4096
+#define SPLoc 4121
+
+typedef struct tnode {
+  int val;                             // value of a number for NUM nodes.
+  int type;                            // type of variable
+  char* symbol;                        // name of a variable for ID nodes
+  int nodetype;                        // information about non-leaf nodes - read/write/connector/+/* etc.
+  struct tnode *left, *right, *third;  // left and right branches
+} tnode;
+void printExit(FILE* targetFile);
+int getLabel();
+int getReg();
+void freeReg();
+void printRead(FILE* targetFile, int varAddr);
+void printWrite(FILE* targetFile, int regNum);
+int getVarAddr(struct tnode* root);
+int codeGen(FILE* fp, struct tnode* root);
+void infixtoprefix(FILE* fp, struct tnode* root);
+
+/*Create a node tnode*/
+struct tnode* createTree(int val, int type, char* c, int nodeType, struct tnode* l, struct tnode* r, struct tnode* third);
+```
+
+## tree.c file
+
+This file contains the helper functions for the yacc file, like the createTree(), infixtoprefix() etc.
+
+The yacc file imports the tree.c file and tree.h file
+
+```c
+int reg = 0;
+int label_no = 0;
+int stacktop[20];  // for continue
+int stackend[20];  // for break
+int stack1 = -1;   // for stacktop
+int stack2 = -1;   // for stackend
+struct tnode* createTree(int val, int type, char* c, int nodeType, struct tnode* l, struct tnode* r, struct tnode* third) {
+  switch (nodeType) {
+    case tADD:
+    case tSUB:
+    case tMUL:
+    case tDIV:
+      if (l->type != r->type || l->type != tINT) {
+        printf("\ntype mismatch error\n");
+        exit(0);
+      } else {
+        type = tINT;
+      }
+      break;
+    case tLT:
+    case tGT:
+    case tLE:
+    case tGE:
+    case tNE:
+    case tEQ:
+      if (l->type != r->type || l->type != tINT) {
+        printf("\ntype mismatch error\n");
+        exit(0);
+      } else {
+        type = tBOOL;
+      }
+      break;
+    case tASSIGN:
+      if (r->type != tINT || l->nodetype != tVAR) {
+        printf("\ntype mismatch error\n");
+        exit(0);
+      }
+      break;
+    case tWHILE:
+    case tIF:
+      if (l->type != tBOOL) {
+        printf("\ntype mismatch error\n");
+        exit(0);
+      }
+      break;
+  }
+  struct tnode* temp;
+  temp = (struct tnode*)malloc(sizeof(struct tnode));
+  temp->val = val;
+  temp->type = type;
+  temp->symbol = c;
+  temp->nodetype = nodeType;
+  temp->left = l;
+  temp->right = r;
+  temp->third = third;
+  return temp;
+}
+
+void printExit(FILE* targetFile) {
+  fprintf(targetFile, "INT 10\n");
+}
+int getLabel() {
+  int curr_label = label_no;
+  label_no++;
+  return curr_label;
+}
+
+int getReg() {
+  int r = reg;
+  reg++;
+  if (r > 20) {
+    printf("out of registers\n");
+    exit(1);
+  }
+  return r;
+}
+void freeReg() {
+  reg--;
+  if (reg < 0) {
+    reg = 0;
+  }
+}
+void printRead(FILE* targetFile, int varAddr) {
+  int r = getReg();
+  fprintf(targetFile, "MOV R%d, \"Read\"\nPUSH R%d\nMOV R%d, -1\nPUSH R%d\nMOV R%d,%d\nPUSH R%d\nPUSH R%d\nPUSH R%d\nCALL 0\nPOP R%d\nPOP R%d\nPOP R%d\nPOP R%d\nPOP R%d\n", r, r, r, r, r, varAddr, r, r, r, r, r, r, r, r);
+  freeReg();
+}
+
+void printWrite(FILE* targetFile, int regNum) {
+  int r = getReg();
+  fprintf(targetFile, "MOV R%d, \"Write\"\nPUSH R%d\nMOV R%d, -2\nPUSH R%d\nMOV R%d,R%d\nPUSH R%d\nPUSH R%d\nPUSH R%d\nCALL 0\nPOP R%d\nPOP R%d\nPOP R%d\nPOP R%d\nPOP R%d\nBRKP\n", r, r, r, r, r, regNum, r, r, r, r, r, r, r, r);
+  freeReg();
+}
+
+int getVarAddr(struct tnode* root) {
+  char* symbol = root->symbol;
+  int varAddr = 4096 + (symbol[0] - 'a');
+  return varAddr;
+}
+void infixtoprefix(FILE* fp, struct tnode* root) {
+  if (root != NULL) {
+    printf("%s ", root->symbol);
+    fprintf(fp, "%s ", root->symbol);
+    infixtoprefix(fp, root->left);
+    infixtoprefix(fp, root->right);
+  }
+}
+int codeGen(FILE* fp, struct tnode* root) {
+  int r, sourceReg, destReg, varAddr, label_1, label_2, label_3;
+  char* symbol;
+  if (root == NULL) return -1;
+  switch (root->nodetype) {
+    case tCONNECT:
+      codeGen(fp, root->left);
+      codeGen(fp, root->right);
+      return -1;
+    case tREAD:
+      if (root->left == NULL) {
+        printf("\ninvalid read stmt\n");
+        exit(0);
+      }
+      symbol = (root->left)->symbol;
+      varAddr = 4096 + (symbol[0] - 'a');
+      // printf("var addr = %d\n",varAddr);
+      printRead(fp, varAddr);
+      return -1;
+    case tNUM:
+      r = getReg();
+      fprintf(fp, "MOV R%d, %d\n", r, root->val);
+      return r;
+    case tVAR:
+      r = getReg();
+      symbol = root->symbol;
+      varAddr = 4096 + (symbol[0] - 'a');
+      fprintf(fp, "MOV R%d,[%d]\n", r, varAddr);
+      return r;
+    case tWRITE:
+      r = codeGen(fp, root->left);
+      printWrite(fp, r);
+      return -1;
+    case tASSIGN:
+      sourceReg = getVarAddr(root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "MOV [%d],R%d\n", sourceReg, destReg);
+      return -1;
+    case tADD:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "ADD R%d,R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tSUB:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "SUB R%d,R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tMUL:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "MUL R%d,R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tDIV:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "DIV R%d,R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tLT:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "LT R%d, R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tGT:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "GT R%d, R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tLE:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "LE R%d, R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tGE:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "GE R%d, R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tNE:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "NE R%d, R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tBREAK:
+      if (stack2 < 0) {
+        printf("\ninvalid Break statement\n");
+        exit(0);
+      }
+      fprintf(fp, "JMP L%d\n", stackend[stack2]);
+      return -1;
+    case tCONTINUE:
+      if (stack1 < 0) {
+        printf("\ninvalid continue statement\n");
+        exit(0);
+      }
+      fprintf(fp, "JMP L%d\n", stacktop[stack1]);
+      return -1;
+    case tEQ:
+      sourceReg = codeGen(fp, root->left);
+      destReg = codeGen(fp, root->right);
+      fprintf(fp, "EQ R%d, R%d\n", sourceReg, destReg);
+      freeReg();
+      return sourceReg;
+    case tWHILE:
+      label_1 = getLabel();
+      label_2 = getLabel();
+      fprintf(fp, "L%d:\n", label_1);  // Place the first label here.
+      stack1++;
+      stacktop[stack1] = label_1;
+      stack2++;
+      stackend[stack2] = label_2;
+      sourceReg = codeGen(fp, root->left);
+      fprintf(fp, "JZ R%d, L%d\n", sourceReg, label_2);
+      codeGen(fp, root->right);
+      fprintf(fp, "JMP L%d\n", label_1);  // return to the beginning of the loop.
+      fprintf(fp, "L%d:\n", label_2);     // Place the second label here
+      stack1--;
+      stack2--;
+      return -1;
+    case tIF:
+      // label_1 = getLabel();
+      if (root->third != NULL)
+        label_2 = getLabel();
+      label_3 = getLabel();
+      // fprintf (fp, "L%d:\n", label_1); // Place the first label here.
+      // if
+      sourceReg = codeGen(fp, root->left);
+      if (root->third != NULL)
+        fprintf(fp, "JZ R%d, L%d\n", sourceReg, label_2);
+      else
+        fprintf(fp, "JZ R%d, L%d\n", sourceReg, label_3);
+      // then
+      codeGen(fp, root->right);
+      fprintf(fp, "JMP L%d\n", label_3);  // jump to endif.
+      // else
+      if (root->third != NULL) {
+        fprintf(fp, "L%d:\n", label_2);  // Place the second label here
+        // else
+        codeGen(fp, root->third);
+        fprintf(fp, "JMP L%d\n", label_3);  // jump to endif.
+      }
+      fprintf(fp, "L%d:\n", label_3);  // Place the third label here
+      return -1;
+    default:
+      printf("\nsome error in codegen fn : %d\n", root->nodetype);
+      exit(0);
+  }
+}
+```

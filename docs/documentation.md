@@ -9,6 +9,7 @@ hide:
 - [Using `lex`](./lex.md)
 - [Using `YACC`](./yacc.md)
 - [Using `YACC` with `lex`](./ywl.md)
+- [Using `GDB`](./gdb.md)
 - [ExPL Specification](./expl.md)
 - [ExpL Grammar Outline](./grammar-outline.md)
 - [OExpL Specification](./oexpl-specification.md)

@@ -239,6 +239,9 @@ This is explained in the [label translation documentation](../label-translation.
 !!! question "Exercise"
     Add `repeat-until` and `do-while` statements to the language with standard semantics.
 
+!!! question "Reading Exercise"
+    Please read the [GNU Debugger (GDB) tutorial](../gdb.md) ,before proceeding to the next stage for learning the GDB debugger.
+
 !!! note
     Often in practice, programming languages allow a program to be split into different functions,
     written in different source files. In such cases, each file is separately compiled and the
