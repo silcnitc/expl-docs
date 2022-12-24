@@ -1,7 +1,6 @@
-TEST PROGRAMS  
-
 TEST PROGRAMS
--------------
+
+## TEST PROGRAMS
 
 #### Test Program 1 : Bubblesort (iterative)
 
@@ -15,6 +14,8 @@ This program test the iteration, conditional and arrays.
 
 The code for the test progam can be found [here](./test-program-01.md)
 
+---
+
 #### Test Program 2 : [Extended Euclid algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm) (iterative version and with functions)
 
 This test program calculates the GCD (Greatest Common Divisor) of two numbers along with Bezout co-efficients. (iterative version)
@@ -26,6 +27,8 @@ This test program calculates the GCD (Greatest Common Divisor) of two numbers al
 This program test the iteration, parameter passing, passing of user-defined datatype as return value of function.
 
 The code for the test progam can be found [here](./test-program-02.md)
+
+---
 
 #### Test Program 3 : Bubblesort (recursive)
 
@@ -40,6 +43,8 @@ This program test the recursion, conditional and arrays.
 
 The code for the test progam can be found [here](./test-program-03.md)
 
+---
+
 #### Test Program 4 : [Extended Euclid algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm) (recursive)
 
 This test program calculates the GCD (Greatest Common Divisor) of two numbers along with Bezout co-efficients. (recursive version)
@@ -51,6 +56,8 @@ This test program calculates the GCD (Greatest Common Divisor) of two numbers al
 This program test the recursion, parameter passing, passing of user-defined datatype as return value of function.
 
 The code for the test progam can be found [here](./test-program-04.md)
+
+---
 
 #### Test Program 5 : Factorial (recursive)
 
@@ -64,6 +71,8 @@ This program test the working of recursive functions.
 
 The code for the test progam can be found [here](./test-program-05.md)
 
+---
+
 #### Test Program 6 : Quicksort (recursive)
 
 This test program reads elements into an array and sorts them using the classic quicksort algorithm. (recursive version)
@@ -76,6 +85,8 @@ This test program reads elements into an array and sorts them using the classic 
 This program test the recursion, conditional and arrays.
 
 The code for the test progam can be found [here](./test-program-06.md)
+
+---
 
 #### Test Program 7 : Constant Function
 
@@ -92,6 +103,8 @@ This program test the recursion, parameter passing, calling a function inside th
 
 The code for the test progam can be found [here](./test-program-07.md)
 
+---
+
 #### Test Program 8 : Linked List
 
 This test program reads elements into a linked list and prints them.
@@ -103,6 +116,8 @@ This test program reads elements into a linked list and prints them.
 This program test the working of dynamic memory allocation functions like Initialize(), Alloc() and Free().
 
 The code for the test progam can be found [here](./test-program-08.md)
+
+---
 
 #### Test Program 9 : Binary Search Tree
 
@@ -116,6 +131,8 @@ This program test the iteration, recursion, conditional, arrays and passing of u
 
 The code for the test progam can be found [here](./test-program-09.md)
 
+---
+
 #### Test Program 10 :Fibonacci Series
 
 This program prints the nth fibonacci number.
@@ -127,6 +144,8 @@ This program prints the nth fibonacci number.
 This program test the recursion, conditional.
 
 The code for the test progam can be found [here](./test-program-10.md)
+
+---
 
 #### Test Program 11 :Extended Euclid Algorithm using linkedlist
 
@@ -140,6 +159,8 @@ This program test the iteration, recursion, conditional, passing of user-defined
 
 The code for the test progam can be found [here](./test-program-11.md)
 
+---
+
 #### Test Program 12 :Extended Euclid Algorithm (Iterative version without functions)
 
 This test program calculates the GCD (Greatest Common Divisor) of two numbers along with Bezout co-efficients. (iterative version)
@@ -151,5 +172,3 @@ This test program calculates the GCD (Greatest Common Divisor) of two numbers al
 This program tests the iteration.
 
 The code for the test progam can be found [here](./test-program-12.md)
-
-

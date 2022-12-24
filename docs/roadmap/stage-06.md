@@ -23,7 +23,7 @@ dynamically. We will discuss how dynamic memory allocation can be achieved in th
 See the [ExpL language specification](../expl.md) for an informal description of the language.
 It is suggested that you design your own grammar using the outline
 provided [here](../grammar-outline.md) as a reference.
-The following [link](../testprograms/index.md#test8) provide examples
+The following [link](../testprograms/index.md#test-program-8--linked-list) provide examples
 of ExpL programs containing user defined types.
 
 We will now take up the front end - semantic analysis and AST representation - before proceeding
@@ -278,8 +278,8 @@ that can arise when variable sized allocation is done.
 
 Check your implementation with the following test cases:
 
-- [Test Program 1: Linked List](../testprograms/test-program-08.md)
-- [Test Program 2: Binary Search Tree](../testprograms/test-program-09.md)
-- [Test Program 3: Extended Euclid Algorithm using linkedlist](../testprograms/test-program-11.md)
-- [Test Program 4: Extended Euclid Algorithm using Userdefined types](../testprograms/test-program-04.md)
+- [Test Program 1: Linked List](../testprograms/index.md#test-program-8--linked-list)
+- [Test Program 2: Binary Search Tree](../testprograms/index.md#test-program-9--binary-search-tree)
+- [Test Program 3: Extended Euclid Algorithm using linkedlist](../testprograms/index.md#test-program-11-extended-euclid-algorithm-using-linkedlist)
+- [Test Program 4: Extended Euclid Algorithm using Userdefined types](../testprograms/index.md#test-program-4--extended-euclid-algorithm-recursive)
 

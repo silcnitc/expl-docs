@@ -77,6 +77,9 @@ nav:
         - Using LEX: lex.md
         - Using YACC: yacc.md
         - Using YACC with LEX: ywl.md
+        - GDB:
+          - Using GDB : gdb.md
+          - GDB Input Files : gdb-files.md
         - Label Translation: label-translation.md
         - XSM Simulator Installation: install.md
         - XSM Simulator Instructions: xsmusagespec.md

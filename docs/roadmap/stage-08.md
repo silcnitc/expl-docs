@@ -185,10 +185,10 @@ before proceeding further.**
 
 Check your implementation with the following test cases :
 
-- [Test Program 1: Testing the runtime binding of the variables of a class](../oexpl-testprograms.md#test4)
-- [Test Program 2: Testing the correct set up of the virtual function table](../oexpl-testprograms.md#test5)
-- [Test Program 3: Testing the implementation of inheritance and subtype polymorphism](../oexpl-testprograms.md#test6)
-- [Test Program 4: Testing the implementation of inheritance and subtype polymorphism](../oexpl-testprograms.md#test7)
+- [Test Program 1: Testing the runtime binding of the variables of a class](../oexpl-testprograms.md#test-program-4)
+- [Test Program 2: Testing the correct set up of the virtual function table](../oexpl-testprograms.md#test-program-5)
+- [Test Program 3: Testing the implementation of inheritance and subtype polymorphism](../oexpl-testprograms.md#test-program-6)
+- [Test Program 4: Testing the implementation of inheritance and subtype polymorphism](../oexpl-testprograms.md#test-program-7)
 
 !!! question "Exercise 1"
     This exercise asks you to add a limited form of **function overloading** support to the language.

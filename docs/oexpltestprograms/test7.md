@@ -4,7 +4,7 @@ hide:
     - toc
 ---
 
-#Test program 7
+# Test program 7
 
 This program tests the implementation of inheritance and subtype polymorphism.
 
