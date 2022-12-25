@@ -7,7 +7,7 @@ title: 'ATTRIBUTE SYNTHESIS'
 
 In the [last section](yacc.md#navpassingvalues) of the YACC documentation we noted that it is possible to pass values associated with tokens from yylex() to yyparse(). We had described the term 'attribute' as a value associated with a token. YACC uses yylval to facilitate passing values from the lexical analyzer to the parser. In this document we will explore attribute values for non-terminals and how these attributes are handled by YACC internally. We will also be exploring the usage of YYSTYPE to define custom attribute types.
 
-yylval is a global variable of the default return type [YYSTYPE](#navyystype) declared by YACC in y.tab.c. In the YACC documentation, we had seen an [example](yacc.md#navexy1) which illustrates the passing of attributes from yylex() to yyparse(). If the programmer were to use LEX to generate yylex(), then the attributes will have to be passed to yyparse() in a similar fashion i.e, using yylval (as shown below). In the LEX program, the yylex() simply returns the token by its name while the associated attribute is assigned to yylval which can be accessed by yyparse(). Note that, for LEX to return a token, the token must be declared in the declarations section of the YACC program. The following example is a LEX program which returns a token DIGIT when it finds a string matching the "number" pattern.
+yylval is a global variable of the default return type [YYSTYPE](#yystype) declared by YACC in y.tab.c. In the YACC documentation, we had seen an [example](yacc.md#navexy1) which illustrates the passing of attributes from yylex() to yyparse(). If the programmer were to use LEX to generate yylex(), then the attributes will have to be passed to yyparse() in a similar fashion i.e, using yylval (as shown below). In the LEX program, the yylex() simply returns the token by its name while the associated attribute is assigned to yylval which can be accessed by yyparse(). Note that, for LEX to return a token, the token must be declared in the declarations section of the YACC program. The following example is a LEX program which returns a token DIGIT when it finds a string matching the "number" pattern.
 
 ```c
 %{
@@ -75,7 +75,7 @@ In addition to values associated with terminal symbols, YACC also allows values 
 ```c
 X: B C D
 ```
-
+<a name="navstackvar"></a>
 The value of a symbol 'B' can be referred to by $1, value of 'B' can be referred to by $2 and value of symbol 'C' can be referred to by $3. It is also possible to assign a value to the non-terminal which occurs as the head of a rule's production using $$. A value can be assigned to the symbol X using $$. Let's call these the _attribute stack variables_.
 
 Consider the problem of displaying two numbers in an input stream if they occur as a pair separated by a comma. Also suppose that the numbers must be displayed ONLY after a pair is found. Let us look at a YACC program that solves the problem.

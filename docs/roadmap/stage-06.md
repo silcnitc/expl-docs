@@ -112,7 +112,7 @@ user-defined types right now. This will be discussed in Part II.
 We must now discuss how to use the symbol table and type table for completing semantic
 analysis of the input program. Let us look at an example.
 
-Consider the declaration of the type _markList_ in the example [above](#nav-marklist).
+Consider the declaration of the type _markList_ in the example above.
 The language now permits statements like:
 
 ```
@@ -269,7 +269,7 @@ that can arise when variable sized allocation is done.
 
 !!! question "Exercise 2: (Optional)"
     Modify _Alloc()_ and _Free()_ library functions to implement the Buddy memory allocator
-    described [here](../run_data_structures/heap.md#nav-buddy-allocation). You will have to modify
+    described [here](../run_data_structures/heap.md#buddy-memory-allocation-optional). You will have to modify
     _Initialize()_ appropriately. The buddy system allocator is too complex to write in assembly
     language. Hence write them in ExpL itself and modify your label translation scheme
     to generate target addresses correctly.

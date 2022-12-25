@@ -6,7 +6,7 @@ title: 'YACC'
 
 ## Introduction to YACC
 
-YACC (Yet Another Compiler Compiler) is a tool used to generate a parser. This document is a tutorial for the use of YACC to generate a parser for ExpL. YACC translates a given [Context Free Grammar (CFG)](#navcfg) specifications (input in input\_file.y) into a C implementation (y.tab.c) of a corresponding [push down automaton](http://en.wikipedia.org/wiki/Pushdown_automaton) (i.e., a finite state machine with a stack). This C program when compiled, yields an executable parser.
+YACC (Yet Another Compiler Compiler) is a tool used to generate a parser. This document is a tutorial for the use of YACC to generate a parser for ExpL. YACC translates a given [Context Free Grammar (CFG)](#context-free-grammar-cfg) specifications (input in input\_file.y) into a C implementation (y.tab.c) of a corresponding [push down automaton](http://en.wikipedia.org/wiki/Pushdown_automaton) (i.e., a finite state machine with a stack). This C program when compiled, yields an executable parser.
 
 ![](img/yacc_1.png)
 
@@ -20,7 +20,7 @@ A parser is a program that checks whether its input (viewed as a stream of token
 
 ### Context Free Grammar (CFG)
 
-A context free grammar is defined by a four tuple (N,T,P,S) - a set N of non-terminals, a set T of terminals (in our project, these are the [tokens](lex.md#navintro) returned by the lexical analyzer and hence we refer to them as tokens frequently), set P of productions and a start variable S. Each production consists of a non-terminal on the left side (head part) and a sequence of tokens and non-terminals (of zero or more length) on the right side (body part). We will explore productions further in detail [later](#navprod) in this documentation. For more about context free grammars refer to this [wiki](https://en.wikipedia.org/wiki/Context-free_grammar) .
+A context free grammar is defined by a four tuple (N,T,P,S) - a set N of non-terminals, a set T of terminals (in our project, these are the [tokens](lex.md#navintro) returned by the lexical analyzer and hence we refer to them as tokens frequently), set P of productions and a start variable S. Each production consists of a non-terminal on the left side (head part) and a sequence of tokens and non-terminals (of zero or more length) on the right side (body part). We will explore productions further in detail [later](#productions) in this documentation. For more about context free grammars refer to this [wiki](https://en.wikipedia.org/wiki/Context-free_grammar) .
 
 **Example:** This example is an Infix to Postfix converter implemented using YACC. The rules part of the YACC program has been shown below:
 
@@ -61,13 +61,13 @@ I: 5$
 O: NUM1 error
 ```
 
-The [example](#navgramex1) above demonstrates the specification of rules in YACC. In this example there are five rules. Each rule has a _production part_ and an _action part_ .The action part consists of C statements enclosed within a { and }. Each production part has a _head_ and a _body_ separated by a '**:**'. For example, the first rule above has production part with start as the head and expr '\\n' as the body. The action part for the rule is {exit(1);}. The parser reads the input sequentially and tries to find a pattern match with the body part of each production. When it finds a matching production, the action part of the corresponding rule is executed. The process is repeated till the end of the input.
+The example above demonstrates the specification of rules in YACC. In this example there are five rules. Each rule has a _production part_ and an _action part_ .The action part consists of C statements enclosed within a { and }. Each production part has a _head_ and a _body_ separated by a '**:**'. For example, the first rule above has production part with start as the head and expr '\\n' as the body. The action part for the rule is {exit(1);}. The parser reads the input sequentially and tries to find a pattern match with the body part of each production. When it finds a matching production, the action part of the corresponding rule is executed. The process is repeated till the end of the input.
 
 In the above example, when the input 1+5 is given to the parser, it attempts to match the input with the body of the production of the first rule. When the input has been parsed completely and correctly matched with the start production start: expr '\\n' the parser executes the action exit(1);. The statements printf("NUM "); and printf("+ "); are executed as result of the input being matched with the productions expr: DIGIT and expr: expr '+' expr respectively. If the parser fails to find any matching body part, it invokes a special yyerror() function. In our example, the yyerror() function is programmed to print the message “error”.
 
 ### yyparse()
 
-The `y.tab.c` file contains a function yyparse() which is an implementation (in C) of a [push down automaton](http://en.wikipedia.org/wiki/Pushdown_automaton). yyparse() is responsible for parsing the given input file. The function yylex() is invoked by yyparse() to read tokens from the input file. Click [here](#navexy0al) to view an example of yylex() definition. Note that the yyparse() function is automatically generated by YACC in the y.tab.c file. Although YACC declares yylex() in the y.tab.c file, it does not generate the definition for yylex(). Hence the yylex() function definition has to be supplied by you (either directly by defining yylex() in the _auxiliary functions_ section (explained in the next section) or using a lexical analyzer generator like LEX). Each invocation of yylex() must return the next token (from the input steam) to yyparse(). The action corresponding to a production is executed by yyparse() only after sufficient number of tokens has been read (through repeated invocations of yylex()) to get a complete match with the body of the production.
+The `y.tab.c` file contains a function yyparse() which is an implementation (in C) of a [push down automaton](http://en.wikipedia.org/wiki/Pushdown_automaton). yyparse() is responsible for parsing the given input file. The function yylex() is invoked by yyparse() to read tokens from the input file. Click [here](#navexy0) to view an example of yylex() definition. Note that the yyparse() function is automatically generated by YACC in the y.tab.c file. Although YACC declares yylex() in the y.tab.c file, it does not generate the definition for yylex(). Hence the yylex() function definition has to be supplied by you (either directly by defining yylex() in the _auxiliary functions_ section (explained in the next section) or using a lexical analyzer generator like LEX). Each invocation of yylex() must return the next token (from the input steam) to yyparse(). The action corresponding to a production is executed by yyparse() only after sufficient number of tokens has been read (through repeated invocations of yylex()) to get a complete match with the body of the production.
 
 ## The structure of YACC programs
 
@@ -130,23 +130,23 @@ The following example shows an abstract outline of the structure of the rules pa
 %%
 ```
 
-The rules in our example can be found [here](#navexy0r)
+The rules in our example can be found [here](#navexy0)
 
 #### Productions
 
-Each production consists of a production head and a production body. Consider a production from our [example](#navexy0r):
+Each production consists of a production head and a production body. Consider a production from our [example](#navexy0):
 
 ```
 expr : expr '+' expr
 ```
 
-The expr on the LHS of the **:** in the production is called the _head_ of the production and the expr '+' expr on the RHS of the : is called the _body_ of the production. In the above example, '+' is a terminal (token) and expr is a non-terminal. Users can give name to a token. (for instance we can give the name 'PLUS' to the token '+'). In such cases, the names must be defined in the declarations section. For example have a look at the definition of the token DIGIT [here](#navexy0yd). The head of a production is always a non-terminal. Every non-terminal in the grammar must appear in the head part of at least one production.
+The expr on the LHS of the **:** in the production is called the _head_ of the production and the expr '+' expr on the RHS of the : is called the _body_ of the production. In the above example, '+' is a terminal (token) and expr is a non-terminal. Users can give name to a token. (for instance we can give the name 'PLUS' to the token '+'). In such cases, the names must be defined in the declarations section. For example have a look at the definition of the token DIGIT [here](#navexy0). The head of a production is always a non-terminal. Every non-terminal in the grammar must appear in the head part of at least one production.
 
 Note that a non-terminal in the head part of a production may have one or more production bodies separated by a “|”. Consider the non-terminal expr in our [example](#navexy0). The non-terminal has four production bodies expr '+' expr , expr '\*' expr , '(' expr ')' and DIGIT. The first production body has an associated print action op\_printf("+") and the second production body has an associated action op\_print("\*"). yyparse() executes the action only when the body expr '+' expr has been matched with the input. The action part of a single production may have several statements of C code.
 
 #### Actions
 
-The action part of a rule consists of C statements enclose within a '{' and '}'. These statements are executed when the input is matched with the body of a production and a _reduction_ takes place. The notion of a _reduction_ will be explained later. From the [example](#navexy0r) below, consider the following rule:
+The action part of a rule consists of C statements enclose within a '{' and '}'. These statements are executed when the input is matched with the body of a production and a _reduction_ takes place. The notion of a _reduction_ will be explained later. From the [example](#navexy0) below, consider the following rule:
 
 expr: DIGIT {printf("NUM%d ",pos);}
 
@@ -154,10 +154,10 @@ In this rule, when the input matches with the body of the production DIGIT, it i
 
 #### Auxiliary Functions
 
-The Auxiliary functions section contains the definitions of three mandatory functions main(), yylex() and yyerror(). You may wish to add your own functions (depending on the the requirement for the application) in the y.tab.c file. Such functions are written in the auxiliary functions section. The [main()](#navexy0al) function must invoke [yyparse()](#navexy0al) to parse the input. You will need to write your supporting functions later in this project.
+The Auxiliary functions section contains the definitions of three mandatory functions main(), yylex() and yyerror(). You may wish to add your own functions (depending on the the requirement for the application) in the y.tab.c file. Such functions are written in the auxiliary functions section. The [main()](#navexy0) function must invoke [yyparse()](#navexy0) to parse the input. You will need to write your supporting functions later in this project.
 
 **Example: intopost.y**
-
+<a name="navexy0"></a>
 ```c
 %{
 /*** Auxiliary declarations section ***/
@@ -190,7 +190,6 @@ expr: expr '+' expr     {print_operator('+');}
     ;
 
 %%
-
 
 /*** Auxiliary functions section ***/
 
@@ -275,8 +274,8 @@ The input to be parsed, which is a sequence of terminal symbols, is stored in an
 
 The parser works by repeatedly performing the following actions :
 
-1. Read the next terminal symbol from the input and push it into the stack and removing it from the input. This operation is called a shift. (The shift operation will be explained in detail [later](#navparseact).)
-2. Do some conditional operations on the stack. These operations are called reductions. Not every iteration may involve reductions. (Reductions will be explained in detail [later](#navparseact).)
+1. Read the next terminal symbol from the input and push it into the stack and removing it from the input. This operation is called a shift. (The shift operation will be explained in detail later.)
+2. Do some conditional operations on the stack. These operations are called reductions. Not every iteration may involve reductions. (Reductions will be explained in detail later.)
 3. Until an error is encountered or the input is successfully parsed.
 
 Parsing ends successfully when the input buffer is empty (except for the end-marker '$') and the stack contains nothing but the '$' followed by the start symbol of the grammar. Error condition occurs when the input does not belong to the language of the grammar and the parser detects the same. We will look at error conditions later.
@@ -370,7 +369,7 @@ Now, the parser can apply Production 4 and _reduce_ the handle '3' on the top of
 (6) STACK: $ expr + expr   I/P BUFFER: * ( 4 + 5 ) $
 ```
 
-At this point there is a further reduction possible using Production 1. However, the “valid” action here is not to perform the reduction, but shift the next input to the stack. The reason being that '\*' has higher precedence over '+'. (similar issues occur with associativity of operators). Unless the parser is somehow is informed about what the correct action is (shift/reduce), under every such situation, the correct precedence/associativity may not be respected. For the time being, it is sufficient to understand that there are ways by which the user can force the parser to act in the right way in most practical situations, particularly when using a parser generator like YACC. Hence we hide these issues for now and assume that the parser is somehow capable of finding the “valid” actions. (Some more details on how this will be done will be explained in the [later](#navconflict) sections.) Hence, the next action is a shift.
+At this point there is a further reduction possible using Production 1. However, the “valid” action here is not to perform the reduction, but shift the next input to the stack. The reason being that '\*' has higher precedence over '+'. (similar issues occur with associativity of operators). Unless the parser is somehow is informed about what the correct action is (shift/reduce), under every such situation, the correct precedence/associativity may not be respected. For the time being, it is sufficient to understand that there are ways by which the user can force the parser to act in the right way in most practical situations, particularly when using a parser generator like YACC. Hence we hide these issues for now and assume that the parser is somehow capable of finding the “valid” actions. (Some more details on how this will be done will be explained in the [later](#conflicts-in-parsing-using-yacc) sections.) Hence, the next action is a shift.
 
 ```
 (7) STACK: $ expr + expr *   I/P BUFFER: ( 4 + 5 )$
@@ -443,7 +442,7 @@ There are several variants of shift-reduce parsing like the LR(1), SLR(1) and LA
 Infix to Postfix program
 ------------------------
 
-When `yacc_file.y` is fed to YACC, it generates a `y.tab.c` file. When compiled, this program yields a [parser](#navintro). The generated parser uses shift-reduce parsing to parse the given input. Yacc copies the C declarations (in the Declaration section of input\_file.y) and all the auxiliary functions (in the Auxiliary functions section of input\_file.y) directly into y.tab.c without any modification. In addition to these, YACC generates the definition of yyparse() in `y.tab.c`.
+When `yacc_file.y` is fed to YACC, it generates a `y.tab.c` file. When compiled, this program yields a [parser](#introduction-to-yacc). The generated parser uses shift-reduce parsing to parse the given input. Yacc copies the C declarations (in the Declaration section of input\_file.y) and all the auxiliary functions (in the Auxiliary functions section of input\_file.y) directly into y.tab.c without any modification. In addition to these, YACC generates the definition of yyparse() in `y.tab.c`.
 
 It is important to understand that, y.tab.c contains the following :
 
@@ -454,6 +453,7 @@ It is important to understand that, y.tab.c contains the following :
 Recall our [infix to postfix program](#navexy0).
 
 Here is a Sample Input and Output:
+<a name="navsam1">
 
 ```
 I: 2+3*(4+5)

@@ -137,9 +137,9 @@ Once the code is written, _lex.yy.c_ maybe generated using the command _lex "fil
 
 The following variables are offered by LEX to aid the programmer in designing sophisticated lexical analyzers. These variables are accessible in the LEX program and are automatically declared by LEX in _lex.yy.c_.
 
-- [yyin](#navyyin)
-- [yytext](#navyytext)
-- [yyleng](#navyyleng)
+- [yyin](#yyin)
+- [yytext](#yytext)
+- [yyleng](#yyleng)
 
 ### `yyin`
 

@@ -84,7 +84,7 @@ The structure of Global Symbol Table(GST) is as follows:
 
 Arglist is used to store information regarding the types and names of the arguements. ArgStruct has the following structure.
 
-Read about ASTNode [here](#nav-abstract-syntax-tree).
+Read about ASTNode [here](#abstract-syntax-tree).
 
 ###### Associated Methods
 
@@ -114,7 +114,7 @@ In addition to the global symbol table, the ExpL compiler maintains a separate l
 
 Arrays cannot be local variables, so we don't need to store the size of a variables. Also nested functions are not allowed in ExpL, so we don't require fbinding and arglist as in Gsymbol. The LST is formed for the Local Declaration Section in the same way GST was created for the Global declaration section.
 
-Memory is allocated for local variables of a function from a seperate memory area called the [stack](#nav-stack). Hence, the binding for a local variable is the relative address of the variable with respect to the base of the [**Activation Record**](#). The [**Base Pointer**](#) points to the base of an activation record of a function. The binding is added to the Base Pointer to obtain the address of variable in stack. This will be explained in detail later.
+Memory is allocated for local variables of a function from a seperate memory area called the [stack](#stack). Hence, the binding for a local variable is the relative address of the variable with respect to the base of the [**Activation Record**]. The [**Base Pointer**] points to the base of an activation record of a function. The binding is added to the Base Pointer to obtain the address of variable in stack. This will be explained in detail later.
 
 ### Abstract Syntax Tree
 

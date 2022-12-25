@@ -2,17 +2,6 @@
 title: 'ExpL Specification'
 ---
 
-# ExpL Specification
-
-* [Introduction](#nav-intro)
-* [Supported data types](#nav-data-types)
-* [General Program Structure](#nav-general-program-structure)
-* [Statements and Expressions](#nav-stmts-and-exprs)
-* [Dynamic Memory Allocation](#nav-dynamic-memory-allocation)
-* [Parameter passing](#nav-fun-par-passing)
-* [Sample Programs](#nav-sample-programs)
-* [Appendix](#nav-appendix)
-
 Introduction
 ------------
 

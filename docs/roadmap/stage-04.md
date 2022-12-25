@@ -199,6 +199,7 @@ The next variable, b can be bound to the address 4106.
     ```
     Test your implementation with a program for multiplying two `n x n` matrices.
 
+<a name="ex2"></a>
 !!! question "Exercise 2"
     Permit `pointer type` variables as in the following declaration as in the C programming language.
     ```

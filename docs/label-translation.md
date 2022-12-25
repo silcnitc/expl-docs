@@ -70,7 +70,7 @@ The code generated after the [`codeGen()`](./codegen.md) phase is shown in the f
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 1em;">
     <div class="highlight">
-    <h5>Figure 1: Assembly Code Before Label Translation</h5>
+    <h5 id="fig1">Figure 1: Assembly Code Before Label Translation</h5>
     <pre id="__code_1">
         <span></span>
         <code>
@@ -269,7 +269,7 @@ The code generated after the [`codeGen()`](./codegen.md) phase is shown in the f
     </pre>
     </div>
     <div class="highlight">
-    <h5>Figure 2: Assembly Code after Label Translation</h5>
+    <h5 id="fig2">Figure 2: Assembly Code after Label Translation</h5>
         <pre class="__code_2">
         <span></span>
         <code>
