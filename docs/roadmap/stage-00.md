@@ -30,9 +30,10 @@ the compiler design software tools LEX and YACC. Follow the instructions below.
 
 4. Complete the [Using YACC with LEX tutorial](../ywl.md).
 
-    The next step is to understand the target machine envionment. You must carefully go through
-    the following tutorial before proceeding to the next stage of this roadmap.
+5. Complete the [GDB Tutorial](../gdb.md)
 
-5. Complete the [XSM execution environment tutorial](../xsm-environment-tut.md).
+    The next step is to understand the target machine envionment. You must carefully go through the following tutorial before proceeding to the next stage of this roadmap.
 
-    With this, you are ready with all the required pre-requisites to proceed further in this roadmap.
+6. Complete the [XSM execution environment tutorial](../xsm-environment-tut.md).
+
+With this, you are ready with all the required pre-requisites to proceed further in this roadmap.
