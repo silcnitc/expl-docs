@@ -100,8 +100,8 @@ endclass
 
     So, the virtual function table of class A looks as shown in the below figure. It is constructed using member function list of class A as shown in the above figure :
 
-    [![](../img/virtual_function_table_1.png)](../img/virtual_function_table_1.png)
-    
+    ![](../img/virtual_function_table_1.png)
+
 2.  In class B, there are two methods f1() and f3() and it is extending class A.
     When a class extends other class, all the member fields and methods of the parent class are inherited by the derived class.
     Suppose as in this example, if the method signatures of the parent class and the derived class match, then method overriding occurs.
@@ -115,5 +115,4 @@ endclass
     for the f1() method of class B. Now, we need to update the member func list entry of the f1() method in class B,
     by new flabel given to the method f1() of class B. Similarly, the member func list for class C will be constructed.
 
-    [![](../img/virtual_function_table_2.png)](../img/virtual_function_table_2.png)
-
+    ![](../img/virtual_function_table_2.png)

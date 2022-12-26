@@ -154,7 +154,9 @@ With this, the global symbol table for the [program](../run_data_structures/run-
 
 Continuing with the above example, we need two local symbol tables – one for the main function and one for the factorial function. The local symbol table holds the (name, type, binding) triple for each **formal parameter** as well as **local variables** of the function. We will discuss the binding of formal parameters and local variables later. The local symbol tables of main and factorial would look as the following:
 
-![](../img/localsymboltable2.png) ![](../img/localsymboltable1.png)
+![](../img/localsymboltable2.png)
+
+![](../img/localsymboltable1.png)
 
 See [LINK](../data_structures/local-symbol-table.md) for more details. For now, ignore the type table pointer in the structure given in the link. This will be discussed in the next stage.
 

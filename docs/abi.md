@@ -594,6 +594,7 @@ to identify the system call. The figure to the left shows the data stored in sta
 INT instruction.
 
 ![](img/system_call_stack2.png){ align=right }
+
 The INT instruction in XSM will push the value of IP + 2 on to the stack. This is the address of
 the instruction immediately following the INT instruction in the calling program. Each instruction 
 is 2 words, hence IP is incremented by 2. Upon execution of the IRET instruction from the system

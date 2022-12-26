@@ -20,6 +20,7 @@ A feedback questionnaire was circulated to all the students who credited the cou
 * Stage 8: Object oriented programming support for classes and single inheritance.
 
 ## Q1. _Student Performance_: How many stages of the project did you complete?
+
 ![charts](../img/final_charts/1.png)
 
 !!! note
@@ -56,7 +57,6 @@ A feedback questionnaire was circulated to all the students who credited the cou
 ## Q4: _Contribution to understanding of theory_: How much did the lab help to improve your understanding of compiler design theory?
 
 ![charts](../img/final_charts/12-4-1.png)
-
 
 <div class="two-col">
     <div>

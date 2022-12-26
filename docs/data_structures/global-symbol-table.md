@@ -69,9 +69,14 @@ enddecl
 
 1.  As soon as the compiler encounters the global declaration of a variable or funtion, it is installed into the Global Symbol Table.
     Subsequently, the parameters are attached to the entry in the case of functions. Following is how GST looks when _studentname_ is installed.
+
     ![](../img/data_structure_5.png)
+
 2.  Similarly for _rollno,average,findaverage(linkedlist marks)_, symbol table entries are formed and installed.  
-    ![](../img/data_structure_6.png)]
+
+    ![](../img/data_structure_6.png)
+
 3.  The final Global Symbol table looks as follows:  
+
     ![](../img/data_structure_7.png)
 

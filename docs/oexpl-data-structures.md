@@ -152,7 +152,10 @@ endclass
 ```
 
 1. As soon as the compiler encounters the class name, it installs the class name and the parent class name if present into the class table. Subsequently, If there is an extension to the parent class, all the member fields and methods of parent class are inherited. Following is how class table looks when class _Person_ is installed.  
-    [![](./img/class_table_1.png)](./img/class_table_1.png)
+
+![](./img/class_table_1.png)
+
 2. Following is how class table looks when class _Student_ is installed.
 
-    [![](./img/class_table_2.png)](./img/class_table_2.png)
+![](./img/class_table_2.png)
+

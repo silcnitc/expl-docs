@@ -48,7 +48,9 @@ For making library calls, follow the steps given in the [invoking a library modu
 
 ## Illustration
 
-![](img/tree3.png) ![](img/codegen.png)
+![](img/tree3.png)
+
+![](img/codegen.png)
 
 Consider the ExpL program given below.
 

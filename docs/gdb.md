@@ -403,7 +403,11 @@ $2 = 0x55555555637f7 "\*"
 
 Now, we are not sure whether this node "\*" is a new node to the right of node "hij" **OR** it is the same node which is a right of node "+", and node "hij" is making a cyclic loop with this node.
 
-![start](img/gdb/t11.jpeg) ![start](img/gdb/question.jpg) ![start](img/gdb/t12.jpeg)
+![start](img/gdb/t11.jpeg)
+
+![start](img/gdb/question.jpg)
+
+![start](img/gdb/t12.jpeg)
 
 ---
 

@@ -86,6 +86,7 @@ struct Gsymbol {
 ```
 
 The symbol table entries for the program above would look as below:
+
 ![](../img/gsymboltable1.png)
 
 To implement the symbol table, you must write two functions. For a simple implementation, a linear
@@ -187,7 +188,6 @@ The size entry set to 10. This means that we are allocating locations 4096-4105 
 The next variable, b can be bound to the address 4106.
 
 ![](../img/gsymboltable2.png)
-
 
 !!! question "Task 2"
     Complete the implementation of single dimensional arrays.

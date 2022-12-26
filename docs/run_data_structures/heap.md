@@ -173,12 +173,16 @@ For illustration, we will have 64-sized heap and smallest block size as 8. So we
 4.  Now we have a request C of size 7.
 
     ![](../img/data_structure_21.png)
+
     ![](../img/data_structure_22.png)
+
     ![](../img/data_structure_23.png)
 
 5.  Now, C releases its memory.
 
     ![](../img/data_structure_24.png)
+
     ![](../img/data_structure_25.png)
+
     ![](../img/data_structure_26.png)
 

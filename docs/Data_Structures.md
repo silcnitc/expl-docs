@@ -57,14 +57,17 @@ The variable 'fields' is a pointer to the head of 'fieldlist'. Here 'fieldlist' 
 Let us consider the following sample code:
 
 1. The type table is first created and initialised to contain the default entries for each of the primitive and internal datatypes. This is done through a call to the function TypeTableCreate() from main function before yyparse() is called to start parsing the code. After the execution of TypeTableCreate() , the type table will be as follows:  
-    ![](img/data_structure_1.png)  
+
+    ![](img/data_structure_1.png)
 
 2. As soon as the compiler encounters the declaration of a user defined type, it is installed into the type table. Subsequently the fields are attached to this type table entry. For instance, in the case of the user-defined type _linkedlist_, as soon as the name _linkedlist_ is encountered, a type table entry with 'name' set to _linkedlist_ and 'fields' set to _NULL_ is created. Later, on finishing the complete parse of the type definition, the fieldlist is created and it is attached to the type table entry.  
     **NOTE** : A type table entry is created as soon as the type name is seen. This is because a field of the type may be of same type (For example, just like _next_ is of type _linkedlist_ in the type definition of _linkedlist_). When the 'fieldlist' is created, the type of the field is set by looking up the type table.  
-    ![](img/data_structure_2.png)  
+
+    ![](img/data_structure_2.png)
 
 3. Similar actions are carried out for user-defined type _marklist_ also.  
-    ![](img/data_structure_3.png)  
+
+    ![](img/data_structure_3.png)
 
 4. Once the type declaration section is completely parsed, the type table is fully created and will not be further modified or updated.
 
@@ -95,11 +98,17 @@ Read about ASTNode [here](#abstract-syntax-tree).
 
 Continuing with earlier example, let us add Global declaration section to it.
 
-1. As soon as the compiler encounters the global declaration of a variable or funtion, it is installed into Global Symbol Table. Subsequently, the arguments are attached to the entry in case of functions. Following is how GST looks when _studentname_ is installed. [![](img/data_structure_5.png)](img/data_structure_5.png)
+1. As soon as the compiler encounters the global declaration of a variable or funtion, it is installed into Global Symbol Table. Subsequently, the arguments are attached to the entry in case of functions. Following is how GST looks when _studentname_ is installed.
+
+![](img/data_structure_5.png)
+
 2. Similarly for _rollno,average,findaverage(linkedlist marks)_, symbol table entries are formed and installed. The fbinding for a function is the abstract syntax tree of the function definition and is set only after complete parsing of the function definition.  
-    [![](img/data_structure_6.png)](img/data_structure_6.png)
+
+![](img/data_structure_6.png)
+
 3. After this, the types for rollno,average and findaverage will be set and these objects are appended to the global symbol table. The final Global Symbol table looks as follows:  
-    [![](img/data_structure_7.png)](img/data_structure_7.png)
+
+![](img/data_structure_7.png)
 
 #### Local Symbol Table
 
@@ -272,41 +281,41 @@ Consider the following program
 
 2\. Similarly we have AST fot `n==0` (in line 9) as follows.
 
-![](img/data_structure_51.png)  
+![](img/data_structure_51.png)
 
 3\. Next consider the complete conditional expression `n==1 || n==0`.
 
-![](img/data_structure_52.png)  
+![](img/data_structure_52.png)
 
 4.Next we will form the AST for assignment statement `f = 1` (in line 10).
 
-![](img/data_structure_53.png)  
+![](img/data_structure_53.png)
 
 5\. Next, lets consider the statement `f = n * factorial(n-1)` which consists of arthimetic expressions with operands '-','\*' and an assignment statement.
 
 AST for `n-1` is as follows.
 
-![](img/data_structure_54.png)  
+![](img/data_structure_54.png)
 
 AST for `n * factorial(n-1)` is as follows.
 
-![](img/data_structure_55.png)  
+![](img/data_structure_55.png)
 
 AST for `f = n * factorial(n-1)` is as below.
 
-![](img/data_structure_56.png)  
+![](img/data_structure_56.png)
 
 6\. Following is the AST for the if condition.
 
-![](img/data_structure_57.png)  
+![](img/data_structure_57.png)
 
 7\. The AST for return statement is as folows
 
-![](img/data_structure_58.png)  
+![](img/data_structure_58.png)
 
 8\. Finally the AST for the factorial function will be as follows.
 
-![](img/data_structure_59.png)  
+![](img/data_structure_59.png)
 
 ## DATA STRUCTURES FOR EXECUTION PHASE
 
@@ -352,8 +361,8 @@ To summarize, we have four kinds of memory allocation – static, stack, heap an
 
 Our interpreter will simulate machine memory and registers by defining three memory arrays, named _stack, heap and registers_.
 
-![](img/data_structure_33.png)  
-  
+![](img/data_structure_33.png)
+
 The basic unit of memory (called a **memory word**) is assumed to be able to store an integer or a string. This model is assumed because the primitive data types of ExpL are integer and string. The interpreter therefore defines the following memory structure:
 
 The interpreter works with three arrays of memory words, to implement temporary storage (registers), the run time stack and the heap. There will be no sperarate memory array for static data. Instead, the intial part of the stack will be used for storing static data.
@@ -419,7 +428,7 @@ Consider the following example:
 
 1. The global variables are allocated statically in the initial portion of the stack.
 
-    ![](img/data_structure_39.png)  
+    ![](img/data_structure_39.png)
 
 2. The main functions sets up stack locations for its local variables and calls the function factorial(3) after setting up a part of the callee's activation record.
 
@@ -427,31 +436,31 @@ Consider the following example:
 
 3. Factorial(3) saves the old Base pointer and sets up locations for its local variables.
 
-    ![](img/data_structure_41.png)  
+    ![](img/data_structure_41.png)
 
 4. Factorial(3) calls factorial(2) and the activation record of factorial(2) is setup similar to the above steps.
 
-    ![](img/data_structure_42.png)  
+    ![](img/data_structure_42.png)
 
 5. Activation record for factorial(1) (called by factorial(2)) is seup similarly.
 
-    ![](img/data_structure_43.png)  
+    ![](img/data_structure_43.png)
 
 6. factorial(1) calculates the result and returns it by setting the value at return value location and pops off it local variables and sets back the base pointer.
 
-    ![](img/data_structure_44.png)  
+    ![](img/data_structure_44.png)
 
 7. Similarly, factorial(2) calculates the steps and pops off its activation record till the result value after setting back the old base pointer.
 
-    ![](img/data_structure_45.png)  
+    ![](img/data_structure_45.png)
 
 8. Similarly, factorial(3) also calculates the result and returns it to the main function.
 
-    ![](img/data_structure_46.png)  
+    ![](img/data_structure_46.png)
 
 9. Main function calculates and sets the 'result' variable.
 
-    ![](img/data_structure_47.png)  
+    ![](img/data_structure_47.png)
 
 Stack
 -----
@@ -527,20 +536,24 @@ This section shows how the heap looks after each step of allocation or free. Thi
 
     ![](img/data_structure_11.png)
 
-    x is a memstruct in the run-time stack of type MEMSTRUCT\_BIND with intval 8.
+x is a memstruct in the run-time stack of type MEMSTRUCT\_BIND with intval 8.
 
 * y = alloc();
 
     ![](img/data_structure_12.png)
+
 * z = alloc();
 
     ![](img/data_structure_13.png)
+
 * dealloc(x);
 
     ![](img/data_structure_14.png)
+
 * dealloc(z);
 
     ![](img/data_structure_15.png)
+
 * z = alloc();
 
     ![](img/data_structure_16.png)
@@ -596,9 +609,10 @@ For illustration, we will have 64-sized heap and smallest block size as 8. So we
 1. The heap looks initially as follows.
 
     ![](img/data_structure_18.png)
+
 2. Request for memory of size 5. Lets call this request as A. The nearest 2^k value for 5 is 8. We search for a 8 sized free block. We have one such! Allocate it!
 
-    ![](img/data_structure_19.png)  
+    ![](img/data_structure_19.png)
 
 3. Next we will have a reuqest B of size 14.
 
@@ -606,13 +620,17 @@ For illustration, we will have 64-sized heap and smallest block size as 8. So we
 
 4. Now we have a request C of size 7.
 
-    ![](img/data_structure_21.png)  
-    ![](img/data_structure_22.png)  
-    ![](img/data_structure_23.png)  
+    ![](img/data_structure_21.png)
+
+    ![](img/data_structure_22.png)
+
+    ![](img/data_structure_23.png)
 
 5. Now, C releases its memory.
 
-    ![](img/data_structure_24.png)  
-    ![](img/data_structure_25.png)  
-    ![](img/data_structure_26.png)  
+    ![](img/data_structure_24.png)
+
+    ![](img/data_structure_25.png)
+
+    ![](img/data_structure_26.png)
 

@@ -80,6 +80,7 @@ For example, consider the AST for the following erratic expression.
 ```
 d = ( a + b ) + ( c < 3 )
 ```
+
 ![](../img/ast3.png)
 
 Here, the root of the AST is an assignment node which is **typeless**. (statements have no type,

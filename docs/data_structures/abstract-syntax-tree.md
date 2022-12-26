@@ -181,27 +181,38 @@ int main(){
     ![](../img/data_structure_50.png)
 
 2. Similarly we have AST fot `n==0` (in line 9) as follows.
+
     ![](../img/data_structure_51.png)
 
 3. Next consider the complete conditional expression `n==1 || n==0`.
+
     ![](../img/data_structure_52.png)
 
 4. Next we will form the AST for assignment statement `f = 1` (in line 10).
+
     ![](../img/data_structure_53.png)
 
 5. Next, lets consider the statement `f = n * factorial(n-1)` which consists of arthimetic expressions with operands '-','\*' and an assignment statement.
     AST for `n-1` is as follows.
+
     ![](../img/data_structure_54.png)
+
     AST for `n * factorial(n-1)` is as follows.
+
     ![](../img/data_structure_55.png)
+
     AST for `f = n * factorial(n-1)` is as below.
+
     ![](../img/data_structure_56.png)
 
 6. Following is the AST for the if condition.
+
     ![](../img/data_structure_57.png)
 
 7. The AST for return statement is as folows
+
     ![](../img/data_structure_58.png)
 
 8. Finally the AST for the factorial function will be as follows.
+
     ![](../img/data_structure_59.png)

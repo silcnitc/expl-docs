@@ -75,10 +75,11 @@ Note that compile time check whether f0() is a method in the class A to which ob
 
 While generating the code for invoking a method of a class using an object of the class (for example, in the call obj.f0() above, f0() is invoked using the object obj of class A) **the member field pointer and virtual function table pointer of the object must be pushed to the stack in addition to normal arguments of the function.** We will follow the convention that these two values will be pushed before other arguments are pushed. This is how the runtime stack looks, when a method of a class is called.
 
-[![](img/runtimestackoexpl.png)](img/runtimestackoexpl.png)
+![](img/runtimestackoexpl.png)
+
 For instance, in the above example, if the value read from the input is 0, the following figure shows the run time stack.
 
-[![](img/runtimestackoexpl2_1.png)](img/runtimestackoexpl2_1.png)
+![](img/runtimestackoexpl2_1.png)
 
 ### Need For Pushing The Object
 

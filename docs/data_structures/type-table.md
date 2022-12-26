@@ -69,9 +69,11 @@ endtype
 
 
 2. After entry is created for linked list, the type would appear as shown below.
+
     ![](../img/data_structure_2.png)
 
 3. Similar actions are carried out for user-defined type _marklist_ as well.
+
     ![](../img/data_structure_3.png)
 
 4. Once the type declaration section in the input ExpL program, the type table is fully created and will not be changed later.
