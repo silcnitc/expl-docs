@@ -16,7 +16,7 @@ title: 'Installation'
 === "Fedora"
 
     ```bash
-    yum instal flex
+    sudo dnf install flex
     ```
 
 ## Install YACC
@@ -31,7 +31,7 @@ title: 'Installation'
 === "Fedora"
 
     ```bash
-    yum install bison
+    sudo dnf install bison byacc
     ```
 
 ## Install XSM Machine Simulator
@@ -55,10 +55,17 @@ Do the following steps:
 1. Type `make`.
 
     You may get some warnings and they can be ignored. If you get any **fatal error**, then install the following dependencies and try running `make` again :
+    
+=== "Ubuntu"
 
     ```bash
     sudo apt-get install libreadline-dev
     sudo apt-get install libc6-dev
+    ```
+    
+=== "Fedora"
+    ```bash
+    sudo dnf install readline-devel
     ```
 
     If any other dependencies are missing (this depends on your system configuration), you have to install the missing dependencies and run `make` again.
@@ -69,9 +76,18 @@ Do the following steps:
         /usr/bin/ld: cannot find -ll collect2: error: ld returned 1 exit status
         ```
         Then you need to install:
+        
+=== "Ubuntu"
+        
         ```bash
         sudo apt-get install libfl-dev
         ```
+=== "Fedora"
+        
+        ```bash
+        sudo dnf install flex-devel
+        ```
+        
         and edit the `Makefile` of `xsm_dev` folder, to proceed find the line where `-ll` is used as option
         and update it to ``-lfl`` to use the `flex` library we installed above.
         Now you can run `make` again after navigating into the folder `xsm_expl` through the terminal.
