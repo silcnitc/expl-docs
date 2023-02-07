@@ -56,17 +56,18 @@ Do the following steps:
 
     You may get some warnings and they can be ignored. If you get any **fatal error**, then install the following dependencies and try running `make` again :
     
-=== "Ubuntu"
+    === "Ubuntu"
 
-    ```bash
-    sudo apt-get install libreadline-dev
-    sudo apt-get install libc6-dev
-    ```
+        ```bash
+        sudo apt-get install libreadline-dev
+        sudo apt-get install libc6-dev
+        ```
     
-=== "Fedora"
-    ```bash
-    sudo dnf install readline-devel
-    ```
+    === "Fedora"
+
+        ```bash
+        sudo dnf install readline-devel
+        ```
 
     If any other dependencies are missing (this depends on your system configuration), you have to install the missing dependencies and run `make` again.
 
@@ -77,20 +78,21 @@ Do the following steps:
         ```
         Then you need to install:
         
-=== "Ubuntu"
+    === "Ubuntu"
         
         ```bash
         sudo apt-get install libfl-dev
         ```
-=== "Fedora"
+        
+    === "Fedora"
         
         ```bash
         sudo dnf install flex-devel
         ```
         
-        and edit the `Makefile` of `xsm_dev` folder, to proceed find the line where `-ll` is used as option
-        and update it to ``-lfl`` to use the `flex` library we installed above.
-        Now you can run `make` again after navigating into the folder `xsm_expl` through the terminal.
+    and edit the `Makefile` of `xsm_dev` folder, to proceed find the line where `-ll` is used as option
+    and update it to ``-lfl`` to use the `flex` library we installed above.
+    Now you can run `make` again after navigating into the folder `xsm_expl` through the terminal.
 
 2. Type `cd ../xfs-interface/` and type `./init`.
 3. (Optional) Add this line `#!/usr/bin/env bash` as first line to the `xsm` file in `xsm_expl` folder.
