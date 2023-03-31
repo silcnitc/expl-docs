@@ -3,6 +3,7 @@ title: 'Installation'
 ---
 
 # Installation
+If these instructions do not work, you can try the [:material-docker: Docker based setup](./docker-setup.md). 
 
 ## Install LEX
 
@@ -42,13 +43,18 @@ Let us install XSM
 
 ### Step 1
 
-Download XSM Simulator
+Clone the XSM Simulator from the official repository to your computer
 
-[Version 1 :octicons-download-16:](files/xsm_expl.tar.gz){ .md-button .md-button--primary }
+```bash
+git clone https://github.com/silcnitc/xsm_expl.git
+```
 
 ### Step 2
 
-Extract this file and navigate into the folder `xsm_expl` through the terminal.
+Navigate into the folder `xsm_expl` through the terminal.
+```bash
+cd xsm_expl
+```
 
 Do the following steps:
 
