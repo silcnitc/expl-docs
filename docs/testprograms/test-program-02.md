@@ -37,9 +37,9 @@ int ExtendedEuclid(int a,int b)
 
   while(r1 != 0) do
    qi = r0/r1;
-   ri = r0 - (qi\*r1);
-   si = s0 - (qi\*s1);
-   ti = t0 - (qi\*t1);
+   ri = r0 - (qi*r1);
+   si = s0 - (qi*s1);
+   ti = t0 - (qi*t1);
    r0 = r1;
    r1 = ri;
    s0 = s1;
