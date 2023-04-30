@@ -6,7 +6,7 @@ decl
 	int n,f2,f0,f1,i;
 enddecl
 read(n);
-if(n≥2) then
+if(n>=2) then
     f0=0;
     f1=1;
     n=n-1;
