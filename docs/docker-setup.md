@@ -69,7 +69,7 @@ The given `Dockerfile` will setup an expl environment as specified in [Installat
 We'll now build the container image using the `Dockerfile`
 
 ```sh
-sudo docker build -t expl:ubuntu20.04 .
+docker build -t expl:ubuntu20.04 .
 ```
 
 ### Start the container instance
@@ -83,7 +83,7 @@ We'll start an instance of Container and map the local folder `workdir` into `/h
 
 === "Unix / Linux"
     ``` sh
-    sudo docker run -v $PWD/workdir:/home/expl/xsm_expl/workdir -d --name expl -i expl:ubuntu20.04 
+    docker run -v $PWD/workdir:/home/expl/xsm_expl/workdir -d --name expl -i expl:ubuntu20.04 
     ```
 
 We now have a container instance running in background with the name `expl` and required volume mounts
@@ -93,9 +93,9 @@ We now have a container instance running in background with the name `expl` and 
 We can connect to the container instance using the following commands
 
 ```sh
-sudo docker start expl # if the container instance is not already running
+docker start expl # if the container instance is not already running
 
-sudo docker exec -it expl /bin/bash # to get a bash shell inside the container
+docker exec -it expl /bin/bash # to get a bash shell inside the container
 ```
 
 After connecting to the container you can use `xfs-interface`, and `xsm` binaries as mentioned in [Installation Page](./install.md)
