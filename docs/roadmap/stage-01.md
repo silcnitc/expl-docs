@@ -10,8 +10,8 @@ hide:
     0.5 week, 5-10 hours/week
 
 !!! abstract "Prerequisites"
-    1. You must be comfortable with LEX and YACC. ( If you are not, you must first do [LEX]
-        (../lex.md) tutorial, [YACC](../yacc.md) Tutorial and [Using Lex with Yacc](../ywl.md) tutorials.)
+    1. You must be comfortable with LEX and YACC. ( If you are not, you must first do [LEX](../lex.md)
+    tutorial, [YACC](../yacc.md) Tutorial and [Using Lex with Yacc](../ywl.md) tutorials.)
     2. You must have completed the [XSM environment tutorial](../xsm-environment-tut.md)
         **including all the exercises** before staring this stage.
 
