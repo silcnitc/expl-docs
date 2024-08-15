@@ -53,7 +53,7 @@ This is our lex file [lex.l](./gdb-files.md#lexl-file)
 
 This is our yacc file [parser.y](./gdb-files.md#parsery-file)
 
-This is our input file [input.txt](./gdb-files.md#infixtoprefix-function)
+This is our input file [input.txt](./gdb-files.md#input-file)
 
 This is our tree.c file [tree.c](./gdb-files.md#treec-file), this contains the helper functions like the infixtoprefix(), createTree() etc.
 
@@ -111,7 +111,7 @@ Now our GDB is up.
 
 **break** - You can pass a function name or line number as an argument to this command. It will set a break point corresponding to that line number or function. So that when we run the gdb, it halts at the break point, and then we can move incrementally (step by step) exploring the variables and the execution flow.
 
-Here we can use the break command to halt at the start of the execution of the infixtoprefix function [infixtoprefix](./gdb-files.md#infixtoprefix-function), to examine the working of the function in detail.
+Here we can use the break command to halt at the start of the execution of the infixtoprefix function, to examine the working of the function in detail.
 
 `(gdb) break infixtoprefix`
 
