@@ -53,17 +53,15 @@ This is our lex file [lex.l](./gdb-files.md#lexl-file)
 
 This is our yacc file [parser.y](./gdb-files.md#parsery-file)
 
-This is our function to convert an infix expression to prefix expression [infixtoprefix](./gdb-files.md#infixtoprefix-function)
-
 This is our input file [input.txt](./gdb-files.md#infixtoprefix-function)
 
 This is our tree.c file [tree.c](./gdb-files.md#treec-file), this contains the helper functions like the infixtoprefix(), createTree() etc.
 
 This is our tree.h file [tree.h](./gdb-files.md#treeh-file)
 
-**Input :** `abc+(bcd-efg)\*hij`
+**Input :** `abc+(bcd-efg)*hij`
 
-**Expected Output :** `+ abc \* - bcd efg hij`
+**Expected Output :** `+ abc * - bcd efg hij`
 
 We know that we have to construct a infix expression tree by parsing the input string, and then we can do a preorder traversal on that tree to get the prefix. Here, let us see how we can use GDB to verify whether our expression tree / syntax tree is constructed properly.
 
@@ -107,9 +105,9 @@ gdb --args a.out input.txt
 
 Now our GDB is up.
 
-**layout next** - Opens a Graphical user interface, where you can view the part of the code currently executing along with the code line numbers
+**layout src** - Opens a Graphical user interface, where you can view the part of the code currently executing along with the code line numbers
 
-`(gdb) layout next`
+`(gdb) layout src`
 
 **break** - You can pass a function name or line number as an argument to this command. It will set a break point corresponding to that line number or function. So that when we run the gdb, it halts at the break point, and then we can move incrementally (step by step) exploring the variables and the execution flow.
 
@@ -135,7 +133,7 @@ Now, let us print the symbol stored at the root of the tree, and also view a sna
 
 **print** - you can use this to print the value of the variables at that point.
 
-In the above image we can see that the command layout next gave us the graphical user interface which allows us to see the code segment currently executing while debugging.
+In the above image we can see that the command layout src gave us the graphical user interface which allows us to see the code segment currently executing while debugging.
 
 The break statement helped us to reach the interested target function, so that from there we can proceed step by step exploring the contents.
 
@@ -445,7 +443,7 @@ GDB, thus, helps us to save a lot of time in debugging.
 
 ## Some of the important GDB commands are :-
 
-- **layout next** - Opens a Graphical user interface, where you can view the part of the code currently executing along with the code line numbers
+- **layout src** - Opens a Graphical user interface, where you can view the part of the code currently executing along with the code line numbers
 - **start** - It starts debugging from top, and gives control to user
 - **break** - You can pass a function name or line number as an argument to this command. It will set a break point corresponding to that line number or function. So that when we run the gdb, it halts at the break point, and then we can move incrementally (step by step) exploring the variables and the execution flow.
 - **continue** - To run until you encounter next breakpoint
