@@ -53,7 +53,7 @@ This is our lex file [lex.l](./gdb-files.md#lexl-file)
 
 This is our yacc file [parser.y](./gdb-files.md#parsery-file)
 
-This is our input file [input.txt](./gdb-files.md#input-file)
+This is our input file [input.txt](./gdb-files.md#inputtxt-file)
 
 This is our tree.c file [tree.c](./gdb-files.md#treec-file), this contains the helper functions like the infixtoprefix(), createTree() etc.
 

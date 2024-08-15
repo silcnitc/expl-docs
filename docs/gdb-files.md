@@ -96,7 +96,7 @@ int main(int argc, char*argv[]) {
 ```
 
 
-## input file
+## input.txt file
 
 ```
 abc+(bcd-efg)*hij
