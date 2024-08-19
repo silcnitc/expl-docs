@@ -207,7 +207,7 @@ $1 = (struct tnode\*) 0x0
 
 ![start](img/gdb/t2.jpeg)
 
-We habe reached Null node represented by 0x0 in hexadecimal
+We have reached the Null node represented by 0x0 in hexadecimal
 
 ---
 
@@ -319,7 +319,7 @@ As expected we found "hij" to the right of "\*" node
 
 ---
 
-Further continuing the debugging, we will find Null node to the left of "hij" node
+Further continuing the debugging, we will find the Null node to the left of "hij" node
 
 Now, when we move right from node "hij"
 
@@ -347,7 +347,7 @@ GDB will monitor the value of the root pointer, and whenever the value of the va
 
 ## Infinte Loop
 
-One of the important use cases of GDB start when we encounter a segmentation fault or infinte loop, and trust me, we encounter such errors more often than we thin in the upcoming stages, as the syntax tree becomes more and more complex, during those times, GDB debugging of the syntax tree to verify the contents and to find out went wrong is very helpful and saves a lot of time.
+One of the most critical use cases for GDB arises when we encounter a segmentation fault or an infinite loop. These issues become increasingly common as the syntax tree grows more complex in later stages. In such situations, using GDB to debug the syntax tree, verify its contents, and identify what went wrong is invaluable. It can save a significant amount of time and effort in troubleshooting these complex errors.
 
 In this example, we can see an infinite loop, for the problem infix to prefix problem. let us see how we can use GDB to find the error in the construction of the express tree / syntax tree.
 
