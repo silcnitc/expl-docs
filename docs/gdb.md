@@ -524,3 +524,11 @@ GDB, thus, helps us to save a lot of time in debugging.
   You can also follow pointers iteratively, like in a linked list:
 
   `(gdb) print list_prt->next->next->next->data`
+
+
+## References
+
+For further details on the topics covered in this document, the reader may refer to the following :
+
+1. [Debugging: GDB Tutorial (Video)](https://www.youtube.com/watch?v=bWH-nL7v5F4)
+2. [GNU GDB Tutorial](https://raw.githubusercontent.com/wiki/NETMF/llilum/gdbTutorial.pdf)
