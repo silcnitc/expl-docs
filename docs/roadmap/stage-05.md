@@ -121,26 +121,27 @@ The compiler needs to know the binding addresses and types of the local variable
 To keep track of the local variable and scope information, our strategy is to keep global and local variables in different symbol tables. We will have
 
 *   1\. A single **global symbol table** storing the _(name, type, size, binding)_ information of global variables as well as _(name, type, parameters, binding)_ information for functions. The following structure is suggested for storing a global symbol table entry.
-
-    **struct Gsymbol{**
-      **char \*name;** //name of the variable or function
-      **int type;** //type of the variable:(Integer / String)
-      **int size;** //size of an array
-      **int binding;** //static binding of global variables
-      **struct Paramstruct \*paramlist;**//pointer to the head of the formal parameter list
-                       //in the case of functions
-      **int flabel;** //a label for identifying the starting address of a function's code
-      **struct Gsymbol \*next;** //points to the next Global Symbol Table entry
-    **};**
+```
+    struct Gsymbol{
+      char *name;   //name of the variable or function
+      int type;     //type of the variable:(Integer / String)
+      int size;     //size of an array
+      int binding;  //static binding of global variables
+      struct Paramstruct *paramlist; //pointer to the head of the formal parameter list in the case of functions
+      int flabel;   // a label for identifying the starting address of a function's code
+      struct Gsymbol *next; //points to the next Global Symbol Table entry
+    };
+```
 
 *   2\. Several **local symbol tables** - one for each function containing the _(name, type, binding)_ information for each local variable of the function. (Note that since the language does not permit arrays to be defined within a function, the size value of local variables is always 1, hence the field is not required). A local symbol table entry can be stored in the following structure:
-
-**struct Lsymbol{**
-  **char \*name;**     //name of the variable
-  **int type;**    //type of the variable:(Integer / String)
-  **int binding;**     //local binding of the variable
-  **struct Lsymbol \*next;**   //points to the next Local Symbol Table entry
-**};**
+```
+    struct Lsymbol{
+      char *name;     //name of the variable
+      int type;       //type of the variable (Integer / String)
+      int binding;    //local binding of the variable
+      struct Lsymbol *next;   //points to the next Local Symbol Table entry
+    };
+```
 
 **Note:** As noted in the [run time storage allocation](../run-data-structures.md) documentation, local variables cannot be assigned static memory addresses. Hence, the binding of a local variable is a relative address within the function's activation record. We will discuss this matter in detail later.
 
